@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_counter/presentation/pages/home_page.dart';
 
 class CounterBottomNav extends StatefulWidget {
   const CounterBottomNav({
@@ -15,6 +16,12 @@ class _CounterBottomNavState extends State<CounterBottomNav> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
+      switch(index){
+        case 0: {
+          Navigator.pushNamed(context, HomePage.ROUTE_NAME);
+        }
+      }
     });
   }
 
@@ -40,10 +47,12 @@ class _CounterBottomNavState extends State<CounterBottomNav> {
         ),
       ],
       currentIndex: _selectedIndex,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).accentColor,
       selectedItemColor: Colors.white,
-      unselectedItemColor: Theme.of(context).accentColor,
+      unselectedItemColor: Theme.of(context).primaryColor,
       onTap: _onItemTapped,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
     );
   }

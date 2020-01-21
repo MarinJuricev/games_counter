@@ -11,3 +11,4 @@ class Player {
     @required this.bonusPoints,
   });
 }
+ 
