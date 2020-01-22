@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:game_counter/presentation/pages/add_players.dart';
+import 'package:game_counter/presentation/pages/add_players_page.dart';
 import 'package:game_counter/presentation/pages/home_page.dart';
+import 'package:game_counter/presentation/widgets/bottom_nav.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,9 +22,11 @@ class MyApp extends StatelessWidget {
         textTheme: Typography(platform: TargetPlatform.iOS).white,
       ),
       home: SafeArea(
-        child: HomePage(),
+        child: Scaffold(
+          body: HomePage(),
+          bottomNavigationBar: BottomNav(),
+        ),
       ),
-      initialRoute: HomePage.ROUTE_NAME,
       routes: {
         AddPlayersPage.ROUTE_NAME: (_) => AddPlayersPage(),
       },

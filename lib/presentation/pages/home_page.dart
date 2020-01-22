@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/widgets/counter_bottom_nav.dart';
-import 'package:game_counter/presentation/widgets/game_title.dart';
 
-
+import '../widgets/game_title.dart';
 
 class HomePage extends StatefulWidget {
   static const ROUTE_NAME = '/';
@@ -26,7 +24,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: CounterBottomNav(),
     );
   }
 }

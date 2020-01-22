@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/widgets/counter_bottom_nav.dart';
-import 'package:game_counter/presentation/widgets/game_title.dart';
+
+import '../widgets/bottom_nav.dart';
+import '../widgets/game_title.dart';
 
 class AddPlayersPage extends StatelessWidget {
   static const ROUTE_NAME = '/add-players';
@@ -19,7 +20,6 @@ class AddPlayersPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CounterBottomNav(),
     );
   }
 }

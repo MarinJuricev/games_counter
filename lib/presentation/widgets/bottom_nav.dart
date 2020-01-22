@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/pages/home_page.dart';
 
-class CounterBottomNav extends StatefulWidget {
-  const CounterBottomNav({
+import '../pages/add_players_page.dart';
+import '../pages/home_page.dart';
+
+class BottomNav extends StatefulWidget {
+  const BottomNav({
     Key key,
   }) : super(key: key);
 
   @override
-  _CounterBottomNavState createState() => _CounterBottomNavState();
+  _BottomNavState createState() => _BottomNavState();
 }
 
-class _CounterBottomNavState extends State<CounterBottomNav> {
+class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -19,7 +21,11 @@ class _CounterBottomNavState extends State<CounterBottomNav> {
 
       switch(index){
         case 0: {
-          Navigator.pushNamed(context, HomePage.ROUTE_NAME);
+          // Navigator.pushNamed(context, HomePage.ROUTE_NAME);
+          break;
+        }
+        case 3: {
+          Navigator.pushNamed(context, AddPlayersPage.ROUTE_NAME);
         }
       }
     });
