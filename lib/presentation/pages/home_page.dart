@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../widgets/game_title.dart';
 
 class HomePage extends StatefulWidget {
-  static const ROUTE_NAME = '/';
   HomePage({Key key}) : super(key: key);
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_nav.dart';
 import '../widgets/game_title.dart';
 
 class AddPlayersPage extends StatelessWidget {
@@ -19,6 +18,14 @@ class AddPlayersPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
       ),
     );
   }
