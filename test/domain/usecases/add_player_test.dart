@@ -21,7 +21,7 @@ void main() {
         final actualResult =
             await addPlayer(Params(playerName: emptyPlayerName));
 
-        expect(actualResult, Left(ValidationFailure));
+        expect(actualResult, Left(ValidationFailure()));
       },
     );
   });

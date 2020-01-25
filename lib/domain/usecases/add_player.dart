@@ -4,16 +4,18 @@ import 'package:meta/meta.dart';
 
 import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
-import '../entities/game.dart';
+import '../entities/player.dart';
 
-class AddPlayer implements BaseUseCase<Game, Params> {
+class AddPlayer implements BaseUseCase<Player, Params> {
   @override
-  Future<Either<Failure, Game>> call(Params params) async {
+  Future<Either<Failure, Player>> call(Params params) async {
     return await _validateFields(params.playerName);
   }
 
-  Either<Failure, Game> _validateFields(String playerName) {
-    if (playerName.isEmpty) return (Left(ValidationFailure()));
+  Future<Either<Failure, Player>> _validateFields(String playerName) async{
+    if (playerName.isEmpty) return Future<Either<Failure, Player>>.value(Left(ValidationFailure()));
+
+    // return Future<Either<Failure, Player>>.value(Right(ValidationFailure()))
   }
 }
 
