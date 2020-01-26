@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'di.dart' as di;
+import 'di.dart';
+import 'presentation/bloc/game/bloc/game_bloc.dart';
 import 'presentation/pages/home_bottom_navigation_route.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,7 +28,9 @@ class MyApp extends StatelessWidget {
         primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
         textTheme: Typography(platform: TargetPlatform.iOS).white,
       ),
-      home: HomeBottomNavRoute(),
+      home: BlocProvider(
+        create: (context) => sl<GameBloc>(),
+        child: HomeBottomNavRoute()),
     );
   }
 }

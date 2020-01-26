@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/bloc/game/bloc/game_bloc.dart';
 
 import '../widgets/game_title.dart';
 
@@ -11,6 +13,55 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Widget _buildCreateGame() {
+    return BlocBuilder<GameBloc, GameState>(
+      builder: (BuildContext context, GameState state) {
+        if (state is GameInitialState) {
+          return CreateGame();
+        } else if (state is GameCreatedState){
+          return Center(
+            child: Text('Igra kreirana so hype, much wow'),
+          );
+        }else if (state is ErrorState){
+          return Center(
+            child: Text('Erorr tebra, much wow'),
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          GameTitle(gameTitle: 'Game title'),
+          Expanded(
+            child: _buildCreateGame(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CreateGame extends StatefulWidget {
+  const CreateGame({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _CreateGameState createState() => _CreateGameState();
+}
+
+class _CreateGameState extends State<CreateGame> {
+  void addCreateGameEvent() {
+    BlocProvider.of<GameBloc>(context).add(CreateGameEvent(
+        gameTitle: 'Treseta', numberOfPlayers: 4, pointsToWin: 41));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Container(
         margin: EdgeInsets.all(24),
@@ -88,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(fontSize: 12.0),
                   ),
                   textColor: Colors.white,
-                  onPressed: () {},
+                  onPressed: addCreateGameEvent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.white),
@@ -98,20 +149,6 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          GameTitle(gameTitle: 'Game title'),
-          Expanded(
-            child: _buildCreateGame(),
-          ),
-        ],
       ),
     );
   }

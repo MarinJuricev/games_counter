@@ -4,12 +4,12 @@ abstract class GameEvent extends Equatable {
   const GameEvent();
 }
 
-class CreateGame extends GameEvent {
+class CreateGameEvent extends GameEvent {
   final String gameTitle;
   final int numberOfPlayers;
   final int pointsToWin;
 
-  CreateGame({
+  CreateGameEvent({
     @required this.gameTitle,
     @required this.numberOfPlayers,
     @required this.pointsToWin,
