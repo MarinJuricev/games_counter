@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/usecases/create_game.dart';
 
 void main() {
@@ -107,6 +108,32 @@ void main() {
           );
 
           expect(actualResult, Left(ValidationFailure()));
+        },
+      );
+
+      test(
+        'should return valid Game object when all the parametars are valid',
+        () async {
+          final gameTitle = 'Treseta';
+          final validNumberOfPlayers = 4;
+          final validWinningPoints = 41;
+
+          final actualResult = await createGame(
+            Params(
+              gameTitle: gameTitle,
+              numberOfPlayers: validNumberOfPlayers,
+              winningPoints: validWinningPoints,
+            ),
+          );
+
+          final expectedResult = Right(
+            Game(
+                name: gameTitle,
+                pointsToWin: validWinningPoints,
+                numberOfPlayers: validNumberOfPlayers),
+          );
+
+          expect(actualResult, expectedResult);
         },
       );
     },

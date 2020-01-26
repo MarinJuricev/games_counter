@@ -27,7 +27,15 @@ class CreateGame implements BaseUseCase<Game, Params> {
         winningPoints == 0)
       return Future<Either<Failure, Game>>.value(Left(ValidationFailure()));
 
-    // return Future<Either<Failure, Player>>.value(Right(ValidationFailure()))
+    return Future<Either<Failure, Game>>.value(
+      Right(
+        Game(
+          name: gameTitle,
+          pointsToWin: winningPoints,
+          numberOfPlayers: numberOfPlayers,
+        ),
+      ),
+    );
   }
 }
 

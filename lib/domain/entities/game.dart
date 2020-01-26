@@ -1,18 +1,32 @@
+import 'package:equatable/equatable.dart';
+
 import 'player.dart';
 import 'package:meta/meta.dart';
 
-class Game {
+class Game extends Equatable {
   final List<Player> players;
   final String name;
   final String winner;
   final int pointsToWin;
   final int bonusPoints;
+  final int numberOfPlayers;
 
   Game({
-    @required this.players,
     @required this.name,
-    @required this.winner,
     @required this.pointsToWin,
-    @required this.bonusPoints,
+    @required this.numberOfPlayers,
+    this.winner,
+    this.players,
+    this.bonusPoints,
   });
+
+  @override
+  List<Object> get props => [
+        players,
+        name,
+        winner,
+        pointsToWin,
+        bonusPoints,
+        numberOfPlayers,
+      ];
 }
