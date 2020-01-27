@@ -6,8 +6,8 @@ abstract class GameEvent extends Equatable {
 
 class CreateGameEvent extends GameEvent {
   final String gameTitle;
-  final int numberOfPlayers;
-  final int pointsToWin;
+  final String numberOfPlayers;
+  final String pointsToWin;
 
   CreateGameEvent({
     @required this.gameTitle,

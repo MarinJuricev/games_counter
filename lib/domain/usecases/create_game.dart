@@ -1,32 +1,24 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:game_counter/core/error/failure.dart';
-import 'package:game_counter/core/usecase/base_usecase.dart';
+import '../../core/error/failure.dart';
+import '../../core/usecase/base_usecase.dart';
+import '../../core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:meta/meta.dart';
 
 class CreateGame implements BaseUseCase<Game, Params> {
+  
+
   @override
   Future<Either<Failure, Game>> call(Params params) async {
-    return await _validateFields(
-      params.gameTitle,
-      params.numberOfPlayers,
-      params.winningPoints,
-    );
+    return await _createGame(
+        params.gameTitle, params.numberOfPlayers, params.winningPoints);
   }
 
-  Future<Either<Failure, Game>> _validateFields(
-    String gameTitle,
-    int numberOfPlayers,
-    int winningPoints,
-  ) async {
-    if (gameTitle.isEmpty ||
-        numberOfPlayers.isNegative ||
-        winningPoints.isNegative ||
-        numberOfPlayers == 0 ||
-        winningPoints == 0)
-      return Future<Either<Failure, Game>>.value(Left(ValidationFailure()));
-
+  Future<Either<Failure, Game>> _createGame(
+      String gameTitle, int numberOfPlayers, int winningPoints) async {
+    // TODO actually add the local / remote storage for creating a game
+    
     return Future<Either<Failure, Game>>.value(
       Right(
         Game(

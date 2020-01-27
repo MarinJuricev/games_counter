@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/usecases/create_game.dart';
 import 'package:game_counter/presentation/bloc/game/bloc/game_bloc.dart';
@@ -8,14 +9,19 @@ import 'package:mockito/mockito.dart';
 
 class MockCreateGame extends Mock implements CreateGame {}
 
+class MockInputConverter extends Mock implements InputConverter {}
+
 void main() {
   GameBloc gameBloc;
   MockCreateGame mockCreateGame;
+  MockInputConverter mockInputConverter;
 
   setUp(
     () {
       mockCreateGame = MockCreateGame();
-      gameBloc = GameBloc(createGame: mockCreateGame);
+      mockInputConverter = MockInputConverter();
+      gameBloc = GameBloc(
+          createGame: mockCreateGame, inputConverter: mockInputConverter);
     },
   );
 
@@ -30,19 +36,31 @@ void main() {
     'CreateGameEvent',
     () {
       final gameName = 'Treseta';
-      final pointsToWin = 41;
-      final numberOfPlayers = 4;
+      final pointsToWin = '41';
+      final numberOfPlayers = '4';
+      final pointsToWinParsed = 41;
+      final numberOfPlayersParsed = 4;
       final testGame = Game(
         name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
+        pointsToWin: pointsToWinParsed,
+        numberOfPlayers: numberOfPlayersParsed,
       );
 
+      void _setupMockInputConverterSuccess() {
+        when(mockInputConverter.stringToUnsignedInteger(pointsToWin))
+            .thenReturn(Right(pointsToWinParsed));
+
+        when(mockInputConverter.stringToUnsignedInteger(numberOfPlayers))
+            .thenReturn(Right(numberOfPlayersParsed));
+      }
+
       test(
-        'should call createGame to validate the user input',
+        'should call createGame to with correctly parsed arguments',
         () async {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Right(testGame));
+
+          _setupMockInputConverterSuccess();
 
           gameBloc.add(CreateGameEvent(
             gameTitle: gameName,
@@ -53,8 +71,8 @@ void main() {
 
           verify(mockCreateGame(Params(
               gameTitle: gameName,
-              numberOfPlayers: numberOfPlayers,
-              winningPoints: pointsToWin)));
+              numberOfPlayers: numberOfPlayersParsed,
+              winningPoints: pointsToWinParsed)));
         },
       );
 
@@ -63,6 +81,8 @@ void main() {
         () async {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Left(ValidationFailure()));
+
+              _setupMockInputConverterSuccess();
 
           final expectedState = [
             GameInitialState(),
@@ -84,6 +104,8 @@ void main() {
         () async {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Right(testGame));
+
+              _setupMockInputConverterSuccess();
 
           final expectedState = [
             GameInitialState(),
