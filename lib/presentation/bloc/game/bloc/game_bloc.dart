@@ -13,7 +13,6 @@ import '../../../../domain/entities/game.dart';
 part 'game_event.dart';
 part 'game_state.dart';
 
-//TODO Actually implement empty name, non zero and negative players and points logic !
 const String VALIDATION_ERROR = 'Validation Error';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
@@ -36,14 +35,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       final pointsEither =
           inputConverter.stringToUnsignedInteger(event.pointsToWin);
 
-      yield* _mapValidationErrorStates(
-          numberEither, pointsEither, event.gameTitle);
+      //TODO Actually handle errors when creating the object in local / remote storage,
+      //TODO for now just run the validation
+      if (numberEither.isLeft() ||
+          pointsEither.isLeft() ||
+          event.gameTitle.isEmpty) {
+        yield ErrorState(message: VALIDATION_ERROR);
+      }
 
       final useCaseEither = await createGame(
         Params(
             gameTitle: event.gameTitle,
-            numberOfPlayers: numberEither.getOrElse(null),
-            winningPoints: pointsEither.getOrElse(null)),
+            numberOfPlayers: numberEither.getOrElse(() => 0),
+            winningPoints: pointsEither.getOrElse(() => 0)),
       );
 
       yield* _mapEitherErrorOrGameCreated(useCaseEither);
@@ -53,20 +57,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
 Stream<GameState> _mapEitherErrorOrGameCreated(
     Either<Failure, Game> useCaseEither) async* {
-  yield useCaseEither.fold((failure) => ErrorState(message: VALIDATION_ERROR),
-      (game) => GameCreatedState(game: game));
-}
-
-Stream<GameState> _mapValidationErrorStates(
-  Either<Failure, int> numberEither,
-  Either<Failure, int> pointsEither,
-  String gameTitle,
-) async* {
-  // if (numberEither.isLeft()) {
-  //     yield numberEither.leftMap<Failure>((failure) => ErrorState(message: failure.errorMessage));
-  //   }
-  // yield useCaseEither.fold(
-  //     (failure) => ErrorState(message: failure.errorMessage),
-  //     (game) => GameCreatedState(game: game));
-  // }
+  yield useCaseEither.fold(
+    (failure) => ErrorState(message: VALIDATION_ERROR),
+    (game) => GameCreatedState(game: game),
+  );
 }
