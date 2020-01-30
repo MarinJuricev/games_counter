@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xff58C6B2),
         primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
         textTheme: Typography(platform: TargetPlatform.iOS).white,
+        errorColor: const Color(0xff00FFF0),
       ),
       home: BlocProvider(
         create: (context) => sl<GameBloc>(),

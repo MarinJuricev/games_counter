@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+
 import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
-import '../../core/util/input_converter.dart';
-import 'package:game_counter/domain/entities/game.dart';
-import 'package:meta/meta.dart';
+import '../entities/game.dart';
 
 class CreateGame implements BaseUseCase<Game, Params> {
   

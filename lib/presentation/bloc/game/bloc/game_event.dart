@@ -18,3 +18,19 @@ class CreateGameEvent extends GameEvent {
   @override
   List<Object> get props => [gameTitle, numberOfPlayers, pointsToWin];
 }
+
+class AddPlayerGameEvent extends GameEvent {
+  final Game currentGame;
+
+  final String newPlayerName;
+  final String startingPoints;
+
+  AddPlayerGameEvent({
+    @required this.currentGame,
+    @required this.newPlayerName,
+    @required this.startingPoints,
+  });
+
+  @override
+  List<Object> get props => [currentGame, newPlayerName, startingPoints];
+}

@@ -4,26 +4,35 @@ import 'package:meta/meta.dart';
 
 import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
+import '../entities/game.dart';
 import '../entities/player.dart';
 
-class AddPlayer implements BaseUseCase<Player, Params> {
+class AddPlayer implements BaseUseCase<Game, Params> {
   @override
-  Future<Either<Failure, Player>> call(Params params) async {
-    return await _validateFields(params.playerName);
-  }
+  Future<Either<Failure, Game>> call(Params params) async {
+    final currentGame = params.currentGame;
+    final newPlayer = params.newPlayer;
 
-  Future<Either<Failure, Player>> _validateFields(String playerName) async{
-    if (playerName.isEmpty) return Future<Either<Failure, Player>>.value(Left(ValidationFailure()));
+    final playerAlreadyExists = currentGame.players.firstWhere(
+        (itemToCheck) => itemToCheck.name == newPlayer.name,
+        orElse: () => null);
 
-    // return Future<Either<Failure, Player>>.value(Right(ValidationFailure()))
+    if (playerAlreadyExists != null) {
+      return await Future<Either<Failure, Game>>.value(
+          Left(PlayerAlreadyExistsFailure()));
+    }
+
+    currentGame.players.add(newPlayer);
+    return await Future<Either<Failure, Game>>.value(Right(currentGame));
   }
 }
 
 class Params extends Equatable {
-  final String playerName;
+  final Game currentGame;
+  final Player newPlayer;
 
-  Params({@required this.playerName});
+  Params({@required this.currentGame, @required this.newPlayer});
 
   @override
-  List<Object> get props => [playerName];
+  List<Object> get props => [currentGame, newPlayer];
 }
