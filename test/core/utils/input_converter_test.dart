@@ -33,7 +33,7 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure(errorMessage: INVALID_NUMBER_PROVIDED)));
+          expect(result, Left(ValidationFailure()));
         },
       );
 
@@ -44,24 +44,24 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure(errorMessage: POSITIVE_PROVIDED_NUMBER)));
+          expect(result, Left(ValidationFailure()));
         },
       );
 
-      test('should return failure when the provided string is null', () {
+      test('should return a Failure when the provided string is null', () {
         final str = null;
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure(errorMessage: REQUIRED_FIELDS_NOT_EMTPY)));
+          expect(result, Left(ValidationFailure()));
       });
 
-      test('should return failure when the provided string is empty', () {
+      test('should return a Failure when the provided string is empty', () {
         final str = '';
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure(errorMessage: REQUIRED_FIELDS_NOT_EMTPY)));
+          expect(result, Left(ValidationFailure()));
       });
     },
   );

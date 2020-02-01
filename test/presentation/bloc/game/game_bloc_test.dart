@@ -54,8 +54,16 @@ void main() {
             .thenReturn(Right(numberOfPlayersParsed));
       }
 
+      void _setupMockInputConverterFails() {
+        when(mockInputConverter.stringToUnsignedInteger(pointsToWin))
+            .thenReturn(Left(ValidationFailure()));
+
+        when(mockInputConverter.stringToUnsignedInteger(numberOfPlayers))
+            .thenReturn(Left(ValidationFailure()));
+      }
+
       test(
-        'should call createGame to with correctly parsed arguments',
+        'should call createGame with correctly parsed arguments',
         () async {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Right(testGame));
@@ -82,7 +90,30 @@ void main() {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Left(ValidationFailure()));
 
-              _setupMockInputConverterSuccess();
+          _setupMockInputConverterFails();
+
+          final expectedState = [
+            GameInitialState(),
+            ErrorState(message: VALIDATION_ERROR),
+          ];
+
+          expectLater(gameBloc, emitsInOrder(expectedState));
+
+          gameBloc.add(CreateGameEvent(
+            gameTitle: gameName,
+            numberOfPlayers: numberOfPlayers,
+            pointsToWin: pointsToWin,
+          ));
+        },
+      );
+
+      test(
+        'should emit [ErrorState] when the game creation fails',
+        () async {
+          when(mockCreateGame.call(any))
+              .thenAnswer((_) async => Left(ValidationFailure()));
+
+          _setupMockInputConverterSuccess();
 
           final expectedState = [
             GameInitialState(),
@@ -105,7 +136,7 @@ void main() {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Right(testGame));
 
-              _setupMockInputConverterSuccess();
+          _setupMockInputConverterSuccess();
 
           final expectedState = [
             GameInitialState(),
