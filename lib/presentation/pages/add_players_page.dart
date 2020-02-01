@@ -6,6 +6,10 @@ class AddPlayersPage extends StatelessWidget {
   static const ROUTE_NAME = '/add-players';
   const AddPlayersPage({Key key}) : super(key: key);
 
+  Widget _buildAddPlayers() {
+    return Text('Test');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +18,7 @@ class AddPlayersPage extends StatelessWidget {
           GameTitle(gameTitle: 'Game title'),
           Expanded(
             child: Center(
-              child: Text('Add Players'),
+              child: _buildAddPlayers(),
             ),
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/usecases/create_game.dart';
-import 'package:game_counter/presentation/bloc/game/bloc/game_bloc.dart';
+import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 class MockCreateGame extends Mock implements CreateGame {}

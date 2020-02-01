@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:game_counter/core/util/input_converter.dart';
-import '../../../../core/error/failure.dart';
-import '../../../../domain/usecases/create_game.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../domain/entities/game.dart';
+import '../../../core/error/failure.dart';
+import '../../../core/util/input_converter.dart';
+import '../../../domain/entities/game.dart';
+import '../../../domain/usecases/create_game.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';

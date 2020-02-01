@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class Player {
+class Player extends Equatable {
   final String name;
   final int points;
   final int bonusPoints;
@@ -10,5 +11,8 @@ class Player {
     @required this.points,
     @required this.bonusPoints,
   });
+
+  @override
+  List<Object> get props => [name, points, bonusPoints];
 }
  

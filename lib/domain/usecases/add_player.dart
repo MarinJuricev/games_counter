@@ -17,7 +17,7 @@ class AddPlayer implements BaseUseCase<Game, Params> {
         (itemToCheck) => itemToCheck.name == newPlayer.name,
         orElse: () => null);
 
-    if (playerAlreadyExists != null) {
+    if (playerAlreadyExists != null) { 
       return await Future<Either<Failure, Game>>.value(
           Left(PlayerAlreadyExistsFailure()));
     }

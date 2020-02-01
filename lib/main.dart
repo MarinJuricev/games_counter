@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'di.dart' as di;
 import 'di.dart';
-import 'presentation/bloc/game/bloc/game_bloc.dart';
+import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/pages/home_bottom_navigation_route.dart';
 
 void main() async {
