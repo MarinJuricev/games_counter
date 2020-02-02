@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
           return Center(
             child: Text('Igra kreirana so hype, much wow'),
           );
-        } else if (state is ErrorState) {
+        } else if (state is GameErrorState) {
           return Center(
             child: Text('Erorr tebra, much wow'),
           );

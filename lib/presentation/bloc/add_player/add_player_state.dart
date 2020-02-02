@@ -7,19 +7,19 @@ abstract class AddPlayerState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialState extends AddPlayerState {}
+class AddPlayerInitialState extends AddPlayerState {}
 
-class GameNotCreatedState extends AddPlayerState {}
+class AddPlayerGameNotCreatedState extends AddPlayerState {}
 
-class PlayerCreationStartedState extends AddPlayerState {}
+class AddPlayerCreationStartedState extends AddPlayerState {}
 
-class CreationFinishedState extends AddPlayerState {
+class AddPlayerCreationFinishedState extends AddPlayerState {
   final Player player;
 
-  CreationFinishedState({@required this.player});
+  AddPlayerCreationFinishedState({@required this.player});
 
   @override
   List<Object> get props => [player];
 }
 
-class ErrorState extends AddPlayerState {}
+class AddPlayerErrorState extends AddPlayerState {}

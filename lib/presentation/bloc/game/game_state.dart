@@ -18,10 +18,10 @@ class GameCreatedState extends GameState {
   List<Object> get props => [game];
 }
 
-class ErrorState extends GameState {
+class GameErrorState extends GameState {
   final String message;
 
-  ErrorState({@required this.message});
+  GameErrorState({@required this.message});
 
   @override
   List<Object> get props => [message];

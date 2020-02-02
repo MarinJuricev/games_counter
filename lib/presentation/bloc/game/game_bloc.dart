@@ -40,7 +40,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       if (numberEither.isLeft() ||
           pointsEither.isLeft() ||
           event.gameTitle.isEmpty) {
-        yield ErrorState(message: VALIDATION_ERROR);
+        yield GameErrorState(message: VALIDATION_ERROR);
       }
 
       final useCaseEither = await createGame(
@@ -58,7 +58,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 Stream<GameState> _mapEitherErrorOrGameCreated(
     Either<Failure, Game> useCaseEither) async* {
   yield useCaseEither.fold(
-    (failure) => ErrorState(message: VALIDATION_ERROR),
+    (failure) => GameErrorState(message: VALIDATION_ERROR),
     (game) => GameCreatedState(game: game),
   );
 }

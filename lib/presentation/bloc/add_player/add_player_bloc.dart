@@ -9,6 +9,7 @@ import '../../../core/error/failure.dart';
 import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/player.dart';
 import '../../../domain/usecases/create_player.dart';
+import '../game/game_bloc.dart';
 
 part 'add_player_event.dart';
 part 'add_player_state.dart';
@@ -16,20 +17,30 @@ part 'add_player_state.dart';
 class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
+  final GameBloc gameBloc;
+
+  StreamSubscription gameBlocSubscription;
 
   AddPlayerBloc({
-    this.createPlayer,
-    this.inputConverter,
-  });
+    @required this.createPlayer,
+    @required this.inputConverter,
+    @required this.gameBloc,
+  }) {
+    gameBlocSubscription = gameBloc.listen((state) {
+      if (state is GameInitialState) {
+        add(GameNotCreatedEvent());
+      }
+    });
+  }
 
   @override
-  AddPlayerState get initialState => InitialState();
+  AddPlayerState get initialState => AddPlayerInitialState();
 
   @override
   Stream<AddPlayerState> mapEventToState(
     AddPlayerEvent event,
   ) async* {
-    if (event is CreatePlayerEvent) {
+    if (event is PlayerCreatedEvent) {
       final pointsEither = inputConverter.stringToUnsignedInteger(event.points);
 
       final bonusPointsEither =
@@ -42,7 +53,7 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
       if (pointsEither.isLeft() ||
           bonusPointsEither.isLeft() ||
           playerName.isEmpty) {
-        yield ErrorState();
+        yield AddPlayerErrorState();
       }
 
       final useCaseEither = await createPlayer(
@@ -54,15 +65,21 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
 
       yield* _mapEitherErrorOrAddPlayerCreationFinished(useCaseEither);
     } else if (event is InitiatePlayerCreationEvent) {
-      yield PlayerCreationStartedState();
+      yield AddPlayerCreationStartedState();
     }
+  }
+
+  @override
+  Future<void> close() {
+    gameBlocSubscription.cancel();
+    return super.close();
   }
 }
 
 Stream<AddPlayerState> _mapEitherErrorOrAddPlayerCreationFinished(
     Either<Failure, Player> useCaseEither) async* {
   yield useCaseEither.fold(
-    (failure) => ErrorState(),
-    (player) => CreationFinishedState(player: player),
+    (failure) => AddPlayerErrorState(),
+    (player) => AddPlayerCreationFinishedState(player: player),
   );
 }

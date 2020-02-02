@@ -15,7 +15,7 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
   List<Widget> _bottomPages;
   int _selectedPageIndex = 0;
 
-  void _selectPage(int page) {
+  void selectPage(int page) {
     setState(() => _selectedPageIndex = page);
   }
 
@@ -38,7 +38,7 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
         child: _bottomPages[_selectedPageIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
+        onTap: selectPage,
         backgroundColor: Theme.of(context).primaryColor,
         unselectedItemColor: Theme.of(context).scaffoldBackgroundColor,
         selectedItemColor: Colors.white,

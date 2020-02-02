@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'di.dart' as di;
-import 'di.dart';
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/pages/home_bottom_navigation_route.dart';
 
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         errorColor: const Color(0xff00FFF0),
       ),
       home: BlocProvider(
-        create: (context) => sl<GameBloc>(),
+        create: (context) => di.sl<GameBloc>(),
         child: HomeBottomNavRoute()),
     );
   }
