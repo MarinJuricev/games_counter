@@ -16,7 +16,6 @@ class MockInputConverter extends Mock implements InputConverter {}
 class MockGameBloc extends MockBloc<GameEvent, GameState> implements GameBloc {}
 
 void main() {
-  AddPlayerBloc addPlayerBloc;
   MockCreatePlayer mockCreatePlayer;
   MockInputConverter mockInputConverter;
   MockGameBloc mockGameBloc;
@@ -26,24 +25,17 @@ void main() {
       mockCreatePlayer = MockCreatePlayer();
       mockInputConverter = MockInputConverter();
       mockGameBloc = MockGameBloc();
-
-      addPlayerBloc = AddPlayerBloc(
-        createPlayer: mockCreatePlayer,
-        inputConverter: mockInputConverter,
-        gameBloc: mockGameBloc,
-      );
     },
   );
 
-  void _setupGameBlocInitialState(){
-      whenListen(mockGameBloc, Stream.fromIterable([GameInitialState()]));
-    }
+  void _setupGameBlocInitialState() {
+    whenListen(mockGameBloc, Stream.fromIterable([GameInitialState()]));
+  }
 
   // test('should emit [GameNotCreatedEvent] when gameBloc state is [GameInitialState]', () {
-  //   whenListen(mockGameBloc, Stream.fromIterable([GameInitialState]));
+  //   _setupGameBlocInitialState();
 
-  //   expectLater(addPlayerBloc.state, GameNotCreatedEvent);
-
+  //   expectLater(addPlayerBloc, emitsInOrder([AddPlayerInitialState(), GameNotCreatedEvent()]));
   // });
 
   blocTest(
@@ -71,125 +63,146 @@ void main() {
     bonusPoints: playerPointsParsed,
   );
 
-  group('CreatePlayerEvent', () {
-    void _setupMockInputConverterSuccess() {
-      when(mockInputConverter.stringToUnsignedInteger(playerPoints))
-          .thenReturn(Right(playerPointsParsed));
+  group(
+    'CreatePlayerEvent',
+    () {
+      void _setupMockInputConverterSuccess() {
+        when(mockInputConverter.stringToUnsignedInteger(playerPoints))
+            .thenReturn(Right(playerPointsParsed));
 
-      when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
-          .thenReturn(Right(playerBonusPointsParsed));
-    }
+        when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
+            .thenReturn(Right(playerBonusPointsParsed));
+      }
 
-    void _setupMockInputConverterFail() {
-      when(mockInputConverter.stringToUnsignedInteger(playerPoints))
-          .thenReturn(Left(ValidationFailure()));
+      void _setupMockInputConverterFail() {
+        when(mockInputConverter.stringToUnsignedInteger(playerPoints))
+            .thenReturn(Left(ValidationFailure()));
 
-      when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
-          .thenReturn(Left(ValidationFailure()));
-    }
+        when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
+            .thenReturn(Left(ValidationFailure()));
+      }
 
-    blocTest(
-      'should call createPlayer with correctly parsed arguments',
-      build: () { 
-        _setupGameBlocInitialState();
+      blocTest(
+        'should call createPlayer with correctly parsed arguments',
+        build: () {
+          _setupGameBlocInitialState();
 
-        return AddPlayerBloc(
-        createPlayer: mockCreatePlayer,
-        inputConverter: mockInputConverter,
-        gameBloc: mockGameBloc,
-      );},
-      act: (addPlayerBloc) => addPlayerBloc.add((PlayerCreatedEvent(
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+          );
+        },
+        act: (addPlayerBloc) => addPlayerBloc.add((PlayerCreatedEvent(
+            playerName: playerName,
+            points: playerBonusPoints,
+            bonusPoints: playerBonusPoints))),
+        verify: () => (mockCreatePlayer(Params(
+          playerName: playerName,
+          points: playerPointsParsed,
+          bonusPoints: playerBonusPointsParsed,
+        ))),
+        expect: [AddPlayerInitialState()],
+      );
+
+      // test('should call createPlayer with correctly parsed arguments', () {});
+
+      blocTest(
+        'should emit [AddPlayerErrorState] when the usecase validation fails',
+        build: () {
+          _setupGameBlocInitialState();
+          _setupMockInputConverterFail();
+          when(mockCreatePlayer.call(any))
+              .thenAnswer((_) async => Left(ValidationFailure()));
+
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+          );
+        },
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
           playerName: playerName,
           points: playerBonusPoints,
-          bonusPoints: playerBonusPoints))),
-      verify: () => (mockCreatePlayer(Params(
-        playerName: playerName,
-        points: playerPointsParsed,
-        bonusPoints: playerBonusPointsParsed,
-      ))),
-      expect: [AddPlayerInitialState()],
-    );
-
-    // test('should call createPlayer with correctly parsed arguments', () {});
-
-    test(
-      'should emit [AddPlayerErrorState] when the usecase validation fails',
-      () async {
-        when(mockCreatePlayer.call(any))
-            .thenAnswer((_) async => Left(ValidationFailure()));
-
-        _setupMockInputConverterFail();
-
-        final expectedState = [
+          bonusPoints: playerBonusPoints,
+        )),
+        expect: [
           AddPlayerInitialState(),
           AddPlayerErrorState(),
-        ];
+        ],
+      );
 
-        expectLater(addPlayerBloc, emitsInOrder(expectedState));
+      blocTest(
+        'should emit [AddPlayerErrorState] when the player creation fails',
+        build: () {
+          _setupGameBlocInitialState();
+          when(mockCreatePlayer.call(any))
+              .thenAnswer((_) async => Left(ValidationFailure()));
+          _setupMockInputConverterSuccess();
 
-        addPlayerBloc.add(PlayerCreatedEvent(
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+          );
+        },
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
             playerName: playerName,
             points: playerBonusPoints,
-            bonusPoints: playerBonusPoints));
-      },
-    );
-
-    test(
-      'should emit [AddPlayerErrorState] when the player creation fails',
-      () async {
-        when(mockCreatePlayer.call(any))
-            .thenAnswer((_) async => Left(ValidationFailure()));
-
-        _setupMockInputConverterSuccess();
-
-        final expectedState = [
+            bonusPoints: playerBonusPoints)),
+        expect: [
           AddPlayerInitialState(),
           AddPlayerErrorState(),
-        ];
+        ],
+      );
 
-        expectLater(addPlayerBloc, emitsInOrder(expectedState));
+      blocTest(
+        'should emit [CreationFinishedState] when the player creation succeds',
+        build: () {
+          _setupGameBlocInitialState();
+          when(mockCreatePlayer.call(any))
+              .thenAnswer((_) async => Right(player));
+          _setupMockInputConverterSuccess();
 
-        addPlayerBloc.add(PlayerCreatedEvent(
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+          );
+        },
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
             playerName: playerName,
             points: playerBonusPoints,
-            bonusPoints: playerBonusPoints));
-      },
-    );
-
-    test(
-      'should emit [CreationFinishedState] when the player creation succeds',
-      () async {
-        when(mockCreatePlayer.call(any)).thenAnswer((_) async => Right(player));
-
-        _setupMockInputConverterSuccess();
-
-        final expectedState = [
+            bonusPoints: playerBonusPoints)),
+        expect: [
           AddPlayerInitialState(),
           AddPlayerCreationFinishedState(player: player),
-        ];
+        ],
+      );
+    },
+  );
 
-        expectLater(addPlayerBloc, emitsInOrder(expectedState));
-
-        addPlayerBloc.add(PlayerCreatedEvent(
-            playerName: playerName,
-            points: playerBonusPoints,
-            bonusPoints: playerBonusPoints));
-      },
-    );
-  });
-
-  group('InitiatePlayerCreationEvent', () {
-    test(
+  group(
+    'InitiatePlayerCreationEvent',
+    () {
+      blocTest(
         'should emit [PlayerCreationStartedState] when InitiatePlayerCreationEvent is called',
-        () async {
-      final expectedState = [
-        AddPlayerInitialState(),
-        AddPlayerCreationStartedState(),
-      ];
+        build: () {
+          _setupGameBlocInitialState();
 
-      expectLater(addPlayerBloc, emitsInOrder(expectedState));
-
-      addPlayerBloc.add(InitiatePlayerCreationEvent());
-    });
-  });
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+          );
+        },
+        act: (addPlayerBloc) =>
+            addPlayerBloc.add(InitiatePlayerCreationEvent()),
+        expect: [
+          AddPlayerInitialState(),
+          AddPlayerCreationStartedState(),
+        ],
+      );
+    },
+  );
 }
