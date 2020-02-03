@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:game_counter/domain/entities/game.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
@@ -28,7 +29,9 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
   }) {
     gameBlocSubscription = gameBloc.listen((state) {
       if (state is GameInitialState) {
-        add(GameNotCreatedEvent());
+        add(AddPlayerGameNotCreatedEvent());
+      } else if (state is GameCreatedState) {
+        add(AddPlayerGameCreatedEvent(game: state.game));
       }
     });
   }
@@ -66,6 +69,10 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
       yield* _mapEitherErrorOrAddPlayerCreationFinished(useCaseEither);
     } else if (event is InitiatePlayerCreationEvent) {
       yield AddPlayerCreationStartedState();
+    } else if (event is AddPlayerGameNotCreatedEvent) {
+      yield AddPlayerGameNotCreatedState();
+    } else if (event is AddPlayerGameCreatedEvent) {
+      yield AddPlayerGameCreatedState(game: event.game);
     }
   }
 

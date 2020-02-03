@@ -11,9 +11,9 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
-  sl.registerFactory(() => GameBloc(createGame: sl(), inputConverter: sl()));
-  sl.registerFactory(
-      () => AddPlayerBloc(createPlayer: sl(), inputConverter: sl()));
+  sl.registerLazySingleton(() => GameBloc(createGame: sl(), inputConverter: sl()));
+  sl.registerFactory(() =>
+      AddPlayerBloc(createPlayer: sl(), inputConverter: sl(), gameBloc: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => CreateGame());

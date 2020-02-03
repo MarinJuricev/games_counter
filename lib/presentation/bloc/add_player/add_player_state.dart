@@ -3,7 +3,6 @@ part of 'add_player_bloc.dart';
 abstract class AddPlayerState extends Equatable {
   const AddPlayerState();
 
-  @override
   List<Object> get props => [];
 }
 
@@ -23,3 +22,12 @@ class AddPlayerCreationFinishedState extends AddPlayerState {
 }
 
 class AddPlayerErrorState extends AddPlayerState {}
+
+class AddPlayerGameCreatedState extends AddPlayerState {
+  final Game game;
+
+  AddPlayerGameCreatedState({@required this.game});
+
+  @override
+  List<Object> get props => [game];
+}

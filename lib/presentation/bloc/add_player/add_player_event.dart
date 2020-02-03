@@ -24,7 +24,16 @@ class PlayerCreatedEvent extends AddPlayerEvent {
   List<Object> get props => [playerName, points, bonusPoints];
 }
 
-class GameNotCreatedEvent extends AddPlayerEvent {
+class AddPlayerGameNotCreatedEvent extends AddPlayerEvent {
   @override
   List<Object> get props => [];
+}
+
+class AddPlayerGameCreatedEvent extends AddPlayerEvent {
+  final Game game;
+
+  AddPlayerGameCreatedEvent({@required this.game});
+
+  @override
+  List<Object> get props => [game];
 }

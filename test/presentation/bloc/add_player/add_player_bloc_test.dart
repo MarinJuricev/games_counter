@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
+import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/usecases/create_player.dart';
 import 'package:game_counter/presentation/bloc/add_player/add_player_bloc.dart';
@@ -19,12 +20,21 @@ void main() {
   MockCreatePlayer mockCreatePlayer;
   MockInputConverter mockInputConverter;
   MockGameBloc mockGameBloc;
+  Game testGame;
 
   setUp(
     () {
       mockCreatePlayer = MockCreatePlayer();
       mockInputConverter = MockInputConverter();
       mockGameBloc = MockGameBloc();
+      testGame = Game(
+        name: 'gameName',
+        pointsToWin: 41,
+        numberOfPlayers: 4,
+        bonusPoints: 0,
+        players: [],
+        winner: 'noWinner',
+      );
     },
   );
 
@@ -32,11 +42,41 @@ void main() {
     whenListen(mockGameBloc, Stream.fromIterable([GameInitialState()]));
   }
 
-  // test('should emit [GameNotCreatedEvent] when gameBloc state is [GameInitialState]', () {
-  //   _setupGameBlocInitialState();
+  void _setupGameBlocCreatedState() {
+    whenListen(
+        mockGameBloc, Stream.fromIterable([GameCreatedState(game: testGame)]));
+  }
 
-  //   expectLater(addPlayerBloc, emitsInOrder([AddPlayerInitialState(), GameNotCreatedEvent()]));
-  // });
+  blocTest(
+    'should emit [AddPlayerGameNotCreatedState] when gameBloc state is [GameInitialState]',
+    build: () {
+      _setupGameBlocInitialState();
+
+      return AddPlayerBloc(
+        createPlayer: mockCreatePlayer,
+        inputConverter: mockInputConverter,
+        gameBloc: mockGameBloc,
+      );
+    },
+    expect: [AddPlayerInitialState(), AddPlayerGameNotCreatedState()],
+  );
+
+  blocTest(
+    'should emit [AddPlayerGameCreatedState] when gameBloc state is [GameCreatedState]',
+    build: () {
+      _setupGameBlocCreatedState();
+
+      return AddPlayerBloc(
+        createPlayer: mockCreatePlayer,
+        inputConverter: mockInputConverter,
+        gameBloc: mockGameBloc,
+      );
+    },
+    expect: [
+      AddPlayerInitialState(),
+      isA<AddPlayerGameCreatedState>(),
+    ],
+  );
 
   blocTest(
     'initialState should be AddPlayerInitialState',
@@ -49,7 +89,10 @@ void main() {
         gameBloc: mockGameBloc,
       );
     },
-    expect: [AddPlayerInitialState()],
+    expect: [
+      AddPlayerInitialState(),
+      AddPlayerGameNotCreatedState(),
+    ],
   );
 
   final playerName = 'validName';
@@ -102,7 +145,10 @@ void main() {
           points: playerPointsParsed,
           bonusPoints: playerBonusPointsParsed,
         ))),
-        expect: [AddPlayerInitialState()],
+        expect: [
+          AddPlayerInitialState(),
+          AddPlayerGameNotCreatedState(),
+        ],
       );
 
       // test('should call createPlayer with correctly parsed arguments', () {});
@@ -129,13 +175,14 @@ void main() {
         expect: [
           AddPlayerInitialState(),
           AddPlayerErrorState(),
+          AddPlayerGameNotCreatedState(),
         ],
       );
 
       blocTest(
         'should emit [AddPlayerErrorState] when the player creation fails',
         build: () {
-          _setupGameBlocInitialState();
+          _setupGameBlocCreatedState();
           when(mockCreatePlayer.call(any))
               .thenAnswer((_) async => Left(ValidationFailure()));
           _setupMockInputConverterSuccess();
@@ -153,13 +200,14 @@ void main() {
         expect: [
           AddPlayerInitialState(),
           AddPlayerErrorState(),
+          isA<AddPlayerGameCreatedState>(),
         ],
       );
 
       blocTest(
         'should emit [CreationFinishedState] when the player creation succeds',
         build: () {
-          _setupGameBlocInitialState();
+          _setupGameBlocCreatedState();
           when(mockCreatePlayer.call(any))
               .thenAnswer((_) async => Right(player));
           _setupMockInputConverterSuccess();
@@ -177,6 +225,7 @@ void main() {
         expect: [
           AddPlayerInitialState(),
           AddPlayerCreationFinishedState(player: player),
+          isA<AddPlayerGameCreatedState>(),
         ],
       );
     },
@@ -201,6 +250,7 @@ void main() {
         expect: [
           AddPlayerInitialState(),
           AddPlayerCreationStartedState(),
+          AddPlayerGameNotCreatedState(),
         ],
       );
     },
