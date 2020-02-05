@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/bloc/add_player/add_player_bloc.dart';
 
-import '../bloc/game/game_bloc.dart';
-
-class CreateGame extends StatefulWidget {
-  const CreateGame({
-    Key key,
-  }) : super(key: key);
+class CreatePlayer extends StatefulWidget {
+  CreatePlayer({Key key}) : super(key: key);
 
   @override
-  _CreateGameState createState() => _CreateGameState();
+  _CreatePlayerState createState() => _CreatePlayerState();
 }
 
-class _CreateGameState extends State<CreateGame> {
-  String gameTitle;
-  String numberOfPlayers;
-  String winningPoints;
+class _CreatePlayerState extends State<CreatePlayer> {
+  String playerName;
+  String points;
+  String bonusPoints;
 
-  final _gameFormKey = GlobalKey<FormState>();
+  final _createPlayerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    //TODO this type of form is used in multiple screens, extract into separate widget and re-use
     return Form(
-      key: _gameFormKey,
+      key: _createPlayerFormKey,
       child: Center(
         child: Container(
           margin: EdgeInsets.all(24),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              color: Theme.of(context).accentColor,
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 8, color: Colors.black26, offset: Offset(0, 2))
-              ]),
+            borderRadius: BorderRadius.circular(24),
+            color: Theme.of(context).accentColor,
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 8, color: Colors.black26, offset: Offset(0, 2)),
+            ],
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -42,15 +41,15 @@ class _CreateGameState extends State<CreateGame> {
                 child: TextFormField(
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Game title can\'t be empty';
+                      return 'Player name can\'t be empty';
                     }
                     return null;
                   },
                   onChanged: (value) {
-                    gameTitle = value;
+                    playerName = value;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Game Title',
+                    labelText: 'Player name',
                     errorStyle: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.bold,
@@ -72,15 +71,13 @@ class _CreateGameState extends State<CreateGame> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty ||
-                        num.parse(value).isNegative ||
-                        value == '0') {
-                      return 'The value can\'t be empty, and must be a positive number!';
+                    if (value.isEmpty || num.tryParse(value) == null) {
+                      return 'The value can\'t be empty, and must be a number!';
                     }
                     return null;
                   },
                   onChanged: (value) {
-                    numberOfPlayers = value;
+                    points = value;
                   },
                   decoration: InputDecoration(
                     errorMaxLines: 2,
@@ -88,7 +85,7 @@ class _CreateGameState extends State<CreateGame> {
                       fontSize: 12.0,
                       fontWeight: FontWeight.bold,
                     ),
-                    labelText: 'Number of Players',
+                    labelText: 'Starting points',
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -106,21 +103,19 @@ class _CreateGameState extends State<CreateGame> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty ||
-                        num.parse(value).isNegative ||
-                        value == '0') {
-                      return 'The value can\'t be empty, and must be a positive number!';
+                    if (value.isEmpty || num.tryParse(value) == null) {
+                      return 'The value can\'t be empty, and must be a number!';
                     }
                     return null;
                   },
                   onChanged: (value) {
-                    winningPoints = value;
+                    bonusPoints = value;
                   },
                   decoration: InputDecoration(
                     errorMaxLines: 2,
                     errorStyle:
                         TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-                    labelText: 'Winning Points',
+                    labelText: 'Starting bonus points',
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -142,11 +137,11 @@ class _CreateGameState extends State<CreateGame> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
                     child: Text(
-                      'CREATE GAME',
+                      'CREATE PLAYER',
                       style: TextStyle(fontSize: 12.0),
                     ),
                     textColor: Colors.white,
-                    onPressed: addCreateGameEvent,
+                    onPressed: addPlayerCreatedEvent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.white),
@@ -161,12 +156,15 @@ class _CreateGameState extends State<CreateGame> {
     );
   }
 
-  void addCreateGameEvent() {
-    if (_gameFormKey.currentState.validate()) {
-      BlocProvider.of<GameBloc>(context).add(CreateGameEvent(
-          gameTitle: gameTitle,
-          numberOfPlayers: numberOfPlayers,
-          pointsToWin: winningPoints));
+  void addPlayerCreatedEvent() {
+    if (_createPlayerFormKey.currentState.validate()) {
+      BlocProvider.of<AddPlayerBloc>(context).add(
+        PlayerCreatedEvent(
+          playerName: playerName,
+          points: points,
+          bonusPoints: bonusPoints,
+        ),
+      );
     }
   }
 }
