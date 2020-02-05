@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/widgets/create_player.dart';
 
 import '../../di.dart' as di;
 import '../bloc/add_player/add_player_bloc.dart';
+import '../widgets/create_player.dart';
 import '../widgets/game_not_created.dart';
 import '../widgets/game_title.dart';
 
