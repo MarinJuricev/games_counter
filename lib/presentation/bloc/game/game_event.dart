@@ -21,7 +21,6 @@ class CreateGameEvent extends GameEvent {
 
 class AddPlayerGameEvent extends GameEvent {
   final Game currentGame;
-
   final Player newPlayer;
 
   AddPlayerGameEvent({
