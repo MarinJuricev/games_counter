@@ -6,5 +6,5 @@ abstract class Failure extends Equatable {
 }
 
 class ValidationFailure extends Failure {}
-
 class PlayerAlreadyExistsFailure extends Failure {}
+class CacheFailure extends Failure {}

@@ -1,4 +1,6 @@
+import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/domain/entities/game.dart';
+
 
 abstract class GameLocalDataSource {
   Future<Game> getGame();
@@ -11,7 +13,12 @@ class GameLocalDataSourceImpl implements GameLocalDataSource {
 
   @override
   Future<Game> getGame() async {
-    return await Future<Game>.value(currentGame);
+    final gameToReturn = await Future<Game>.value(currentGame);
+
+    if (gameToReturn != null)
+      return gameToReturn;
+    else
+      throw CacheException();
   }
 
   @override
