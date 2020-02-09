@@ -13,12 +13,12 @@ class AddPlayerGameNotCreatedState extends AddPlayerState {}
 class AddPlayerCreationStartedState extends AddPlayerState {}
 
 class AddPlayerCreationFinishedState extends AddPlayerState {
-  final Player player;
+  final Game game;
 
-  AddPlayerCreationFinishedState({@required this.player});
+  AddPlayerCreationFinishedState({@required this.game});
 
   @override
-  List<Object> get props => [player];
+  List<Object> get props => [game];
 }
 
 class AddPlayerErrorState extends AddPlayerState {}

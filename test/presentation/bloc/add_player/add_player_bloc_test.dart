@@ -3,6 +3,7 @@ import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
+import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/create_player.dart';
 import 'package:game_counter/presentation/bloc/add_player/add_player_bloc.dart';
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
@@ -14,10 +15,13 @@ class MockCreatePlayer extends Mock implements CreatePlayer {}
 
 class MockInputConverter extends Mock implements InputConverter {}
 
+class MockGameRepository extends Mock implements GameRepository {}
+
 class MockGameBloc extends MockBloc<GameEvent, GameState> implements GameBloc {}
 
 void main() {
   MockCreatePlayer mockCreatePlayer;
+  MockGameRepository mockGameRepository;
   MockInputConverter mockInputConverter;
   MockGameBloc mockGameBloc;
   Game testGame;
@@ -25,6 +29,7 @@ void main() {
   setUp(
     () {
       mockCreatePlayer = MockCreatePlayer();
+      mockGameRepository = MockGameRepository();
       mockInputConverter = MockInputConverter();
       mockGameBloc = MockGameBloc();
       testGame = Game(
@@ -47,6 +52,14 @@ void main() {
         mockGameBloc, Stream.fromIterable([GameCreatedState(game: testGame)]));
   }
 
+  void _setupRepositorySuccessCase() {
+    when(mockGameRepository.getGame()).thenAnswer((_) async => Right(testGame));
+  }
+
+  void _setupRepositoryFailureCase() {
+    when(mockGameRepository.getGame()).thenAnswer((_) async => Left(CacheFailure()));
+  }
+
   blocTest(
     'should emit [AddPlayerGameNotCreatedState] when gameBloc state is [GameInitialState]',
     build: () {
@@ -56,6 +69,7 @@ void main() {
         createPlayer: mockCreatePlayer,
         inputConverter: mockInputConverter,
         gameBloc: mockGameBloc,
+        gameRepository: mockGameRepository,
       );
     },
     expect: [AddPlayerInitialState(), AddPlayerGameNotCreatedState()],
@@ -70,6 +84,7 @@ void main() {
         createPlayer: mockCreatePlayer,
         inputConverter: mockInputConverter,
         gameBloc: mockGameBloc,
+        gameRepository: mockGameRepository,
       );
     },
     expect: [
@@ -87,6 +102,7 @@ void main() {
         createPlayer: mockCreatePlayer,
         inputConverter: mockInputConverter,
         gameBloc: mockGameBloc,
+        gameRepository: mockGameRepository,
       );
     },
     expect: [
@@ -100,11 +116,6 @@ void main() {
   final playerBonusPoints = '0';
   final playerPointsParsed = 0;
   final playerBonusPointsParsed = 0;
-  final player = Player(
-    name: playerPoints,
-    points: playerPointsParsed,
-    bonusPoints: playerPointsParsed,
-  );
 
   group(
     'CreatePlayerEvent',
@@ -134,16 +145,19 @@ void main() {
             createPlayer: mockCreatePlayer,
             inputConverter: mockInputConverter,
             gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
           );
         },
         act: (addPlayerBloc) => addPlayerBloc.add((PlayerCreatedEvent(
-            playerName: playerName,
-            points: playerBonusPoints,
-            bonusPoints: playerBonusPoints))),
+          playerName: playerName,
+          points: playerBonusPoints,
+          bonusPoints: playerBonusPoints,
+        ))),
         verify: () => (mockCreatePlayer(Params(
           playerName: playerName,
           points: playerPointsParsed,
           bonusPoints: playerBonusPointsParsed,
+          currentGame: testGame,
         ))),
         expect: [
           AddPlayerInitialState(),
@@ -165,6 +179,7 @@ void main() {
             createPlayer: mockCreatePlayer,
             inputConverter: mockInputConverter,
             gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
           );
         },
         act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
@@ -183,6 +198,7 @@ void main() {
         'should emit [AddPlayerErrorState] when the player creation fails',
         build: () {
           _setupGameBlocCreatedState();
+          _setupRepositorySuccessCase();
           when(mockCreatePlayer.call(any))
               .thenAnswer((_) async => Left(ValidationFailure()));
           _setupMockInputConverterSuccess();
@@ -191,6 +207,7 @@ void main() {
             createPlayer: mockCreatePlayer,
             inputConverter: mockInputConverter,
             gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
           );
         },
         act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
@@ -208,14 +225,16 @@ void main() {
         'should emit [CreationFinishedState] when the player creation succeds',
         build: () {
           _setupGameBlocCreatedState();
+          _setupRepositorySuccessCase();
           when(mockCreatePlayer.call(any))
-              .thenAnswer((_) async => Right(player));
+              .thenAnswer((_) async => Right(testGame));
           _setupMockInputConverterSuccess();
 
           return AddPlayerBloc(
             createPlayer: mockCreatePlayer,
             inputConverter: mockInputConverter,
             gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
           );
         },
         act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
@@ -224,7 +243,35 @@ void main() {
             bonusPoints: playerBonusPoints)),
         expect: [
           AddPlayerInitialState(),
-          AddPlayerCreationFinishedState(player: player),
+          isA<AddPlayerCreationFinishedState>(),
+          isA<AddPlayerGameCreatedState>(),
+        ],
+      );
+
+      blocTest(
+        'should emit [AddPlayerErrorState] when the repositry returns a [CacheFailure]',
+        build: () {
+          _setupGameBlocCreatedState();
+          _setupRepositoryFailureCase();
+          when(mockCreatePlayer.call(any))
+              .thenAnswer((_) async => Right(testGame));
+
+          _setupMockInputConverterSuccess();
+
+          return AddPlayerBloc(
+            createPlayer: mockCreatePlayer,
+            inputConverter: mockInputConverter,
+            gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
+          );
+        },
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
+            playerName: playerName,
+            points: playerBonusPoints,
+            bonusPoints: playerBonusPoints)),
+        expect: [
+          AddPlayerInitialState(),
+          AddPlayerErrorState(),
           isA<AddPlayerGameCreatedState>(),
         ],
       );
@@ -243,6 +290,7 @@ void main() {
             createPlayer: mockCreatePlayer,
             inputConverter: mockInputConverter,
             gameBloc: mockGameBloc,
+            gameRepository: mockGameRepository,
           );
         },
         act: (addPlayerBloc) =>

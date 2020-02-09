@@ -5,9 +5,12 @@ import 'package:meta/meta.dart';
 import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
+import '../repositories/game_repository.dart';
 
 class CreateGame implements BaseUseCase<Game, Params> {
-  
+  final GameRepository repository;
+
+  CreateGame({@required this.repository});
 
   @override
   Future<Either<Failure, Game>> call(Params params) async {
@@ -17,17 +20,14 @@ class CreateGame implements BaseUseCase<Game, Params> {
 
   Future<Either<Failure, Game>> _createGame(
       String gameTitle, int numberOfPlayers, int winningPoints) async {
-    // TODO actually add the local / remote storage for creating a game
-    
-    return Future<Either<Failure, Game>>.value(
-      Right(
-        Game(
-          name: gameTitle,
-          pointsToWin: winningPoints,
-          numberOfPlayers: numberOfPlayers,
-        ),
-      ),
+    final game = Game(
+      name: gameTitle,
+      pointsToWin: winningPoints,
+      numberOfPlayers: numberOfPlayers,
     );
+
+    await repository.saveGame(game);
+    return await repository.getGame();
   }
 }
 

@@ -20,7 +20,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final CreateGame createGame;
   final InputConverter inputConverter;
 
-  GameBloc({@required this.createGame, @required this.inputConverter});
+  GameBloc(
+      {@required this.createGame,
+      @required this.inputConverter,
+    });
 
   @override
   GameState get initialState => GameInitialState();
@@ -29,7 +32,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> mapEventToState(
     GameEvent event,
   ) async* {
-    if (event is CreateGameEvent) {
+    if (event is CreatedGameEvent) {
       final numberEither =
           inputConverter.stringToUnsignedInteger(event.numberOfPlayers);
 
@@ -52,6 +55,15 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       );
 
       yield* _mapEitherErrorOrGameCreated(useCaseEither);
+    } else if (event is GameUpdatedEvent) {
+      // final newPlayer = event.newPlayer;
+      // final currentGame = event.currentGame;
+
+      // final useCaseEither = await addPlayer(
+      //   add.Params(currentGame: currentGame, newPlayer: newPlayer),
+      // );
+
+      
     }
   }
 }

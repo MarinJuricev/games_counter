@@ -61,7 +61,7 @@ void main() {
       blocTest('should call createGame with correctly parsed arguments',
           build: () => GameBloc(
               createGame: mockCreateGame, inputConverter: mockInputConverter),
-          act: (gameBloc) => gameBloc.add(CreateGameEvent(
+          act: (gameBloc) => gameBloc.add(CreatedGameEvent(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
@@ -82,7 +82,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame, inputConverter: mockInputConverter);
         },
-        act: (gameBloc) => gameBloc.add(CreateGameEvent(
+        act: (gameBloc) => gameBloc.add(CreatedGameEvent(
           gameTitle: gameName,
           numberOfPlayers: numberOfPlayers,
           pointsToWin: pointsToWin,
@@ -102,7 +102,7 @@ void main() {
             return GameBloc(
                 createGame: mockCreateGame, inputConverter: mockInputConverter);
           },
-          act: (gameBloc) => gameBloc.add((CreateGameEvent(
+          act: (gameBloc) => gameBloc.add((CreatedGameEvent(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
@@ -122,7 +122,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame, inputConverter: mockInputConverter);
         },
-        act: (gameBloc) => gameBloc.add(CreateGameEvent(
+        act: (gameBloc) => gameBloc.add(CreatedGameEvent(
           gameTitle: gameName,
           numberOfPlayers: numberOfPlayers,
           pointsToWin: pointsToWin,
