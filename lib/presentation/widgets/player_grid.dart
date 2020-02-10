@@ -13,9 +13,44 @@ class PlayerGrid extends StatefulWidget {
 class _PlayerGridState extends State<PlayerGrid> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-          'Masovin igraci, ima ih ${widget.currentGame.players.length}'),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return GridView.builder(
+          itemCount: widget.currentGame.players.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3),
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
+              ),
+              child: Card(
+                elevation: 4.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                color: Colors.white,
+                child: GridTile(
+                  header: Center(
+                    heightFactor: 2,
+                    child: Text(
+                      widget.currentGame.players[index].name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    widget.currentGame.players[index].points.toString(),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
