@@ -15,7 +15,7 @@ class Game extends Equatable {
     @required this.name,
     @required this.pointsToWin,
     @required this.numberOfPlayers,
-    this.players,
+    @required this.players,
     this.winner,
     this.bonusPoints,
   });

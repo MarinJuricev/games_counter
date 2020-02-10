@@ -8,7 +8,6 @@ import 'package:meta/meta.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/game.dart';
-import '../../../domain/entities/player.dart';
 import '../../../domain/usecases/create_game.dart';
 
 part 'game_event.dart';

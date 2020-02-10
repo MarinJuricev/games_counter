@@ -2,7 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
-import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/create_player.dart';
 import 'package:game_counter/presentation/bloc/add_player/add_player_bloc.dart';

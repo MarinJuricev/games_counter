@@ -24,6 +24,7 @@ class CreateGame implements BaseUseCase<Game, Params> {
       name: gameTitle,
       pointsToWin: winningPoints,
       numberOfPlayers: numberOfPlayers,
+      players: []
     );
 
     await repository.saveGame(game);

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +7,7 @@ import '../bloc/add_player/add_player_bloc.dart';
 import '../widgets/create_player.dart';
 import '../widgets/game_not_created.dart';
 import '../widgets/game_title.dart';
+import '../widgets/player_grid.dart';
 
 class AddPlayersPage extends StatelessWidget {
   const AddPlayersPage({Key key}) : super(key: key);
@@ -19,17 +21,20 @@ class AddPlayersPage extends StatelessWidget {
           return BlocBuilder<AddPlayerBloc, AddPlayerState>(
             builder: (context, state) {
               return Scaffold(
-                  body: Column(
-                    children: <Widget>[
-                      GameTitle(gameTitle: 'Game title'),
-                      Expanded(
-                        child:
-                            _buildAddPlayersDependingOnGameCreationState(state),
+                body: Column(
+                  children: <Widget>[
+                    GameTitle(gameTitle: 'Game title'),
+                    Expanded(
+                      child: _buildAddPlayersDependingOnGameCreationState(
+                        state,
+                        builderContext,
                       ),
-                    ],
-                  ),
-                  floatingActionButton:
-                      _shouldFabBeVisible(builderContext, state));
+                    ),
+                  ],
+                ),
+                floatingActionButton:
+                    _shouldFabBeVisible(builderContext, state),
+              );
             },
           );
         },
@@ -55,13 +60,23 @@ class AddPlayersPage extends StatelessWidget {
     }
   }
 
-  Widget _buildAddPlayersDependingOnGameCreationState(AddPlayerState state) {
+  Widget _buildAddPlayersDependingOnGameCreationState(
+      AddPlayerState state, BuildContext context) {
     if (state is AddPlayerInitialState) {
       return CircularProgressIndicator();
     } else if (state is AddPlayerGameNotCreatedState) {
       return GameNotCreated();
     } else if (state is AddPlayerCreationStartedState) {
       return CreatePlayer();
+    } else if (state is AddPlayerErrorState) {
+      //TODO actual error handling and addPlayerErrorState really should return a error message...
+      return Center(
+        child: Text('Tebra nesto si ujeba pogledaj imena igraca'),
+      );
+    } else if (state is AddPlayerGameCreatedState) {
+      return PlayerGrid(currentGame: state.game);
+    } else if (state is AddPlayerCreationFinishedState) {
+      return PlayerGrid(currentGame: state.game);
     } else {
       return Center(
         child: Text('Nesta drugo ${state.toString}'),

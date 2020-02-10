@@ -21,6 +21,7 @@ void main() {
       name: gameName,
       pointsToWin: pointsToWinParsed,
       numberOfPlayers: numberOfPlayersParsed,
+      players: [],
     );
 
     test('should update the inMemory instance with cacheGame call', () async {

@@ -40,6 +40,7 @@ void main() {
         name: gameName,
         pointsToWin: pointsToWinParsed,
         numberOfPlayers: numberOfPlayersParsed,
+        players: []
       );
 
       void _setupMockInputConverterSuccess() {

@@ -29,6 +29,7 @@ void main() {
         name: validGameName,
         numberOfPlayers: validNumberOfPlayers,
         pointsToWin: validPointsToWin,
+        players: [],
       );
 
       test(
