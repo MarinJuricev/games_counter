@@ -31,19 +31,37 @@ class _PlayerGridState extends State<PlayerGrid> {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 color: Colors.white,
-                child: GridTile(
-                  header: Center(
-                    heightFactor: 2,
-                    child: Text(
-                      widget.currentGame.players[index].name,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
+                child: InkWell(
+                  onTap: () {},
+                  borderRadius: BorderRadius.circular(16.0),
+                  splashColor: Theme.of(context).accentColor,
+                  child: GridTile(
+                    header: Center(
+                      heightFactor: 2,
+                      child: Text(
+                        widget.currentGame.players[index].name,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
-                  ),
-                  child: Text(
-                    widget.currentGame.players[index].points.toString(),
+                    child: Center(
+                      child: Text(
+                        widget.currentGame.players[index].points.toString(),
+                        style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontSize: 32,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 7.5,
+                              color: Colors.grey,
+                              offset: Offset(0.0, 2.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

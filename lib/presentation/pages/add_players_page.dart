@@ -63,7 +63,9 @@ class AddPlayersPage extends StatelessWidget {
   Widget _buildAddPlayersDependingOnGameCreationState(
       AddPlayerState state, BuildContext context) {
     if (state is AddPlayerInitialState) {
-      return CircularProgressIndicator();
+      return Center(
+        child: CircularProgressIndicator(),
+      );
     } else if (state is AddPlayerGameNotCreatedState) {
       return GameNotCreated();
     } else if (state is AddPlayerCreationStartedState) {
