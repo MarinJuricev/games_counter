@@ -15,26 +15,31 @@ void main() {
 
   final playerName = 'validPlayerName';
   final playerPoints = 0;
+  final playerPointsHigherThanAllowed = 42;
   final playerBonusPoints = 0;
+  final playerBonusPointsHigherThanAllowed = 42;
   final gameName = 'Treseta';
   final pointsToWinParsed = 41;
   final numberOfPlayersParsed = 4;
-  final testGame = Game(
-    name: gameName,
-    pointsToWin: pointsToWinParsed,
-    numberOfPlayers: numberOfPlayersParsed,
-    players: [],
-  );
-  final newPlayer = Player(
-        name: playerName,
-        points: playerPoints,
-        bonusPoints: playerBonusPoints,
-      );
+  Game testGame;
+  Player newPlayer;
 
   setUp(
     () {
       mockGameRepository = MockGameRepository();
       createPlayer = CreatePlayer(repository: mockGameRepository);
+
+      testGame = Game(
+        name: gameName,
+        pointsToWin: pointsToWinParsed,
+        numberOfPlayers: numberOfPlayersParsed,
+        players: [],
+      );
+      newPlayer = Player(
+        name: playerName,
+        points: playerPoints,
+        bonusPoints: playerBonusPoints,
+      );
     },
   );
 
@@ -68,6 +73,51 @@ void main() {
           currentGame: testGame,
         ));
         final expectedResult = Left(PlayerAlreadyExistsFailure());
+
+        expect(actualResult, expectedResult);
+      },
+    );
+
+    test(
+      'should return a [PointsToHighFailure] if a the new player starting points are higher than the game\'s pointsToWin',
+      () async {
+        final actualResult = await createPlayer(Params(
+          playerName: playerName,
+          points: playerPointsHigherThanAllowed,
+          bonusPoints: playerBonusPoints,
+          currentGame: testGame,
+        ));
+        final expectedResult = Left(PointsToHighFailure());
+
+        expect(actualResult, expectedResult);
+      },
+    );
+
+    test(
+      'should return a [PointsToHighFailure] if a the new player starting bonusPoints are higher than the game\'s pointsToWin',
+      () async {
+        final actualResult = await createPlayer(Params(
+          playerName: playerName,
+          points: playerPoints,
+          bonusPoints: playerBonusPointsHigherThanAllowed,
+          currentGame: testGame,
+        ));
+        final expectedResult = Left(PointsToHighFailure());
+
+        expect(actualResult, expectedResult);
+      },
+    );
+
+    test(
+      'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
+      () async {
+        final actualResult = await createPlayer(Params(
+          playerName: playerName,
+          points: 25,
+          bonusPoints: 25,
+          currentGame: testGame,
+        ));
+        final expectedResult = Left(PointsToHighFailure());
 
         expect(actualResult, expectedResult);
       },
