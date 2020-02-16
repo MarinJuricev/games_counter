@@ -20,7 +20,7 @@ void main() {
   final playerBonusPointsHigherThanAllowed = 42;
   final gameName = 'Treseta';
   final pointsToWinParsed = 41;
-  final numberOfPlayersParsed = 4;
+  final numberOfPlayersParsed = 2;
   Game testGame;
   Player newPlayer;
 
@@ -118,6 +118,40 @@ void main() {
           currentGame: testGame,
         ));
         final expectedResult = Left(PointsToHighFailure());
+
+        expect(actualResult, expectedResult);
+      },
+    );
+
+    test(
+      'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
+      () async {
+        final actualResult = await createPlayer(Params(
+          playerName: playerName,
+          points: 25,
+          bonusPoints: 25,
+          currentGame: testGame,
+        ));
+        final expectedResult = Left(PointsToHighFailure());
+
+        expect(actualResult, expectedResult);
+      },
+    );
+
+    test(
+      'should return a [CantAddMorePlayersFailure] if the newPlayer exceeds the numberOfPLayers inisde Game entity',
+      () async {
+        final gameWithAddedPlayer = testGame;
+        gameWithAddedPlayer.players.add(newPlayer);
+        gameWithAddedPlayer.players.add(newPlayer);
+
+        final actualResult = await createPlayer(Params(
+          playerName: 'newPlayerName',
+          points: 0,
+          bonusPoints: 0,
+          currentGame: testGame,
+        ));
+        final expectedResult = Left(CantAddMorePlayersFailure());
 
         expect(actualResult, expectedResult);
       },

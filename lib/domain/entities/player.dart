@@ -12,7 +12,10 @@ class Player extends Equatable {
     @required this.bonusPoints,
   });
 
+  int get sumOfAllPoints {
+    return points + bonusPoints;
+  }
+
   @override
   List<Object> get props => [name, points, bonusPoints];
 }
- 

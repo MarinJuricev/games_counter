@@ -35,13 +35,31 @@ class CreatePlayer implements BaseUseCase<Game, Params> {
           Left(PointsToHighFailure()));
     }
 
+    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(
+      currentGame.numberOfPlayers,
+      currentGame.players.length,
+    )) {
+      return await Future<Either<Failure, Game>>.value(
+          Left(CantAddMorePlayersFailure()));
+    }
+
     currentGame.players.add(newPlayer);
     await repository.saveGame(currentGame);
     return await Future<Either<Failure, Game>>.value(Right(currentGame));
   }
 }
 
-bool pointsExceedPointsToWin(Player newPlayer, int pointsToWin) {
+bool newPlayersExceedsGamesMaximumAllowedPlayerCount(
+  int numberOfAllowedPlayers,
+  int currentNumberOfPlayers,
+) {
+  return currentNumberOfPlayers + 1 > numberOfAllowedPlayers;
+}
+
+bool pointsExceedPointsToWin(
+  Player newPlayer,
+  int pointsToWin,
+) {
   if ((newPlayer.points + newPlayer.bonusPoints) >= pointsToWin ||
       newPlayer.points >= pointsToWin ||
       newPlayer.bonusPoints >= pointsToWin) {
@@ -52,7 +70,9 @@ bool pointsExceedPointsToWin(Player newPlayer, int pointsToWin) {
 }
 
 bool checkIfPlayerWithThatNameAlreadyExists(
-    Player newPlayer, List<Player> players) {
+  Player newPlayer,
+  List<Player> players,
+) {
   final playerAlreadyExists = players.firstWhere(
       (itemToCheck) => itemToCheck.name == newPlayer.name,
       orElse: () => null);

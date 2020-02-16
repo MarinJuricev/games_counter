@@ -8,4 +8,5 @@ abstract class Failure extends Equatable {
 class ValidationFailure extends Failure {}
 class PlayerAlreadyExistsFailure extends Failure {}
 class PointsToHighFailure extends Failure {}
+class CantAddMorePlayersFailure extends Failure {}
 class CacheFailure extends Failure {}
