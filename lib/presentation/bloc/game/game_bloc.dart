@@ -55,13 +55,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       yield* _mapEitherErrorOrGameCreated(useCaseEither);
     } else if (event is GameUpdatedEvent) {
-      // final newPlayer = event.newPlayer;
-      // final currentGame = event.currentGame;
-
-      // final useCaseEither = await addPlayer(
-      //   add.Params(currentGame: currentGame, newPlayer: newPlayer),
-      // );
-
       
     }
   }

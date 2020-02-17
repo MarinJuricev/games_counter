@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
@@ -56,7 +57,7 @@ void main() {
   }
 
   void _setupRepositoryFailureCase() {
-    when(mockGameRepository.getGame()).thenAnswer((_) async => Left(CacheFailure()));
+    when(mockGameRepository.getGame()).thenAnswer((_) async => Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA)));
   }
 
   blocTest(
@@ -129,10 +130,10 @@ void main() {
 
       void _setupMockInputConverterFail() {
         when(mockInputConverter.stringToUnsignedInteger(playerPoints))
-            .thenReturn(Left(ValidationFailure()));
+            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
         when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
-            .thenReturn(Left(ValidationFailure()));
+            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
       }
 
       blocTest(
@@ -164,15 +165,13 @@ void main() {
         ],
       );
 
-      // test('should call createPlayer with correctly parsed arguments', () {});
-
       blocTest(
         'should emit [AddPlayerErrorState] when the usecase validation fails',
         build: () {
           _setupGameBlocInitialState();
           _setupMockInputConverterFail();
           when(mockCreatePlayer.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure()));
+              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
           return AddPlayerBloc(
             createPlayer: mockCreatePlayer,
@@ -188,7 +187,7 @@ void main() {
         )),
         expect: [
           AddPlayerInitialState(),
-          AddPlayerErrorState(),
+          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
           AddPlayerGameNotCreatedState(),
         ],
       );
@@ -199,7 +198,7 @@ void main() {
           _setupGameBlocCreatedState();
           _setupRepositorySuccessCase();
           when(mockCreatePlayer.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure()));
+              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
           _setupMockInputConverterSuccess();
 
           return AddPlayerBloc(
@@ -215,7 +214,7 @@ void main() {
             bonusPoints: playerBonusPoints)),
         expect: [
           AddPlayerInitialState(),
-          AddPlayerErrorState(),
+          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
           isA<AddPlayerGameCreatedState>(),
         ],
       );
@@ -270,7 +269,7 @@ void main() {
             bonusPoints: playerBonusPoints)),
         expect: [
           AddPlayerInitialState(),
-          AddPlayerErrorState(),
+          AddPlayerErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
           isA<AddPlayerGameCreatedState>(),
         ],
       );

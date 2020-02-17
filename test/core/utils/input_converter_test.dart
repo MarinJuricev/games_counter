@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 
 void main() {
@@ -33,7 +34,7 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure()));
+          expect(result, Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
         },
       );
 
@@ -44,7 +45,7 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure()));
+          expect(result, Left(ValidationFailure(POSITIVE_PROVIDED_NUMBER)));
         },
       );
 
@@ -53,7 +54,7 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure()));
+          expect(result, Left(ValidationFailure(REQUIRED_FIELDS_NOT_EMTPY)));
       });
 
       test('should return a Failure when the provided string is empty', () {
@@ -61,7 +62,7 @@ void main() {
 
           final result = inputConverter.stringToUnsignedInteger(str);
 
-          expect(result, Left(ValidationFailure()));
+          expect(result, Left(ValidationFailure(REQUIRED_FIELDS_NOT_EMTPY)));
       });
     },
   );

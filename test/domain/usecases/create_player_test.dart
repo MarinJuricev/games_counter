@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
@@ -72,7 +73,7 @@ void main() {
           bonusPoints: playerBonusPoints,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PlayerAlreadyExistsFailure());
+        final expectedResult = Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS));
 
         expect(actualResult, expectedResult);
       },
@@ -87,7 +88,7 @@ void main() {
           bonusPoints: playerBonusPoints,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PointsToHighFailure());
+        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
         expect(actualResult, expectedResult);
       },
@@ -102,7 +103,7 @@ void main() {
           bonusPoints: playerBonusPointsHigherThanAllowed,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PointsToHighFailure());
+        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
         expect(actualResult, expectedResult);
       },
@@ -117,7 +118,7 @@ void main() {
           bonusPoints: 25,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PointsToHighFailure());
+        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
         expect(actualResult, expectedResult);
       },
@@ -132,7 +133,7 @@ void main() {
           bonusPoints: 25,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PointsToHighFailure());
+        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
         expect(actualResult, expectedResult);
       },
@@ -151,7 +152,7 @@ void main() {
           bonusPoints: 0,
           currentGame: testGame,
         ));
-        final expectedResult = Left(CantAddMorePlayersFailure());
+        final expectedResult = Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS));
 
         expect(actualResult, expectedResult);
       },

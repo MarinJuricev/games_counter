@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/error/failure.dart';
+import '../../core/localization/budget_localization.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';
+import '../repositories/game_repository.dart';
 
 class CreatePlayer implements BaseUseCase<Game, Params> {
   final GameRepository repository;
@@ -27,20 +28,18 @@ class CreatePlayer implements BaseUseCase<Game, Params> {
       currentGame.players,
     )) {
       return await Future<Either<Failure, Game>>.value(
-          Left(PlayerAlreadyExistsFailure()));
+          Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS)));
     }
 
     if (pointsExceedPointsToWin(newPlayer, currentGame.pointsToWin)) {
       return await Future<Either<Failure, Game>>.value(
-          Left(PointsToHighFailure()));
+          Left(PointsToHighFailure(POINTS_TO_HIGH)));
     }
 
-    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(
-      currentGame.numberOfPlayers,
-      currentGame.players.length,
-    )) {
+    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(currentGame.numberOfPlayers,
+        currentGame.players.length, )) {
       return await Future<Either<Failure, Game>>.value(
-          Left(CantAddMorePlayersFailure()));
+          Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS)));
     }
 
     currentGame.players.add(newPlayer);

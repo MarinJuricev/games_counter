@@ -46,38 +46,37 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
     AddPlayerEvent event,
   ) async* {
     if (event is PlayerCreatedEvent) {
-      final pointsEither = inputConverter.stringToUnsignedInteger(event.points);
-
-      final bonusPointsEither =
-          inputConverter.stringToUnsignedInteger(event.bonusPoints);
-
       final playerName = event.playerName;
 
-      //TODO Actually handle errors when creating the object in local / remote storage,
-      //TODO for now just run the validation
-      if (pointsEither.isLeft() ||
-          bonusPointsEither.isLeft() ||
-          playerName.isEmpty) {
-        yield AddPlayerErrorState();
-      }
+      final pointsEitherResult =
+          inputConverter.stringToUnsignedInteger(event.points).unwrapResult();
+
+      final bonusPointsEitherResult = inputConverter
+          .stringToUnsignedInteger(event.bonusPoints)
+          .unwrapResult();
+
+      yield* _validateEitherResults(
+        pointsEitherResult,
+        bonusPointsEitherResult,
+      );
 
       final gameEither = await gameRepository.getGame();
       final gameRepoResult = gameEither.unwrapResult();
 
       if (gameRepoResult is Failure)
-        yield AddPlayerErrorState();
+        yield AddPlayerErrorState(errorMessage: gameRepoResult.message);
       else if (gameRepoResult is Game) {
         final createPlayerUseCase = await createPlayer(
           Params(
               playerName: playerName,
-              points: pointsEither.getOrElse(() => 0),
-              bonusPoints: bonusPointsEither.getOrElse(() => 0),
+              points: pointsEitherResult,
+              bonusPoints: bonusPointsEitherResult,
               currentGame: gameRepoResult),
         );
         final createPlayerResult = createPlayerUseCase.unwrapResult();
 
         if (createPlayerResult is Failure)
-          yield AddPlayerErrorState();
+          yield AddPlayerErrorState(errorMessage: createPlayerResult.message);
         else if (createPlayerResult is Game) {
           gameBloc.add(GameUpdatedEvent(newGame: createPlayerResult));
           yield AddPlayerCreationFinishedState(game: createPlayerResult);
@@ -89,6 +88,17 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
       yield AddPlayerGameNotCreatedState();
     } else if (event is AddPlayerGameCreatedEvent) {
       yield AddPlayerGameCreatedState(game: event.game);
+    }
+  }
+
+  Stream<AddPlayerState> _validateEitherResults(
+      pointsEitherResult, bonusPointsEitherResult) async* {
+    if (pointsEitherResult is Failure) {
+      yield AddPlayerErrorState(errorMessage: pointsEitherResult.message);
+    }
+
+    if (bonusPointsEitherResult is Failure) {
+      yield AddPlayerErrorState(errorMessage: pointsEitherResult.message);
     }
   }
 

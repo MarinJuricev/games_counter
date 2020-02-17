@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/data/datasources/game_local_data_source.dart';
 import 'package:game_counter/data/repositories/game_repository_impl.dart';
 import 'package:game_counter/domain/entities/game.dart';
@@ -52,7 +53,7 @@ void main() {
       when(mockLocalDataSource.cacheGame(testGame)).thenThrow(CacheException());
 
       final actualResult = await repository.saveGame(testGame);
-      final expectedResult = Left(CacheFailure());
+      final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
       verify(mockLocalDataSource.cacheGame(testGame));
       expect(actualResult, expectedResult);
@@ -80,7 +81,7 @@ void main() {
           .thenThrow(CacheException());
 
       final actualResult = await repository.getGame();
-      final expectedResult = Left(CacheFailure());
+      final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
       verify(mockLocalDataSource.getGame());
       expect(actualResult, expectedResult);

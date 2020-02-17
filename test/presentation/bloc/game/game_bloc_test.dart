@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/usecases/create_game.dart';
@@ -53,10 +54,10 @@ void main() {
 
       void _setupMockInputConverterFails() {
         when(mockInputConverter.stringToUnsignedInteger(pointsToWin))
-            .thenReturn(Left(ValidationFailure()));
+            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
         when(mockInputConverter.stringToUnsignedInteger(numberOfPlayers))
-            .thenReturn(Left(ValidationFailure()));
+            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
       }
 
       blocTest('should call createGame with correctly parsed arguments',
@@ -77,7 +78,7 @@ void main() {
         'should emit [ErrorState] when the usecase validation fails',
         build: () {
           when(mockCreateGame.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure()));
+              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
           _setupMockInputConverterFails();
           return GameBloc(
@@ -97,7 +98,7 @@ void main() {
       blocTest('should emit [ErrorState] when the game creation fails',
           build: () {
             when(mockCreateGame.call(any))
-                .thenAnswer((_) async => Left(ValidationFailure()));
+                .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
             _setupMockInputConverterSuccess();
 
             return GameBloc(

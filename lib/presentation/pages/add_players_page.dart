@@ -71,10 +71,7 @@ class AddPlayersPage extends StatelessWidget {
     } else if (state is AddPlayerCreationStartedState) {
       return CreatePlayer();
     } else if (state is AddPlayerErrorState) {
-      //TODO actual error handling and addPlayerErrorState really should return a error message...
-      return Center(
-        child: Text('Tebra nesto si ujeba pogledaj imena igraca'),
-      );
+      return ErrorWidget(state.errorMessage);
     } else if (state is AddPlayerGameCreatedState) {
       return PlayerGrid(currentGame: state.game);
     } else if (state is AddPlayerCreationFinishedState) {

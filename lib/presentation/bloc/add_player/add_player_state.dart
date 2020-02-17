@@ -21,7 +21,14 @@ class AddPlayerCreationFinishedState extends AddPlayerState {
   List<Object> get props => [game];
 }
 
-class AddPlayerErrorState extends AddPlayerState {}
+class AddPlayerErrorState extends AddPlayerState {
+  final String errorMessage;
+
+  AddPlayerErrorState({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
 
 class AddPlayerGameCreatedState extends AddPlayerState {
   final Game game;
