@@ -109,8 +109,8 @@ Widget buildPlayerInfoDependingOnPoints(Player currentPlayer) {
             child: CustomPaint(
                 painter: GradientArcPainter(
               progress: currentPlayer.points / currentPlayer.sumOfAllPoints,
-              startColor: Colors.purple,
-              endColor: Colors.purple,
+              startColor: Colors.purple.shade200,
+              endColor: Colors.purple.shade600,
               width: 4.0,
               startClockWise: true,
             )),

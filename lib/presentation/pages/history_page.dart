@@ -15,7 +15,7 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          GameTitle(gameTitle: 'Game title'),
+          GameTitle(),
           Expanded(
             child: Center(
               child: Text('History'),

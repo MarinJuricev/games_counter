@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../di.dart' as di;
 import '../bloc/add_player/add_player_bloc.dart';
 import '../widgets/create_player.dart';
+import '../widgets/error.dart';
 import '../widgets/game_not_created.dart';
 import '../widgets/game_title.dart';
 import '../widgets/player_grid.dart';
@@ -23,7 +24,7 @@ class AddPlayersPage extends StatelessWidget {
               return Scaffold(
                 body: Column(
                   children: <Widget>[
-                    GameTitle(gameTitle: 'Game title'),
+                    GameTitle(),
                     Expanded(
                       child: _buildAddPlayersDependingOnGameCreationState(
                         state,
@@ -71,7 +72,7 @@ class AddPlayersPage extends StatelessWidget {
     } else if (state is AddPlayerCreationStartedState) {
       return CreatePlayer();
     } else if (state is AddPlayerErrorState) {
-      return ErrorWidget(state.errorMessage);
+      return ErrorContainer(erorrMessage: state.errorMessage);
     } else if (state is AddPlayerGameCreatedState) {
       return PlayerGrid(currentGame: state.game);
     } else if (state is AddPlayerCreationFinishedState) {

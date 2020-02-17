@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorWidget extends StatelessWidget {
-  final erorrMessage;
+class ErrorContainer extends StatelessWidget {
+  final String erorrMessage;
 
-  const ErrorWidget({Key key, this.erorrMessage}) : super(key: key);
+  const ErrorContainer({Key key, this.erorrMessage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,16 @@ class ErrorWidget extends StatelessWidget {
                 blurRadius: 8, color: Colors.black26, offset: Offset(0, 2)),
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(Icons.error_outline, color: Colors.red),
-            SizedBox(height: 16.0),
-            Text(erorrMessage),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(Icons.error_outline, color: Colors.white),
+              SizedBox(height: 16.0),
+              Text(erorrMessage),
+            ],
+          ),
         ),
       ),
     );

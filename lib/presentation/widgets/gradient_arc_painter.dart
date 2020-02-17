@@ -24,25 +24,34 @@ class GradientArcPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = new Rect.fromLTWH(0.0, 0.0, size.width, size.height);
-    final gradient = new SweepGradient(
+    final rect = Rect.fromLTWH(0.0, 0.0, size.width, size.height);
+    final gradient = SweepGradient(
       startAngle: 3 * math.pi / 2,
       endAngle: 7 * math.pi / 2,
       tileMode: TileMode.repeated,
       colors: [startColor, endColor],
     );
 
-    final paint = new Paint()
+    final paint = Paint()
       ..shader = gradient.createShader(rect)
       ..strokeCap = StrokeCap.butt // StrokeCap.round is not recommended.
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
-    final center = new Offset(size.width / 2, size.height / 2);
+    final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width / 2, size.height / 2) - (width / 2);
     final startAngle = -math.pi / 2;
     final sweepAngle = sweepDependingOnClocWise(startClockWise, progress);
-    canvas.drawArc(new Rect.fromCircle(center: center, radius: radius),
-        startAngle, sweepAngle, false, paint);
+    canvas.drawArc(
+        Rect.fromCircle(
+          center: center,
+          radius: radius,
+        ),
+        startAngle,
+        sweepAngle,
+        false,
+        paint);
+
+        // canvas.drawShadow(Path(), Colors.grey, 4.0, false);
   }
 
   @override
