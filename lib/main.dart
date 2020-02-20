@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xff58C6B2),
         primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
         textTheme: Typography(platform: TargetPlatform.iOS).white,
+        accentTextTheme: Typography(platform: TargetPlatform.iOS).black,
         errorColor: const Color(0xff00FFF0),
       ),
       home: BlocProvider(
-        create: (context) => di.sl<GameBloc>(),
-        child: HomeBottomNavRoute()),
+          create: (context) => di.sl<GameBloc>(), child: HomeBottomNavRoute()),
     );
   }
 }

@@ -19,10 +19,10 @@ class _CreatePlayerState extends State<CreatePlayer> {
   @override
   Widget build(BuildContext context) {
     //TODO this type of form is used in multiple screens, extract into separate widget and re-use
-    return SingleChildScrollView(
-      child: Form(
-        key: _createPlayerFormKey,
-        child: Center(
+    return Center(
+      child: SingleChildScrollView(
+        child: Form(
+          key: _createPlayerFormKey,
           child: Container(
             margin: EdgeInsets.all(24),
             decoration: BoxDecoration(

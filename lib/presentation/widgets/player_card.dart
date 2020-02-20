@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_counter/presentation/pages/player_details_page.dart';
 
 import '../../domain/entities/player.dart';
 import 'gradient_arc_painter.dart';
@@ -25,17 +26,26 @@ class PlayerCard extends StatelessWidget {
         ),
         color: Colors.white,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return PlayerDetailsPage(
+                player: currentPlayer,
+              );
+            }));
+          },
           borderRadius: BorderRadius.circular(16.0),
           splashColor: Theme.of(context).accentColor,
           child: GridTile(
             header: Center(
               heightFactor: 2,
-              child: Text(
-                currentPlayer.name,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+              child: Hero(
+                tag: 'playerNameHeroTag',
+                child: Text(
+                  currentPlayer.name,
+                  style: Theme.of(context).accentTextTheme.title.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
                 ),
               ),
             ),

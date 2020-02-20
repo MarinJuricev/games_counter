@@ -48,10 +48,8 @@ class GradientArcPainter extends CustomPainter {
         ),
         startAngle,
         sweepAngle,
-        false,
+        false, 
         paint);
-
-        // canvas.drawShadow(Path(), Colors.grey, 4.0, false);
   }
 
   @override

@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Widget _buildCreateGame() {
     return BlocBuilder<GameBloc, GameState>(
-      builder: (_, GameState state) {
+      builder: (BuildContext context, GameState state) {
         if (state is GameInitialState) {
           return CreateGame();
         } else if (state is GameCreatedState) {

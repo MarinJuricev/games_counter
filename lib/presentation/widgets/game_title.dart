@@ -40,7 +40,10 @@ class GameTitle extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 gameTitle,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

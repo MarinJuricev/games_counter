@@ -21,10 +21,10 @@ class _CreateGameState extends State<CreateGame> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: _gameFormKey,
-        child: Center(
+    return Center(
+      child: SingleChildScrollView(
+        child: Form(
+          key: _gameFormKey,
           child: Container(
             margin: EdgeInsets.all(24),
             decoration: BoxDecoration(
