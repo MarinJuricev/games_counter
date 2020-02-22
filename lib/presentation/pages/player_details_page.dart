@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entities/player.dart';
 import '../widgets/player_progress.dart';
-import '../widgets/points_indicator.dart';
+import '../widgets/point_indicator.dart';
+import '../widgets/point_picker.dart';
 
 class PlayerDetailsPage extends StatelessWidget {
   final Player currentPlayer;
@@ -48,6 +49,14 @@ class PlayerDetailsPage extends StatelessWidget {
                       pointColor: Colors.orange, pointText: 'Bonus Points')
                 ],
               ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  PointPicker(currentPlayer: currentPlayer, color: Colors.purple),
+                  PointPicker(currentPlayer: currentPlayer, color: Colors.orange),
+                ],
+              ),
               SizedBox(height: 24.0),
             ],
           ),
@@ -56,5 +65,3 @@ class PlayerDetailsPage extends StatelessWidget {
     );
   }
 }
-
-

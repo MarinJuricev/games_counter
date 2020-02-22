@@ -28,22 +28,22 @@ class PlayerProgress extends StatelessWidget {
                   width: 4.0,
                   startClockWise: false,
                 ),
-              ),
-            ),
-          ),
-          Center(
-            child: Text(
-              currentPlayer.points.toString(),
-              style: TextStyle(
-                color: Colors.grey.shade700,
-                fontSize: 32,
-                shadows: [
-                  Shadow(
-                    blurRadius: 5.0,
-                    color: Colors.grey,
-                    offset: Offset(0.0, 2.5),
+                child: Center(
+                  child: Text(
+                    currentPlayer.points.toString(),
+                    style: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontSize: 32,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Colors.grey,
+                          offset: Offset(0.0, 2.5),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -72,28 +72,29 @@ class PlayerProgress extends StatelessWidget {
               height: 75,
               width: 75,
               child: CustomPaint(
-                  painter: GradientArcPainter(
-                progress: currentPlayer.points / currentPlayer.sumOfAllPoints,
-                startColor: Colors.purple.shade200,
-                endColor: Colors.purple.shade600,
-                width: 4.0,
-                startClockWise: true,
-              )),
-            ),
-          ),
-          Center(
-            child: Text(
-              currentPlayer.sumOfAllPoints.toString(),
-              style: TextStyle(
-                color: Colors.grey.shade700,
-                fontSize: 32,
-                shadows: [
-                  Shadow(
-                    blurRadius: 5.0,
-                    color: Colors.grey,
-                    offset: Offset(0.0, 2.5),
+                painter: GradientArcPainter(
+                  progress: currentPlayer.points / currentPlayer.sumOfAllPoints,
+                  startColor: Colors.purple.shade200,
+                  endColor: Colors.purple.shade600,
+                  width: 4.0,
+                  startClockWise: true,
+                ),
+                child: Center(
+                  child: Text(
+                    currentPlayer.sumOfAllPoints.toString(),
+                    style: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontSize: 32,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Colors.grey,
+                          offset: Offset(0.0, 2.5),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
