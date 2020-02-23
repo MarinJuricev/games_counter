@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/failure.dart';
-import 'package:game_counter/core/localization/budget_localization.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';

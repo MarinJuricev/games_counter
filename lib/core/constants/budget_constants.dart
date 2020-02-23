@@ -9,3 +9,6 @@ const String CANT_ADD_MORE_PLAYERS =
     'You can\'t exceed the games maximum player count!';
 const String ERROR_RETREVING_LOCAL_DATA =
     'Error loading data, please retry later';
+
+const String HERO_TAG_CARD_TITLE = 'hero-card-title';
+const String HERO_TAG_CARD_POINTS = 'hero-card-points';

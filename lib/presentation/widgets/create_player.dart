@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/bloc/add_player/add_player_bloc.dart';
+
+import '../bloc/add_player/add_player_bloc.dart';
+import 'out_lined_button.dart';
 
 class CreatePlayer extends StatefulWidget {
   CreatePlayer({Key key}) : super(key: key);
@@ -134,20 +136,9 @@ class _CreatePlayerState extends State<CreatePlayer> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8.0),
-                    child: FlatButton(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-                      child: Text(
-                        'CREATE PLAYER',
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                      textColor: Colors.white,
-                      onPressed: addPlayerCreatedEvent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.white),
-                      ),
-                    ),
+                    child: OutLinedButton(
+                        onPressedEvent: _addPlayerCreatedEvent,
+                        title: 'Create Player'),
                   ),
                 )
               ],
@@ -158,7 +149,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
     );
   }
 
-  void addPlayerCreatedEvent() {
+  void _addPlayerCreatedEvent() {
     if (_createPlayerFormKey.currentState.validate()) {
       BlocProvider.of<AddPlayerBloc>(context).add(
         PlayerCreatedEvent(

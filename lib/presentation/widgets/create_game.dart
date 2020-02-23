@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/game/game_bloc.dart';
+import 'out_lined_button.dart';
 
 class CreateGame extends StatefulWidget {
   const CreateGame({
@@ -141,20 +142,7 @@ class _CreateGameState extends State<CreateGame> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8.0),
-                    child: FlatButton(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-                      child: Text(
-                        'CREATE GAME',
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                      textColor: Colors.white,
-                      onPressed: addCreateGameEvent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.white),
-                      ),
-                    ),
+                    child: OutLinedButton(onPressedEvent: _addCreateGameEvent, title: 'Create Game'),
                   ),
                 )
               ],
@@ -165,7 +153,7 @@ class _CreateGameState extends State<CreateGame> {
     );
   }
 
-  void addCreateGameEvent() {
+  void _addCreateGameEvent() {
     if (_gameFormKey.currentState.validate()) {
       BlocProvider.of<GameBloc>(context).add(CreatedGameEvent(
           gameTitle: gameTitle,

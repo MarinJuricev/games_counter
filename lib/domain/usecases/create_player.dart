@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/constants/budget_constants.dart';
 import '../../core/error/failure.dart';
-import '../../core/localization/budget_localization.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';

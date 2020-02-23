@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
+import '../constants/budget_constants.dart';
 import '../error/failure.dart';
-import '../localization/budget_localization.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnsignedInteger(String str) {
