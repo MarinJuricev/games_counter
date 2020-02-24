@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/presentation/widgets/out_lined_button.dart';
@@ -80,9 +82,14 @@ class PlayerDetailsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       PointPicker(
-                          currentPlayer: currentPlayer, color: Colors.purple),
+                        currentPlayer: currentPlayer,
+                        color: Colors.purple,
+                        getCurrentValueCallback: (val) => print('mainPoints: $val'),
+                      ),
                       PointPicker(
-                          currentPlayer: currentPlayer, color: Colors.orange),
+                          currentPlayer: currentPlayer,
+                          color: Colors.orange,
+                          getCurrentValueCallback: (val) => print('bonusPoints: $val')),
                     ],
                   ),
                   SizedBox(height: 24.0),
@@ -91,8 +98,6 @@ class PlayerDetailsPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             OutLinedButton(onPressedEvent: () {}, title: 'Save', width: 64),
-            SizedBox(height: 16.0),
-            OutLinedButton(onPressedEvent: () {}, title: 'Cancel', width: 64),
             SizedBox(height: 16.0),
             OutLinedButton(onPressedEvent: () {}, title: 'Reset', width: 64),
           ],

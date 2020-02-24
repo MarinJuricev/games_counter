@@ -28,11 +28,6 @@ class MyApp extends StatelessWidget {
         textTheme: Typography(platform: TargetPlatform.iOS).white,
         accentTextTheme: Typography(platform: TargetPlatform.iOS).black,
         errorColor: const Color(0xff00FFF0),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          },
-        ),
       ),
       home: BlocProvider(
           create: (context) => di.sl<GameBloc>(), child: HomeBottomNavRoute()),

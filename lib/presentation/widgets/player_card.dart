@@ -47,12 +47,13 @@ class PlayerCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PlayerDetailsPage(
-                    currentPlayer: currentPlayer,
-                  ),
-                ));
+              context,
+              MaterialPageRoute(
+                builder: (_) => PlayerDetailsPage(
+                  currentPlayer: currentPlayer,
+                ),
+              ),
+            );
           },
           borderRadius: BorderRadius.circular(16.0),
           splashColor: Theme.of(context).accentColor,

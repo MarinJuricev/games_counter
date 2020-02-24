@@ -3,14 +3,18 @@ import 'package:numberpicker/numberpicker.dart';
 
 import '../../domain/entities/player.dart';
 
+typedef void IntCallback(int val);
+
 class PointPicker extends StatefulWidget {
   final Player currentPlayer;
   final Color color;
+  final IntCallback getCurrentValueCallback;
 
   const PointPicker({
     Key key,
     @required this.currentPlayer,
     @required this.color,
+    @required this.getCurrentValueCallback,
   }) : super(key: key);
 
   @override
@@ -47,7 +51,10 @@ class _PointPickerState extends State<PointPicker> {
                 bottom: BorderSide(width: 1.5, color: widget.color),
               ),
             ),
-            onChanged: (newValue) => setState(() => _pointsValue = newValue),
+            onChanged: (newValue) => setState(() {
+              _pointsValue = newValue;
+              widget.getCurrentValueCallback(_pointsValue);
+            }),
           ),
         ),
       ),
