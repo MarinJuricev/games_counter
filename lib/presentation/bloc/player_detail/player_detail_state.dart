@@ -17,4 +17,13 @@ class PlayerDetailUpdatedState extends PlayerDetailState {
 
 class PlayerDetailResetState extends PlayerDetailState {}
 
-class PlayerDetailSave extends PlayerDetailState {}
+class PlayerDetailSaveTriggeredState extends PlayerDetailState {}
+
+class PlayerDetailErrorState extends PlayerDetailState {
+  final String errorMessage;
+
+  PlayerDetailErrorState({@required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

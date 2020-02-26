@@ -28,6 +28,7 @@ Future<void> init() async {
 
   sl.registerFactory(() => PlayerDetailBloc(
         gameRepository: sl<GameRepository>(),
+        gameBloc: sl<GameBloc>(),
       ));
 
   // Use cases
