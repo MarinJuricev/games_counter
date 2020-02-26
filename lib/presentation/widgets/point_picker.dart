@@ -8,13 +8,13 @@ typedef void IntCallback(int val);
 class PointPicker extends StatefulWidget {
   final Player currentPlayer;
   final Color color;
-  final IntCallback getCurrentValueCallback;
+  final IntCallback callback;
 
   const PointPicker({
     Key key,
     @required this.currentPlayer,
     @required this.color,
-    @required this.getCurrentValueCallback,
+    @required this.callback,
   }) : super(key: key);
 
   @override
@@ -53,7 +53,7 @@ class _PointPickerState extends State<PointPicker> {
             ),
             onChanged: (newValue) => setState(() {
               _pointsValue = newValue;
-              widget.getCurrentValueCallback(_pointsValue);
+              widget.callback(_pointsValue);
             }),
           ),
         ),

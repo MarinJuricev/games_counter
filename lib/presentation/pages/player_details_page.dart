@@ -1,10 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:game_counter/core/constants/budget_constants.dart';
-import 'package:game_counter/presentation/widgets/out_lined_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/player_detail/player_detail_bloc.dart';
 
+import '../../di.dart' as di;
+import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
+import '../widgets/out_lined_button.dart';
 import '../widgets/player_progress.dart';
 import '../widgets/point_indicator.dart';
 import '../widgets/point_picker.dart';
@@ -12,7 +13,10 @@ import '../widgets/point_picker.dart';
 class PlayerDetailsPage extends StatelessWidget {
   final Player currentPlayer;
 
-  const PlayerDetailsPage({Key key, this.currentPlayer}) : super(key: key);
+  const PlayerDetailsPage({
+    Key key,
+    this.currentPlayer,
+  }) : super(key: key);
 
   Widget _flightShuttleBuilder(
     BuildContext flightContext,
@@ -29,13 +33,29 @@ class PlayerDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => di.sl<PlayerDetailBloc>(),
+      child: Scaffold(
+        body: BlocBuilder<PlayerDetailBloc, PlayerDetailState>(
+          builder: (context, state) {
+            return _buildDetailPage(state, context);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailPage(PlayerDetailState state, BuildContext context) {
     final TextStyle style = Theme.of(context).accentTextTheme.title.copyWith(
           fontSize: 20,
           fontWeight: FontWeight.normal,
         );
 
-    return Scaffold(
-      body: Center(
+    int newMainPoints = 0;
+    int newBonusPoints = 0;
+
+    if (state is PlayerDetailInitialState) {
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -84,25 +104,53 @@ class PlayerDetailsPage extends StatelessWidget {
                       PointPicker(
                         currentPlayer: currentPlayer,
                         color: Colors.purple,
-                        getCurrentValueCallback: (val) => print('mainPoints: $val'),
+                        callback: (pickerMainPoints) =>
+                            newMainPoints = pickerMainPoints,
                       ),
                       PointPicker(
                           currentPlayer: currentPlayer,
                           color: Colors.orange,
-                          getCurrentValueCallback: (val) => print('bonusPoints: $val')),
+                          callback: (pickerBonusPoints) =>
+                              newBonusPoints = pickerBonusPoints),
                     ],
                   ),
-                  SizedBox(height: 24.0),
+                  SizedBox(height: 24.0)
                 ],
               ),
             ),
             SizedBox(height: 16.0),
-            OutLinedButton(onPressedEvent: () {}, title: 'Save', width: 64),
+            OutLinedButton(
+                onPressedEvent: () => _addSaveClickedEvent(
+                    context, newMainPoints, newBonusPoints, currentPlayer),
+                title: 'Save',
+                width: 64),
+            SizedBox(height: 16.0),
+            OutLinedButton(
+                onPressedEvent: () => _popCurrentPage(context),
+                title: 'Cancel',
+                width: 64),
             SizedBox(height: 16.0),
             OutLinedButton(onPressedEvent: () {}, title: 'Reset', width: 64),
           ],
         ),
-      ),
-    );
+      );
+    }
+  }
+
+  void _popCurrentPage(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  void _addSaveClickedEvent(
+    BuildContext context,
+    int newMainPoints,
+    int newBonusPoints,
+    Player currentPlayer,
+  ) {
+    BlocProvider.of<PlayerDetailBloc>(context).add(PlayerDetailSaveClickedEvent(
+      newMainPoints: newMainPoints,
+      newBonusPoints: newBonusPoints,
+      currentPlayer: currentPlayer,
+    ));
   }
 }

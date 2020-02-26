@@ -8,6 +8,7 @@ import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
 import 'presentation/bloc/add_player/add_player_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
+import 'presentation/bloc/player_detail/player_detail_bloc.dart';
 
 // sl for service locator, because of the constant sl invocation
 final sl = GetIt.instance;
@@ -15,19 +16,26 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Bloc
   sl.registerLazySingleton(() => GameBloc(
-        createGame: sl(),
-        inputConverter: sl(),
+        createGame: sl<CreateGame>(),
+        inputConverter: sl<InputConverter>(),
       ));
   sl.registerFactory(() => AddPlayerBloc(
-        createPlayer: sl(),
-        inputConverter: sl(),
-        gameBloc: sl(),
-        gameRepository: sl(),
+        createPlayer: sl<CreatePlayer>(),
+        inputConverter: sl<InputConverter>(),
+        gameBloc: sl<GameBloc>(),
+        gameRepository: sl<GameRepository>(),
+      ));
+
+  sl.registerFactory(() => PlayerDetailBloc(
+        gameRepository: sl<GameRepository>(),
       ));
 
   // Use cases
-  sl.registerLazySingleton(() => CreateGame(repository: sl()));
-  sl.registerLazySingleton(() => CreatePlayer(repository: sl()));
+  sl.registerLazySingleton(() => CreateGame(
+        repository: sl<GameRepository>(),
+      ));
+  sl.registerLazySingleton(
+      () => CreatePlayer(repository: sl<GameRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
