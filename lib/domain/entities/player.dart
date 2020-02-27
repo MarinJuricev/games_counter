@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -18,4 +20,21 @@ class Player extends Equatable {
 
   @override
   List<Object> get props => [name, points, bonusPoints];
+
+  // @override
+  // Iterator<Player> get iterator => PlayerIterator(this);
 }
+
+// class PlayerIterator extends Iterator<Player>{
+//   final Player currentPlayer;
+
+//   PlayerIterator(this.currentPlayer);
+
+//   @override
+//   Player get current => currentPlayer;
+
+//   @override
+//   bool moveNext() {
+//     return false;
+//   }
+// }

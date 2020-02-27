@@ -20,10 +20,25 @@ class UpdateGame implements BaseUseCase<Game, Params> {
   }
 }
 
-Future<Either<Failure, Game>> _updateGame(Game currentGame,
-    Player currentPlayer, int newPoints, int newBonusPoints) {
-      
-    }
+Future<Either<Failure, Game>> _updateGame(
+  Game currentGame,
+  Player currentPlayer,
+  int newPoints,
+  int newBonusPoints,
+) async {
+  if (currentGame.players.contains(currentPlayer)) {
+    final currentPlayerPosition = currentGame.players.indexOf(currentPlayer);
+
+    final updatedPlayer = Player(
+        name: currentPlayer.name,
+        points: currentPlayer.points + newPoints,
+        bonusPoints: currentPlayer.bonusPoints + newBonusPoints);
+
+    currentGame.players[currentPlayerPosition] = updatedPlayer;
+
+    return await Future<Either<Failure, Game>>.value(Right(currentGame));
+  } else {}
+}
 
 class Params extends Equatable {
   final Game currentGame;

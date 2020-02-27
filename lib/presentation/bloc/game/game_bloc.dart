@@ -62,7 +62,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
 Stream<GameState> _mapEitherErrorOrGameCreated(
     Either<Failure, Game> useCaseEither) async* {
-  yield useCaseEither.fold(
+  yield useCaseEither.fold( 
     (failure) => GameErrorState(message: VALIDATION_ERROR),
     (game) => GameCreatedState(game: game),
   );
