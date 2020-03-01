@@ -10,5 +10,8 @@ const String CANT_ADD_MORE_PLAYERS =
 const String ERROR_RETREVING_LOCAL_DATA =
     'Error loading data, please retry later';
 
+const String UPDATE_GAME_ERROR =
+    'There was an error updating your game, try again later!';
+
 const String HERO_TAG_CARD_TITLE = 'hero-card-title';
 const String HERO_TAG_CARD_POINTS = 'hero-card-points';

@@ -36,8 +36,14 @@ Future<Either<Failure, Game>> _updateGame(
 
     currentGame.players[currentPlayerPosition] = updatedPlayer;
 
+    if (updatedPlayer.sumOfAllPoints >= currentGame.pointsToWin) {
+      currentGame.winner = updatedPlayer.name;
+    }
+
     return await Future<Either<Failure, Game>>.value(Right(currentGame));
-  } else {}
+  } else {
+    //TODO 2.0 when we implement the backend for potential errors
+  }
 }
 
 class Params extends Equatable {

@@ -6,6 +6,7 @@ import 'data/repositories/game_repository_impl.dart';
 import 'domain/repositories/game_repository.dart';
 import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
+import 'domain/usecases/update_game.dart';
 import 'presentation/bloc/add_player/add_player_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/bloc/player_detail/player_detail_bloc.dart';
@@ -29,6 +30,7 @@ Future<void> init() async {
   sl.registerFactory(() => PlayerDetailBloc(
         gameRepository: sl<GameRepository>(),
         gameBloc: sl<GameBloc>(),
+        updateGame: sl<UpdateGame>(),
       ));
 
   // Use cases
@@ -37,6 +39,8 @@ Future<void> init() async {
       ));
   sl.registerLazySingleton(
       () => CreatePlayer(repository: sl<GameRepository>()));
+
+  sl.registerLazySingleton(() => UpdateGame(repository: sl<GameRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(

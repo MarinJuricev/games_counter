@@ -6,10 +6,10 @@ import 'package:meta/meta.dart';
 class Game extends Equatable {
   final List<Player> players;
   final String name;
-  final String winner;
   final int pointsToWin;
   final int bonusPoints;
   final int numberOfPlayers;
+  String winner;
 
   Game({
     @required this.name,
