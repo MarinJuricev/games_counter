@@ -71,14 +71,12 @@ void main() {
     when(mockUpdateGame.call(any)).thenAnswer((_) async => Right(testGame));
   }
 
-  blocTest(
-    'initialState should be [PlayerDetailInitialState]',
-    build: () async => PlayerDetailBloc(
-      gameRepository: mockGameRepository,
-      gameBloc: mockGameBloc,
-      updateGame: mockUpdateGame,
-    )
-  );
+  blocTest('initialState should be [PlayerDetailInitialState]',
+      build: () async => PlayerDetailBloc(
+            gameRepository: mockGameRepository,
+            gameBloc: mockGameBloc,
+            updateGame: mockUpdateGame,
+          ));
 
   blocTest(
     'should emit [PlayerDetailErrorState] when game repository returns a failure',
@@ -97,9 +95,7 @@ void main() {
       newMainPoints: newMainPoints,
       newBonusPoints: newBonusPoints,
     )),
-    expect: [
-      PlayerDetailErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
-    ],
+    expect: [PlayerDetailErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)],
   );
 
   blocTest(
@@ -120,35 +116,32 @@ void main() {
       newMainPoints: newMainPoints,
       newBonusPoints: newBonusPoints,
     )),
-    expect: [
-      PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)
-    ],
+    expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
   );
 
-  // blocTest(
-  //   'should emit [PlayerDetailUpdatedState] when updateGame usecase is a success',
-  //   build: () async  {
-  //     _setupRepositorySuccessCase();
-  //     _setupUpdateGameSuccessCase();
+  blocTest(
+    'should emit [PlayerDetailUpdatedState] when updateGame usecase is a success',
+    build: () async {
+      _setupRepositorySuccessCase();
+      _setupUpdateGameSuccessCase();
 
-  //     return PlayerDetailBloc(
-  //       gameRepository: mockGameRepository,
-  //       gameBloc: mockGameBloc,
-  //       updateGame: mockUpdateGame,
-  //     );
-  //   },
-  //   act: (playerDetailBloc) =>
-  //       playerDetailBloc.add(PlayerDetailSaveClickedEvent(
-  //     currentPlayer: currentPlayer,
-  //     newMainPoints: newMainPoints,
-  //     newBonusPoints: newBonusPoints,
-  //   )),
-  //   verify: (playerDetailBloc) async {
-  //     mockGameBloc.add(event)
-  //   },
-  //   expect: [
-  //     PlayerDetailInitialState(),
-  //     PlayerDetailUpdatedState(player: updatedPlayer)
-  //   ],
-  // );
+      return PlayerDetailBloc(
+        gameRepository: mockGameRepository,
+        gameBloc: mockGameBloc,
+        updateGame: mockUpdateGame,
+      );
+    },
+    act: (playerDetailBloc) =>
+        playerDetailBloc.add(PlayerDetailSaveClickedEvent(
+      currentPlayer: currentPlayer,
+      newMainPoints: newMainPoints,
+      newBonusPoints: newBonusPoints,
+    )),
+    verify: (playerDetailBloc) async {
+      mockGameBloc.add(GameUpdatedEvent(newGame: testGame));
+    },
+    expect: [
+      PlayerDetailUpdatedState(player: updatedPlayer)
+    ],
+  );
 }
