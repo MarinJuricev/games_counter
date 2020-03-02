@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/player_detail/player_detail_bloc.dart';
 
-import '../../di.dart' as di;
 import '../../core/constants/budget_constants.dart';
+import '../../di.dart' as di;
 import '../../domain/entities/player.dart';
+import '../bloc/player_detail/player_detail_bloc.dart';
 import '../widgets/out_lined_button.dart';
 import '../widgets/player_progress.dart';
 import '../widgets/point_indicator.dart';

@@ -24,11 +24,6 @@ void main() {
     },
   );
 
-  blocTest('should emit [GameInitialState] as initial state',
-      build: () => GameBloc(
-          createGame: mockCreateGame, inputConverter: mockInputConverter),
-      expect: [GameInitialState()]);
-
   group(
     'CreateGameEvent',
     () {
@@ -38,11 +33,10 @@ void main() {
       final pointsToWinParsed = 41;
       final numberOfPlayersParsed = 4;
       final testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWinParsed,
-        numberOfPlayers: numberOfPlayersParsed,
-        players: []
-      );
+          name: gameName,
+          pointsToWin: pointsToWinParsed,
+          numberOfPlayers: numberOfPlayersParsed,
+          players: []);
 
       void _setupMockInputConverterSuccess() {
         when(mockInputConverter.stringToUnsignedInteger(pointsToWin))
@@ -61,24 +55,26 @@ void main() {
       }
 
       blocTest('should call createGame with correctly parsed arguments',
-          build: () => GameBloc(
+          build: () async => GameBloc(
               createGame: mockCreateGame, inputConverter: mockInputConverter),
           act: (gameBloc) => gameBloc.add(CreatedGameEvent(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
               )),
-          verify: () => (mockCreateGame(Params(
-              gameTitle: gameName,
-              numberOfPlayers: numberOfPlayersParsed,
-              winningPoints: pointsToWinParsed))),
-          expect: [GameInitialState()]);
+          verify: (gameBloc) async {
+            mockCreateGame(Params(
+                gameTitle: gameName,
+                numberOfPlayers: numberOfPlayersParsed,
+                winningPoints: pointsToWinParsed));
+          },
+          expect: []);
 
       blocTest(
         'should emit [ErrorState] when the usecase validation fails',
-        build: () {
-          when(mockCreateGame.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
+        build: () async {
+          when(mockCreateGame.call(any)).thenAnswer(
+              (_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
           _setupMockInputConverterFails();
           return GameBloc(
@@ -90,15 +86,14 @@ void main() {
           pointsToWin: pointsToWin,
         )),
         expect: [
-          GameInitialState(),
           GameErrorState(message: VALIDATION_ERROR),
         ],
       );
 
       blocTest('should emit [ErrorState] when the game creation fails',
-          build: () {
-            when(mockCreateGame.call(any))
-                .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
+          build: () async {
+            when(mockCreateGame.call(any)).thenAnswer(
+                (_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
             _setupMockInputConverterSuccess();
 
             return GameBloc(
@@ -110,13 +105,12 @@ void main() {
                 pointsToWin: pointsToWin,
               ))),
           expect: [
-            GameInitialState(),
             GameErrorState(message: VALIDATION_ERROR)
           ]);
 
       blocTest(
         'should emit [GameCreatedState] when the usecase validation succeeds',
-        build: () {
+        build: () async {
           when(mockCreateGame.call(any))
               .thenAnswer((_) async => Right(testGame));
           _setupMockInputConverterSuccess();
@@ -130,7 +124,6 @@ void main() {
           pointsToWin: pointsToWin,
         )),
         expect: [
-          GameInitialState(),
           GameCreatedState(game: testGame),
         ],
       );

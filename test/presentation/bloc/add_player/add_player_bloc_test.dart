@@ -57,12 +57,13 @@ void main() {
   }
 
   void _setupRepositoryFailureCase() {
-    when(mockGameRepository.getGame()).thenAnswer((_) async => Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA)));
+    when(mockGameRepository.getGame()).thenAnswer(
+        (_) async => Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA)));
   }
 
   blocTest(
     'should emit [AddPlayerGameNotCreatedState] when gameBloc state is [GameInitialState]',
-    build: () {
+    build: () async {
       _setupGameBlocInitialState();
 
       return AddPlayerBloc(
@@ -72,12 +73,12 @@ void main() {
         gameRepository: mockGameRepository,
       );
     },
-    expect: [AddPlayerInitialState(), AddPlayerGameNotCreatedState()],
+    expect: [AddPlayerGameNotCreatedState()],
   );
 
   blocTest(
     'should emit [AddPlayerGameCreatedState] when gameBloc state is [GameCreatedState]',
-    build: () {
+    build: () async {
       _setupGameBlocCreatedState();
 
       return AddPlayerBloc(
@@ -88,14 +89,13 @@ void main() {
       );
     },
     expect: [
-      AddPlayerInitialState(),
       isA<AddPlayerGameCreatedState>(),
     ],
   );
 
   blocTest(
     'initialState should be AddPlayerInitialState',
-    build: () {
+    build: () async {
       _setupGameBlocInitialState();
 
       return AddPlayerBloc(
@@ -106,7 +106,6 @@ void main() {
       );
     },
     expect: [
-      AddPlayerInitialState(),
       AddPlayerGameNotCreatedState(),
     ],
   );
@@ -138,7 +137,7 @@ void main() {
 
       blocTest(
         'should call createPlayer with correctly parsed arguments',
-        build: () {
+        build: () async {
           _setupGameBlocInitialState();
 
           return AddPlayerBloc(
@@ -153,25 +152,26 @@ void main() {
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
         ))),
-        verify: () => (mockCreatePlayer(Params(
-          playerName: playerName,
-          points: playerPointsParsed,
-          bonusPoints: playerBonusPointsParsed,
-          currentGame: testGame,
-        ))),
+        verify: (adPlayerBloc) async {
+          mockCreatePlayer(Params(
+            playerName: playerName,
+            points: playerPointsParsed,
+            bonusPoints: playerBonusPointsParsed,
+            currentGame: testGame,
+          ));
+        },
         expect: [
-          AddPlayerInitialState(),
           AddPlayerGameNotCreatedState(),
         ],
       );
 
       blocTest(
         'should emit [AddPlayerErrorState] when the usecase validation fails',
-        build: () {
+        build: () async {
           _setupGameBlocInitialState();
           _setupMockInputConverterFail();
-          when(mockCreatePlayer.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
+          when(mockCreatePlayer.call(any)).thenAnswer(
+              (_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
           return AddPlayerBloc(
             createPlayer: mockCreatePlayer,
@@ -186,19 +186,18 @@ void main() {
           bonusPoints: playerBonusPoints,
         )),
         expect: [
-          AddPlayerInitialState(),
-          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
           AddPlayerGameNotCreatedState(),
+          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
         ],
       );
 
       blocTest(
         'should emit [AddPlayerErrorState] when the player creation fails',
-        build: () {
+        build: () async {
           _setupGameBlocCreatedState();
           _setupRepositorySuccessCase();
-          when(mockCreatePlayer.call(any))
-              .thenAnswer((_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
+          when(mockCreatePlayer.call(any)).thenAnswer(
+              (_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
           _setupMockInputConverterSuccess();
 
           return AddPlayerBloc(
@@ -213,15 +212,14 @@ void main() {
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),
         expect: [
-          AddPlayerInitialState(),
-          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
           isA<AddPlayerGameCreatedState>(),
+          AddPlayerErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
         ],
       );
 
       blocTest(
         'should emit [CreationFinishedState] when the player creation succeds',
-        build: () {
+        build: () async {
           _setupGameBlocCreatedState();
           _setupRepositorySuccessCase();
           when(mockCreatePlayer.call(any))
@@ -240,15 +238,14 @@ void main() {
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),
         expect: [
-          AddPlayerInitialState(),
-          isA<AddPlayerCreationFinishedState>(),
           isA<AddPlayerGameCreatedState>(),
+          isA<AddPlayerCreationFinishedState>(),
         ],
       );
 
       blocTest(
         'should emit [AddPlayerErrorState] when the repositry returns a [CacheFailure]',
-        build: () {
+        build: () async {
           _setupGameBlocCreatedState();
           _setupRepositoryFailureCase();
           when(mockCreatePlayer.call(any))
@@ -268,9 +265,8 @@ void main() {
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),
         expect: [
-          AddPlayerInitialState(),
-          AddPlayerErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
           isA<AddPlayerGameCreatedState>(),
+          AddPlayerErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
         ],
       );
     },
@@ -281,7 +277,7 @@ void main() {
     () {
       blocTest(
         'should emit [PlayerCreationStartedState] when InitiatePlayerCreationEvent is called',
-        build: () {
+        build: () async {
           _setupGameBlocInitialState();
 
           return AddPlayerBloc(
@@ -294,9 +290,9 @@ void main() {
         act: (addPlayerBloc) =>
             addPlayerBloc.add(InitiatePlayerCreationEvent()),
         expect: [
-          AddPlayerInitialState(),
-          AddPlayerCreationStartedState(),
           AddPlayerGameNotCreatedState(),
+
+          AddPlayerCreationStartedState(),
         ],
       );
     },
