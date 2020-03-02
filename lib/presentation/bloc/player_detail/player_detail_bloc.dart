@@ -54,9 +54,9 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
 
         final updateGameResult = updateGameEither.unwrapResult();
 
-        if(updateGameResult is Failure){
+        if (updateGameResult is Failure) {
           yield PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR);
-        }
+        } else if (updateGameResult is Game) {}
       }
     }
   }

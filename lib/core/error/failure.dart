@@ -30,3 +30,7 @@ class CantAddMorePlayersFailure extends Failure {
 class CacheFailure extends Failure {
   CacheFailure(String errorMessage) : super(message: errorMessage);
 }
+
+class UpdateGameFailure extends Failure {
+  UpdateGameFailure(String errorMessage) : super(message: errorMessage);
+}

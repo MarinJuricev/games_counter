@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/failure.dart';
+import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/update_game.dart';
@@ -25,10 +26,21 @@ void main() {
   int newBonusPoints = 10;
   Player currentPlayer = Player(name: 'Test', points: 0, bonusPoints: 0);
 
+  final gameName = 'Treseta';
+  final pointsToWinParsed = 41;
+  final numberOfPlayersParsed = 4;
+  final testGame = Game(
+    name: gameName,
+    pointsToWin: pointsToWinParsed,
+    numberOfPlayers: numberOfPlayersParsed,
+    players: [],
+  );
+
   setUp(
     () {
       mockGameRepository = MockGameRepository();
       mockGameBloc = MockGameBloc();
+      mockUpdateGame = MockUpdateGame();
     },
   );
 
@@ -36,6 +48,15 @@ void main() {
     when(mockGameRepository.getGame()).thenAnswer(
         (_) async => Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA)));
   }
+
+  void _setupRepositorySuccessCase() {
+    when(mockGameRepository.getGame()).thenAnswer((_) async => Right(testGame));
+  }
+
+  // void _setupUpdateGameFailureCase() {
+  //   when(mockUpdateGame.call(any()))
+  //       .thenAnswer((_) async => Left(UpdateGameFailure(UPDATE_GAME_ERROR)));
+  // }
 
   blocTest(
     'initialState should be [PlayerDetailInitialState]',
@@ -69,4 +90,28 @@ void main() {
       PlayerDetailErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
     ],
   );
+
+  // blocTest(
+  //   'should emit [PlayerDetailErrorState] when updateGame usecase is a failure',
+  //   build: () {
+  //     _setupRepositorySuccessCase();
+  //     _setupUpdateGameFailureCase();
+
+  //     return PlayerDetailBloc(
+  //       gameRepository: mockGameRepository,
+  //       gameBloc: mockGameBloc,
+  //       updateGame: mockUpdateGame,
+  //     );
+  //   },
+  //   act: (playerDetailBloc) =>
+  //       playerDetailBloc.add(PlayerDetailSaveClickedEvent(
+  //     currentPlayer: currentPlayer,
+  //     newMainPoints: newMainPoints,
+  //     newBonusPoints: newBonusPoints,
+  //   )),
+  //   expect: [
+  //     PlayerDetailInitialState(),
+  //     PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)
+  //   ],
+  // );
 }
