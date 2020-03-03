@@ -51,25 +51,35 @@ class PlayerDetailsPage extends StatelessWidget {
           fontWeight: FontWeight.normal,
         );
 
-    int newMainPoints = 0;
-    int newBonusPoints = 0;
-
     if (state is PlayerDetailInitialState) {
-      return _detailView(context, style, newMainPoints, newBonusPoints);
+      return _detailView(
+        context: context,
+        mainPoints: 0,
+        bonusPoints: 0,
+        player: currentPlayer,
+        style: style,
+      );
     } else if (state is PlayerDetailUpdatedState) {
-      int newMainPoints = state.player.points;
-      int newBonusPoints = state.player.bonusPoints;
+      int updatedMainPoints = state.player.points;
+      int updatedBonusPoints = state.player.bonusPoints;
+      Player updatedPlayer = state.player;
 
-      return _detailView(context, style, newMainPoints, newBonusPoints);
+      return _detailView(
+          context: context,
+          mainPoints: updatedMainPoints,
+          bonusPoints: updatedBonusPoints,
+          player: updatedPlayer,
+          style: style);
     }
   }
 
-  Widget _detailView(
+  Widget _detailView({
     BuildContext context,
     TextStyle style,
-    int newMainPoints,
-    int newBonusPoints,
-  ) {
+    int mainPoints,
+    int bonusPoints,
+    Player player,
+  }) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -90,17 +100,17 @@ class PlayerDetailsPage extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 16.0),
                 Hero(
-                  tag: '$HERO_TAG_CARD_TITLE+${currentPlayer.name}',
+                  tag: '$HERO_TAG_CARD_TITLE+${player.name}',
                   child: Text(
-                    '${currentPlayer.name} ',
+                    '${player.name} ',
                     style: style,
                   ),
                 ),
                 SizedBox(height: 16.0),
                 Hero(
-                  tag: '$HERO_TAG_CARD_POINTS+${currentPlayer.name}',
+                  tag: '$HERO_TAG_CARD_POINTS+${player.name}',
                   flightShuttleBuilder: _flightShuttleBuilder,
-                  child: PlayerProgress(currentPlayer: currentPlayer),
+                  child: PlayerProgress(currentPlayer: player),
                 ),
                 SizedBox(height: 32.0),
                 Row(
@@ -117,16 +127,16 @@ class PlayerDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     PointPicker(
-                      currentPlayer: currentPlayer,
+                      currentPlayer: player,
                       color: Colors.purple,
                       callback: (pickerMainPoints) =>
-                          newMainPoints = pickerMainPoints,
+                          mainPoints = pickerMainPoints,
                     ),
                     PointPicker(
-                        currentPlayer: currentPlayer,
+                        currentPlayer: player,
                         color: Colors.orange,
                         callback: (pickerBonusPoints) =>
-                            newBonusPoints = pickerBonusPoints),
+                            bonusPoints = pickerBonusPoints),
                   ],
                 ),
                 SizedBox(height: 24.0)
@@ -136,12 +146,12 @@ class PlayerDetailsPage extends StatelessWidget {
           SizedBox(height: 16.0),
           OutLinedButton(
               onPressedEvent: () => _addSaveClickedEvent(
-                  context, newMainPoints, newBonusPoints, currentPlayer),
+                  context, mainPoints, bonusPoints, player),
               title: 'Save',
               width: 64),
           SizedBox(height: 16.0),
           OutLinedButton(
-              onPressedEvent: () => _popCurrentPage(context),
+              onPressedEvent: () => Navigator.of(context).pop(),
               title: 'Cancel',
               width: 64),
           SizedBox(height: 16.0),
@@ -151,20 +161,16 @@ class PlayerDetailsPage extends StatelessWidget {
     );
   }
 
-  void _popCurrentPage(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
   void _addSaveClickedEvent(
     BuildContext context,
-    int newMainPoints,
-    int newBonusPoints,
-    Player currentPlayer,
+    int updatedMainPoints,
+    int updatedBonusPoints,
+    Player updatedPlayer,
   ) {
     BlocProvider.of<PlayerDetailBloc>(context).add(PlayerDetailSaveClickedEvent(
-      newMainPoints: newMainPoints,
-      newBonusPoints: newBonusPoints,
-      currentPlayer: currentPlayer,
+      newMainPoints: updatedMainPoints,
+      newBonusPoints: updatedBonusPoints,
+      currentPlayer: updatedPlayer,
     ));
   }
 }

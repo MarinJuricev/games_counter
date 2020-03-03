@@ -35,7 +35,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
     PlayerDetailEvent event,
   ) async* {
     if (event is PlayerDetailSaveClickedEvent) {
-      final newPoints = event.newBonusPoints;
+      final newPoints = event.newMainPoints;
       final newBonusPoints = event.newBonusPoints;
       final currentPlayer = event.currentPlayer;
 

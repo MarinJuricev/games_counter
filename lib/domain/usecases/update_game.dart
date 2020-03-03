@@ -18,31 +18,31 @@ class UpdateGame implements BaseUseCase<Game, Params> {
     return await _updateGame(params.currentGame, params.currentPlayer,
         params.newPoints, params.newBonusPoints);
   }
-}
 
-Future<Either<Failure, Game>> _updateGame(
-  Game currentGame,
-  Player currentPlayer,
-  int newPoints,
-  int newBonusPoints,
-) async {
-  if (currentGame.players.contains(currentPlayer)) {
-    final currentPlayerPosition = currentGame.players.indexOf(currentPlayer);
+  Future<Either<Failure, Game>> _updateGame(
+    Game currentGame,
+    Player currentPlayer,
+    int newPoints,
+    int newBonusPoints,
+  ) async {
+    if (currentGame.players.contains(currentPlayer)) {
+      final currentPlayerPosition = currentGame.players.indexOf(currentPlayer);
 
-    final updatedPlayer = Player(
-        name: currentPlayer.name,
-        points: currentPlayer.points + newPoints,
-        bonusPoints: currentPlayer.bonusPoints + newBonusPoints);
+      final updatedPlayer = Player(
+          name: currentPlayer.name,
+          points: currentPlayer.points + newPoints,
+          bonusPoints: currentPlayer.bonusPoints + newBonusPoints);
 
-    currentGame.players[currentPlayerPosition] = updatedPlayer;
+      currentGame.players[currentPlayerPosition] = updatedPlayer;
 
-    if (updatedPlayer.sumOfAllPoints >= currentGame.pointsToWin) {
-      currentGame.winner = updatedPlayer.name;
+      if (updatedPlayer.sumOfAllPoints >= currentGame.pointsToWin) {
+        currentGame.winner = updatedPlayer.name;
+      }
+
+      return await Future<Either<Failure, Game>>.value(Right(currentGame));
+    } else {
+      //TODO 2.0 when we implement the backend for potential errors
     }
-
-    return await Future<Either<Failure, Game>>.value(Right(currentGame));
-  } else {
-    //TODO 2.0 when we implement the backend for potential errors
   }
 }
 
