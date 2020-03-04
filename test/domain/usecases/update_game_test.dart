@@ -66,15 +66,15 @@ void main() {
             bonusPoints: newPlayerBonusPoints,
           );
 
-          final expectedResult = Right(
-            Game(
-              name: gameName,
-              pointsToWin: pointsToWin,
-              numberOfPlayers: numberOfPlayers,
-              players: [actualPlayer],
-            ),
+          final expectedGame = Game(
+            name: gameName,
+            pointsToWin: pointsToWin,
+            numberOfPlayers: numberOfPlayers,
+            players: [actualPlayer],
           );
+          final expectedResult = Right(expectedGame);
 
+          verify(mockGameRepository.saveGame(expectedGame)).called(1);
           expect(actualResult, expectedResult);
         },
       );
@@ -96,16 +96,15 @@ void main() {
             bonusPoints: newPlayerBonusPoints,
           );
 
-          final expectedResult = Right(
-            Game(
+          final expectedGame = Game(
               name: gameName,
               pointsToWin: pointsToWin,
               numberOfPlayers: numberOfPlayers,
               players: [actualPlayer],
-              winner: playerName
-            ),
-          );
+              winner: playerName);
+          final expectedResult = Right(expectedGame);
 
+          verify(mockGameRepository.saveGame(expectedGame)).called(1);
           expect(actualResult, expectedResult);
         },
       );
@@ -127,16 +126,15 @@ void main() {
             bonusPoints: newPlayerBonusPointsThatExceed,
           );
 
-          final expectedResult = Right(
-            Game(
+          final expectedGame = Game(
               name: gameName,
               pointsToWin: pointsToWin,
               numberOfPlayers: numberOfPlayers,
               players: [actualPlayer],
-              winner: playerName
-            ),
-          );
+              winner: playerName);
+          final expectedResult = Right(expectedGame);
 
+          verify(mockGameRepository.saveGame(expectedGame)).called(1);
           expect(actualResult, expectedResult);
         },
       );

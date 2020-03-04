@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
           return CreateGame();
         } else if (state is GameCreatedState) {
           return PlayerGrid(currentGame: state.game);
+        } else if (state is GameUpdatedState) {
+          return PlayerGrid(currentGame: state.game);
         } else if (state is GameErrorState) {
           return ErrorContainer(erorrMessage: state.message);
         }

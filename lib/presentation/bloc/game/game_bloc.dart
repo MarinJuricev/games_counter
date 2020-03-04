@@ -19,10 +19,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final CreateGame createGame;
   final InputConverter inputConverter;
 
-  GameBloc(
-      {@required this.createGame,
-      @required this.inputConverter,
-    });
+  GameBloc({
+    @required this.createGame,
+    @required this.inputConverter,
+  });
 
   @override
   GameState get initialState => GameInitialState();
@@ -46,6 +46,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         yield GameErrorState(message: VALIDATION_ERROR);
       }
 
+      // TODO: use the unwrapEither extension
       final useCaseEither = await createGame(
         Params(
             gameTitle: event.gameTitle,
@@ -55,14 +56,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       yield* _mapEitherErrorOrGameCreated(useCaseEither);
     } else if (event is GameUpdatedEvent) {
-      
+      yield GameUpdatedState(game: event.newGame);
     }
   }
 }
 
 Stream<GameState> _mapEitherErrorOrGameCreated(
     Either<Failure, Game> useCaseEither) async* {
-  yield useCaseEither.fold( 
+  yield useCaseEither.fold(
     (failure) => GameErrorState(message: VALIDATION_ERROR),
     (game) => GameCreatedState(game: game),
   );

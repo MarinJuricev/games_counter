@@ -39,6 +39,8 @@ class UpdateGame implements BaseUseCase<Game, Params> {
         currentGame.winner = updatedPlayer.name;
       }
 
+      await repository.saveGame(currentGame);
+
       return await Future<Either<Failure, Game>>.value(Right(currentGame));
     } else {
       //TODO 2.0 when we implement the backend for potential errors

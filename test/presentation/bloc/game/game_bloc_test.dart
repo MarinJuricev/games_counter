@@ -104,9 +104,7 @@ void main() {
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
               ))),
-          expect: [
-            GameErrorState(message: VALIDATION_ERROR)
-          ]);
+          expect: [GameErrorState(message: VALIDATION_ERROR)]);
 
       blocTest(
         'should emit [GameCreatedState] when the usecase validation succeeds',
@@ -126,6 +124,14 @@ void main() {
         expect: [
           GameCreatedState(game: testGame),
         ],
+      );
+
+      blocTest(
+        'should emit [GameUpdatedState] when [GameUpdatedEvent] is triggered',
+        build: () async => GameBloc(
+            createGame: mockCreateGame, inputConverter: mockInputConverter),
+        act: (gameBloc) => gameBloc.add(GameUpdatedEvent(newGame: testGame)),
+        expect: [GameUpdatedState(game: testGame)],
       );
     },
   );
