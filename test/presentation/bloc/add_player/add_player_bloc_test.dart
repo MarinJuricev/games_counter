@@ -147,7 +147,7 @@ void main() {
             gameRepository: mockGameRepository,
           );
         },
-        act: (addPlayerBloc) => addPlayerBloc.add((PlayerCreatedEvent(
+        act: (addPlayerBloc) => addPlayerBloc.add((PlayerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -180,7 +180,7 @@ void main() {
             gameRepository: mockGameRepository,
           );
         },
-        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -207,7 +207,7 @@ void main() {
             gameRepository: mockGameRepository,
           );
         },
-        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreated(
             playerName: playerName,
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),
@@ -233,7 +233,7 @@ void main() {
             gameRepository: mockGameRepository,
           );
         },
-        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreated(
             playerName: playerName,
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),
@@ -260,7 +260,7 @@ void main() {
             gameRepository: mockGameRepository,
           );
         },
-        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreatedEvent(
+        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreated(
             playerName: playerName,
             points: playerBonusPoints,
             bonusPoints: playerBonusPoints)),

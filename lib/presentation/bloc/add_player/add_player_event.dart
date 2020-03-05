@@ -11,12 +11,12 @@ class InitiatePlayerCreationEvent extends AddPlayerEvent {
   
 }
 
-class PlayerCreatedEvent extends AddPlayerEvent {
+class PlayerCreated extends AddPlayerEvent {
   final String playerName;
   final String points;
   final String bonusPoints;
 
-  PlayerCreatedEvent({
+  PlayerCreated({
     @required this.playerName,
     @required this.points,
     @required this.bonusPoints,

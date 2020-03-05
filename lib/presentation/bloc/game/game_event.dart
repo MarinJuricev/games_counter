@@ -2,6 +2,9 @@ part of 'game_bloc.dart';
 
 abstract class GameEvent extends Equatable {
   const GameEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class CreatedGameEvent extends GameEvent {
@@ -28,4 +31,21 @@ class GameUpdatedEvent extends GameEvent {
 
   @override
   List<Object> get props => [newGame];
+}
+
+class PlayerCreationStartedEvent extends GameEvent {}
+
+class PlayerCreatedEvent extends GameEvent {
+  final String playerName;
+  final String points;
+  final String bonusPoints;
+
+  PlayerCreatedEvent({
+    @required this.playerName,
+    @required this.points,
+    @required this.bonusPoints,
+  });
+
+  @override
+  List<Object> get props => [playerName, points, bonusPoints];
 }

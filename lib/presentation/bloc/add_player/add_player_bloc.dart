@@ -45,7 +45,7 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
   Stream<AddPlayerState> mapEventToState(
     AddPlayerEvent event,
   ) async* {
-    if (event is PlayerCreatedEvent) {
+    if (event is PlayerCreated) {
       final playerName = event.playerName;
 
       final pointsEitherResult =
@@ -98,7 +98,7 @@ class AddPlayerBloc extends Bloc<AddPlayerEvent, AddPlayerState> {
     }
 
     if (bonusPointsEitherResult is Failure) {
-      yield AddPlayerErrorState(errorMessage: pointsEitherResult.message);
+      yield AddPlayerErrorState(errorMessage: pointsEitherResult.errorMessage);
     }
   }
 

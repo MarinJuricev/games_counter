@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/pages/add_players_page.dart';
 import 'package:game_counter/presentation/pages/history_page.dart';
 import 'package:game_counter/presentation/pages/home_page.dart';
 import 'package:game_counter/presentation/pages/settings_page.dart';
@@ -26,7 +25,6 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
     _bottomPages = [
       HomePage(),
       HistoryPage(),
-      AddPlayersPage(),
       SettingsPage(),
     ];
   }
@@ -55,10 +53,6 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             title: Text('History'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Add Player'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

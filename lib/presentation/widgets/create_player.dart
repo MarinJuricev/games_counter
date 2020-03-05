@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
-import '../bloc/add_player/add_player_bloc.dart';
 import 'out_lined_button.dart';
 
 class CreatePlayer extends StatefulWidget {
@@ -151,7 +151,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
 
   void _addPlayerCreatedEvent() {
     if (_createPlayerFormKey.currentState.validate()) {
-      BlocProvider.of<AddPlayerBloc>(context).add(
+      BlocProvider.of<GameBloc>(context).add(
         PlayerCreatedEvent(
           playerName: playerName,
           points: points,
