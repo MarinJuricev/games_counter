@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/widgets/game_over.dart';
 
 import '../bloc/game/game_bloc.dart';
 import '../widgets/create_game.dart';
@@ -25,13 +26,15 @@ class _HomePageState extends State<HomePage> {
       return PlayerGrid(currentGame: state.game);
     } else if (state is GameErrorState) {
       return ErrorContainer(erorrMessage: state.errorMessage);
-    } else if (state is GamePlayerCreationState){
+    } else if (state is GamePlayerCreationState) {
       return CreatePlayer();
+    } else if (state is GameOverState) {
+      return GameOver(winner: state.player);
     }
   }
 
   Widget _buildAddPlayerFab(BuildContext builderContext, GameState state) {
-    if (state is !GameInitialState) {
+    if (state is! GameInitialState && state is! GamePlayerCreationState && state is !GameOverState) {
       return FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () => _addPlayerCreationEvent(builderContext),
@@ -41,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else
-      return null;
+      return null; // returning null won't render the widget
   }
 
   void _addPlayerCreationEvent(BuildContext context) {

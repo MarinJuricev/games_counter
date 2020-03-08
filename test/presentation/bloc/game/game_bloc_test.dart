@@ -5,6 +5,7 @@ import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
+import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/create_game.dart'
     as createGameUseCase;
@@ -51,6 +52,18 @@ void main() {
   final playerBonusPoints = '0';
   final playerPointsParsed = 0;
   final playerBonusPointsParsed = 0;
+
+  final testPlayer = Player(
+      name: playerName,
+      points: playerPointsParsed,
+      bonusPoints: playerBonusPointsParsed);
+
+  final testGameOverGame = Game(
+      name: gameName,
+      pointsToWin: pointsToWinParsed,
+      numberOfPlayers: numberOfPlayersParsed,
+      winner: playerName,
+      players: [testPlayer]);
 
   //TODO separate by event...
   group(
@@ -192,6 +205,18 @@ void main() {
       );
 
       blocTest(
+        'should emit [GameOverEvent] when [GameUpdatedEvent] is triggered with winner field different from null',
+        build: () async => GameBloc(
+            createGame: mockCreateGame,
+            inputConverter: mockInputConverter,
+            createPlayer: mockCreatePlayer,
+            gameRepository: mockGameRepository),
+        act: (gameBloc) =>
+            gameBloc.add(GameUpdatedEvent(newGame: testGameOverGame)),
+        expect: [GameOverState(player: testPlayer)],
+      );
+
+      blocTest(
         'should emit [GamePlayerCreationState] when [GamePlayerCreationState] is triggered',
         build: () async => GameBloc(
             createGame: mockCreateGame,
@@ -324,9 +349,23 @@ void main() {
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
-        act: (addPlayerBloc) => addPlayerBloc.add(PlayerCreationStartedEvent()),
+        act: (gameBloc) => gameBloc.add(PlayerCreationStartedEvent()),
         expect: [
           GamePlayerCreationState(),
+        ],
+      );
+
+      blocTest(
+        'should emit [GameInitialState] when [ResetGameEvent] is called',
+        build: () async => GameBloc(
+            createGame: mockCreateGame,
+            inputConverter: mockInputConverter,
+            createPlayer: mockCreatePlayer,
+            gameRepository: mockGameRepository),
+        act: (gameBloc) => gameBloc.add(ResetGameEvent()),
+        skip: 0,
+        expect: [
+          GameInitialState(),
         ],
       );
     },

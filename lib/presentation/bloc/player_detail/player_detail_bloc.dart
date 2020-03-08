@@ -57,10 +57,11 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
         if (updateGameResult is Failure) {
           yield PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR);
         } else if (updateGameResult is Game) {
-          gameBloc.add(GameUpdatedEvent(newGame: updateGameResult));
-          final updatedPlayer = updateGameResult.players.firstWhere((updatedPlayer) => updatedPlayer.name == currentPlayer.name);
-
+          final updatedPlayer = updateGameResult.players.firstWhere(
+              (updatedPlayer) => updatedPlayer.name == currentPlayer.name);
           yield PlayerDetailUpdatedState(player: updatedPlayer);
+
+          gameBloc.add(GameUpdatedEvent(newGame: updateGameResult));
         }
       }
     }

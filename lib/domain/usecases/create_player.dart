@@ -36,8 +36,10 @@ class CreatePlayer implements BaseUseCase<Game, Params> {
           Left(PointsToHighFailure(POINTS_TO_HIGH)));
     }
 
-    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(currentGame.numberOfPlayers,
-        currentGame.players.length, )) {
+    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(
+      currentGame.numberOfPlayers,
+      currentGame.players.length,
+    )) {
       return await Future<Either<Failure, Game>>.value(
           Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS)));
     }
@@ -59,13 +61,9 @@ bool pointsExceedPointsToWin(
   Player newPlayer,
   int pointsToWin,
 ) {
-  if ((newPlayer.points + newPlayer.bonusPoints) >= pointsToWin ||
+  return ((newPlayer.points + newPlayer.bonusPoints) >= pointsToWin ||
       newPlayer.points >= pointsToWin ||
-      newPlayer.bonusPoints >= pointsToWin) {
-    return true;
-  } else {
-    return false;
-  }
+      newPlayer.bonusPoints >= pointsToWin);
 }
 
 bool checkIfPlayerWithThatNameAlreadyExists(
@@ -76,11 +74,7 @@ bool checkIfPlayerWithThatNameAlreadyExists(
       (itemToCheck) => itemToCheck.name == newPlayer.name,
       orElse: () => null);
 
-  if (playerAlreadyExists != null) {
-    return true;
-  } else {
-    return false;
-  }
+  return (playerAlreadyExists != null);
 }
 
 class Params extends Equatable {

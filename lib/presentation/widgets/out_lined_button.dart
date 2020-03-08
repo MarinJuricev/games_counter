@@ -4,8 +4,14 @@ class OutLinedButton extends StatelessWidget {
   final Function onPressedEvent;
   final String title;
   final double width;
+  final Color backgroundColor;
 
-  OutLinedButton({Key key, this.onPressedEvent, this.title, this.width})
+  OutLinedButton(
+      {Key key,
+      this.onPressedEvent,
+      this.title,
+      this.width,
+      this.backgroundColor})
       : super(key: key);
 
   @override
@@ -19,11 +25,11 @@ class OutLinedButton extends StatelessWidget {
         title,
         style: TextStyle(fontSize: 12.0),
       ),
-      textColor: Colors.white,
+      textColor: backgroundColor,
       onPressed: onPressedEvent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18.0),
-        side: BorderSide(color: Colors.white),
+        side: BorderSide(color: backgroundColor),
       ),
     );
   }

@@ -10,14 +10,21 @@ import '../widgets/player_progress.dart';
 import '../widgets/point_indicator.dart';
 import '../widgets/point_picker.dart';
 
-class PlayerDetailsPage extends StatelessWidget {
+class PlayerDetailsPage extends StatefulWidget {
   final Player currentPlayer;
+  final int pointsToWin;
 
   const PlayerDetailsPage({
     Key key,
     this.currentPlayer,
+    this.pointsToWin,
   }) : super(key: key);
 
+  @override
+  _PlayerDetailsPageState createState() => _PlayerDetailsPageState();
+}
+
+class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
   Widget _flightShuttleBuilder(
     BuildContext flightContext,
     Animation<double> animation,
@@ -56,7 +63,8 @@ class PlayerDetailsPage extends StatelessWidget {
         context: context,
         mainPoints: 0,
         bonusPoints: 0,
-        player: currentPlayer,
+        player: widget.currentPlayer,
+        pointsToWin: widget.pointsToWin,
         style: style,
       );
     } else if (state is PlayerDetailUpdatedState) {
@@ -68,6 +76,7 @@ class PlayerDetailsPage extends StatelessWidget {
           context: context,
           mainPoints: updatedMainPoints,
           bonusPoints: updatedBonusPoints,
+          pointsToWin: widget.pointsToWin,
           player: updatedPlayer,
           style: style);
     }
@@ -79,6 +88,7 @@ class PlayerDetailsPage extends StatelessWidget {
     int mainPoints,
     int bonusPoints,
     Player player,
+    int pointsToWin,
   }) {
     return Center(
       child: Column(
@@ -129,12 +139,14 @@ class PlayerDetailsPage extends StatelessWidget {
                     PointPicker(
                       currentPlayer: player,
                       color: Colors.purple,
+                      pointsToWin: pointsToWin,
                       callback: (pickerMainPoints) =>
                           mainPoints = pickerMainPoints,
                     ),
                     PointPicker(
                         currentPlayer: player,
                         color: Colors.orange,
+                        pointsToWin: pointsToWin,
                         callback: (pickerBonusPoints) =>
                             bonusPoints = pickerBonusPoints),
                   ],
@@ -148,14 +160,21 @@ class PlayerDetailsPage extends StatelessWidget {
               onPressedEvent: () => _addSaveClickedEvent(
                   context, mainPoints, bonusPoints, player),
               title: 'Save',
+              backgroundColor: Colors.white,
               width: 64),
           SizedBox(height: 16.0),
           OutLinedButton(
               onPressedEvent: () => Navigator.of(context).pop(),
               title: 'Cancel',
+              backgroundColor: Colors.white,
               width: 64),
           SizedBox(height: 16.0),
-          OutLinedButton(onPressedEvent: () {}, title: 'Reset', width: 64),
+          OutLinedButton(
+            onPressedEvent: () {},
+            title: 'Reset',
+            backgroundColor: Colors.white,
+            width: 64,
+          ),
         ],
       ),
     );
@@ -172,5 +191,7 @@ class PlayerDetailsPage extends StatelessWidget {
       newBonusPoints: updatedBonusPoints,
       currentPlayer: updatedPlayer,
     ));
+
+    Navigator.of(context).pop();
   }
 }

@@ -43,6 +43,7 @@ class UpdateGame implements BaseUseCase<Game, Params> {
 
       return await Future<Either<Failure, Game>>.value(Right(currentGame));
     } else {
+      return await Future<Either<Failure, Game>>.value(Left(NotImplementedFailure()));
       //TODO 2.0 when we implement the backend for potential errors
     }
   }

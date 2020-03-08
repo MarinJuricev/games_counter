@@ -6,12 +6,14 @@ import '../pages/player_details_page.dart';
 import 'player_progress.dart';
 
 class PlayerCard extends StatelessWidget {
+  final Player currentPlayer;
+  final int pointsToWin;
+
   const PlayerCard({
     Key key,
     @required this.currentPlayer,
+    @required this.pointsToWin,
   }) : super(key: key);
-
-  final Player currentPlayer;
 
   Widget _flightShuttleBuilder(
     BuildContext flightContext,
@@ -51,6 +53,7 @@ class PlayerCard extends StatelessWidget {
               MaterialPageRoute(
                 builder: (_) => PlayerDetailsPage(
                   currentPlayer: currentPlayer,
+                  pointsToWin: pointsToWin,
                 ),
               ),
             );

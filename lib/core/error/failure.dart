@@ -34,3 +34,7 @@ class CacheFailure extends Failure {
 class UpdateGameFailure extends Failure {
   UpdateGameFailure(String errorMessage) : super(message: errorMessage);
 }
+
+class NotImplementedFailure extends Failure {
+  NotImplementedFailure() : super(message: '');
+}

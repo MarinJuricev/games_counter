@@ -17,11 +17,13 @@ class PlayerGrid extends StatelessWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3),
           itemBuilder: (BuildContext context, int index) {
-            return PlayerCard(currentPlayer: currentGame.players[index]);
+            return PlayerCard(
+              currentPlayer: currentGame.players[index],
+              pointsToWin: currentGame.pointsToWin,
+            );
           },
         );
       },
     );
   }
 }
-

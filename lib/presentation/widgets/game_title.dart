@@ -16,7 +16,7 @@ class GameTitle extends StatelessWidget {
         } else if (state is GameUpdatedState) {
           return _buildGameTitle(state.game.name, context);
         } else {
-          return _buildGameTitle('Game title', context);
+          return Container(); // Just render a empty container in other states...
         }
       },
     );

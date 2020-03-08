@@ -7,7 +7,6 @@ import 'domain/repositories/game_repository.dart';
 import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
 import 'domain/usecases/update_game.dart';
-import 'presentation/bloc/add_player/add_player_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/bloc/player_detail/player_detail_bloc.dart';
 
@@ -16,16 +15,10 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
-  sl.registerFactory(() => GameBloc(
+  sl.registerLazySingleton(() => GameBloc(
         createGame: sl<CreateGame>(),
         createPlayer: sl<CreatePlayer>(),
         inputConverter: sl<InputConverter>(),
-        gameRepository: sl<GameRepository>(),
-      ));
-  sl.registerFactory(() => AddPlayerBloc(
-        createPlayer: sl<CreatePlayer>(),
-        inputConverter: sl<InputConverter>(),
-        gameBloc: sl<GameBloc>(),
         gameRepository: sl<GameRepository>(),
       ));
 

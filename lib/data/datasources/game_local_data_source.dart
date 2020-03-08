@@ -1,7 +1,6 @@
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/domain/entities/game.dart';
 
-
 abstract class GameLocalDataSource {
   Future<Game> getGame();
   Future<void> cacheGame(Game game);

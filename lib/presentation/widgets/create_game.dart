@@ -142,7 +142,11 @@ class _CreateGameState extends State<CreateGame> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8.0),
-                    child: OutLinedButton(onPressedEvent: _addCreateGameEvent, title: 'Create Game'),
+                    child: OutLinedButton(
+                      onPressedEvent: _addCreateGameEvent,
+                      title: 'Create Game',
+                      backgroundColor: Colors.white,
+                    ),
                   ),
                 )
               ],

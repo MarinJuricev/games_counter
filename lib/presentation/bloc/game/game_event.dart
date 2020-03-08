@@ -49,3 +49,5 @@ class PlayerCreatedEvent extends GameEvent {
   @override
   List<Object> get props => [playerName, points, bonusPoints];
 }
+
+class ResetGameEvent extends GameEvent {}

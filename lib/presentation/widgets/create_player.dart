@@ -137,8 +137,10 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8.0),
                     child: OutLinedButton(
-                        onPressedEvent: _addPlayerCreatedEvent,
-                        title: 'Create Player'),
+                      onPressedEvent: _addPlayerCreatedEvent,
+                      title: 'Create Player',
+                      backgroundColor: Colors.white,
+                    ),
                   ),
                 )
               ],

@@ -37,3 +37,14 @@ class GameErrorState extends GameState {
 }
 
 class GamePlayerCreationState extends GameState {}
+
+class GameOverState extends GameState {
+  final Player player;
+
+  GameOverState({
+    @required this.player,
+  });
+
+  @override
+  List<Object> get props => [player];
+}

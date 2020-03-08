@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:game_counter/domain/entities/player.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
@@ -63,7 +64,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
       yield* _mapEitherErrorOrGameCreated(useCaseEither);
     } else if (event is GameUpdatedEvent) {
-      yield GameUpdatedState(game: event.newGame);
+      final updatedGame = event.newGame;
+
+      if (updatedGame.winner == null) {
+        yield GameUpdatedState(game: event.newGame);
+      } else {
+        Player winner = updatedGame.players.firstWhere(
+            (itemToCheck) => itemToCheck.name == updatedGame.winner);
+
+        //TODO add a usecase for this.. it'll need to store this game and the winner into local persistence
+        yield GameOverState(player: winner);
+      }
     } else if (event is PlayerCreationStartedEvent) {
       yield GamePlayerCreationState();
     } else if (event is PlayerCreatedEvent) {
@@ -102,7 +113,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           yield GameUpdatedState(game: createPlayerResult);
         }
       }
+    } else if (event is ResetGameEvent) {
+      yield GameInitialState();
     }
+
   }
 }
 

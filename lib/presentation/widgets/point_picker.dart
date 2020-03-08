@@ -9,12 +9,14 @@ class PointPicker extends StatefulWidget {
   final Player currentPlayer;
   final Color color;
   final IntCallback callback;
+  final int pointsToWin;
 
   const PointPicker({
     Key key,
     @required this.currentPlayer,
     @required this.color,
     @required this.callback,
+    @required this.pointsToWin,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class _PointPickerState extends State<PointPicker> {
           child: NumberPicker.integer(
             initialValue: _pointsValue,
             minValue: 0,
-            maxValue: 41,
+            maxValue: widget.pointsToWin,
             listViewWidth: 60,
             infiniteLoop: true,
             highlightSelectedValue: true,
