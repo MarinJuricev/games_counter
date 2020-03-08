@@ -18,17 +18,23 @@ dependencies:
   equatable: ^1.1.0
   # Functional programming
   dartz: ^0.8.9
-  # Remote API
-  data_connection_checker: ^0.3.4
-  http: ^0.12.0+4
+  # Local Persistance
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  # Android-like android picker
   numberpicker: ^1.1.0
+  # Remote API
+  # data_connection_checker: ^0.3.4
+  # http: ^0.12.0+4
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^4.1.1
   lint: ^1.1.1
-  build_runner: ^1.7.3
+  hive_generator: ^0.7.0+2
+  build_runner: ^1.8.0
   bloc_test: ^4.0.0
 
 
