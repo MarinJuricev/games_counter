@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
+import '../bloc/game/game_bloc.dart';
 import 'out_lined_button.dart';
 
 class CreatePlayer extends StatefulWidget {
-  CreatePlayer({Key key}) : super(key: key);
+  final GameBloc gameBloc;
+
+  CreatePlayer({Key key, this.gameBloc}) : super(key: key);
 
   @override
   _CreatePlayerState createState() => _CreatePlayerState();
@@ -38,6 +39,8 @@ class _CreatePlayerState extends State<CreatePlayer> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                const SizedBox(height: 24),
+                Icon(Icons.people, color: Colors.white, size: 48),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
@@ -69,6 +72,8 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     keyboardType: TextInputType.text,
                   ),
                 ),
+                const SizedBox(height: 24),
+                Icon(Icons.gamepad, color: Colors.white, size: 48),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
@@ -101,6 +106,8 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     keyboardType: TextInputType.number,
                   ),
                 ),
+                const SizedBox(height: 24),
+                Icon(Icons.gamepad, color: Colors.white, size: 48),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
@@ -131,13 +138,14 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     keyboardType: TextInputType.number,
                   ),
                 ),
+                const SizedBox(height: 24),
                 Align(
                   alignment: FractionalOffset.bottomRight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8.0),
                     child: OutLinedButton(
-                      onPressedEvent: _addPlayerCreatedEvent,
+                      onPressedEvent: () => _addPlayerCreatedEvent(),
                       title: 'Create Player',
                       backgroundColor: Colors.white,
                     ),
@@ -153,13 +161,15 @@ class _CreatePlayerState extends State<CreatePlayer> {
 
   void _addPlayerCreatedEvent() {
     if (_createPlayerFormKey.currentState.validate()) {
-      BlocProvider.of<GameBloc>(context).add(
+      widget.gameBloc.add(
         PlayerCreatedEvent(
           playerName: playerName,
           points: points,
           bonusPoints: bonusPoints,
         ),
       );
+
+      Navigator.of(context).pop();
     }
   }
 }

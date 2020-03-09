@@ -1,13 +1,16 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/widgets/game_over.dart';
 
 import '../bloc/game/game_bloc.dart';
 import '../widgets/create_game.dart';
-import '../widgets/create_player.dart';
 import '../widgets/error.dart';
+import '../widgets/game_over.dart';
 import '../widgets/game_title.dart';
 import '../widgets/player_grid.dart';
+import 'add_player_page.dart';
+
+const double _fabDimension = 56.0;
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -26,29 +29,42 @@ class _HomePageState extends State<HomePage> {
       return PlayerGrid(currentGame: state.game);
     } else if (state is GameErrorState) {
       return ErrorContainer(erorrMessage: state.errorMessage);
-    } else if (state is GamePlayerCreationState) {
-      return CreatePlayer();
     } else if (state is GameOverState) {
       return GameOver(winner: state.player);
     }
   }
 
   Widget _buildAddPlayerFab(BuildContext builderContext, GameState state) {
-    if (state is! GameInitialState && state is! GamePlayerCreationState && state is !GameOverState) {
-      return FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () => _addPlayerCreationEvent(builderContext),
-        child: Icon(
-          Icons.add,
-          color: Theme.of(builderContext).scaffoldBackgroundColor,
+    if (state is! GameInitialState && state is! GameOverState) {
+      return OpenContainer(
+        openBuilder: (BuildContext context, VoidCallback _) {
+          return AddPlayerPage(gameBloc: BlocProvider.of<GameBloc>(builderContext));
+        },
+        closedElevation: 6.0,
+        closedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(_fabDimension / 2),
+          ),
         ),
+        closedColor: Theme.of(context).colorScheme.secondary,
+        closedBuilder: (BuildContext context, VoidCallback openContainer) {
+          return Container(
+            color: Colors.white,
+            child: SizedBox(
+              height: _fabDimension,
+              width: _fabDimension,
+              child: Center(
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(builderContext).scaffoldBackgroundColor,
+                ),
+              ),
+            ),
+          );
+        },
       );
     } else
       return null; // returning null won't render the widget
-  }
-
-  void _addPlayerCreationEvent(BuildContext context) {
-    BlocProvider.of<GameBloc>(context).add(PlayerCreationStartedEvent());
   }
 
   @override

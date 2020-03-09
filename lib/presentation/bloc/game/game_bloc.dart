@@ -75,8 +75,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         //TODO add a usecase for this.. it'll need to store this game and the winner into local persistence
         yield GameOverState(player: winner);
       }
-    } else if (event is PlayerCreationStartedEvent) {
-      yield GamePlayerCreationState();
     } else if (event is PlayerCreatedEvent) {
       final playerName = event.playerName;
 
@@ -116,7 +114,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     } else if (event is ResetGameEvent) {
       yield GameInitialState();
     }
-
   }
 }
 

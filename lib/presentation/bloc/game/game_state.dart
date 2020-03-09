@@ -36,8 +36,6 @@ class GameErrorState extends GameState {
   List<Object> get props => [errorMessage];
 }
 
-class GamePlayerCreationState extends GameState {}
-
 class GameOverState extends GameState {
   final Player player;
 

@@ -217,17 +217,6 @@ void main() {
       );
 
       blocTest(
-        'should emit [GamePlayerCreationState] when [GamePlayerCreationState] is triggered',
-        build: () async => GameBloc(
-            createGame: mockCreateGame,
-            inputConverter: mockInputConverter,
-            createPlayer: mockCreatePlayer,
-            gameRepository: mockGameRepository),
-        act: (gameBloc) => gameBloc.add(PlayerCreationStartedEvent()),
-        expect: [GamePlayerCreationState()],
-      );
-
-      blocTest(
         'should call createPlayer with correctly parsed arguments',
         build: () async => GameBloc(
             createGame: mockCreateGame,
@@ -339,19 +328,6 @@ void main() {
         ))),
         expect: [
           GameErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
-        ],
-      );
-
-      blocTest(
-        'should emit [GamePlayerCreationState] when [PlayerCreationStartedEvent] is called',
-        build: () async => GameBloc(
-            createGame: mockCreateGame,
-            inputConverter: mockInputConverter,
-            createPlayer: mockCreatePlayer,
-            gameRepository: mockGameRepository),
-        act: (gameBloc) => gameBloc.add(PlayerCreationStartedEvent()),
-        expect: [
-          GamePlayerCreationState(),
         ],
       );
 
