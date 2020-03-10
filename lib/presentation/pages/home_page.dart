@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<GameBloc, GameState>(
       listenWhen: (previousState, currentState) {
-        if (currentState is GameErrorState) return true;
+        return (currentState is GameErrorState);
       },
       listener: (builderContext, state) {
         if (state is GameErrorState) {
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
         }
       },
       buildWhen: (previousState, currentState) {
-        if (currentState is GameErrorState) return false;
+        return (currentState is !GameErrorState);
       },
       builder: (builderContext, state) {
         return Scaffold(
