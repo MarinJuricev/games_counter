@@ -6,15 +6,14 @@ import '../widgets/create_player.dart';
 class AddPlayerPage extends StatelessWidget {
   final GameBloc gameBloc;
 
-
   const AddPlayerPage({Key key, this.gameBloc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Add Player')),
-      backgroundColor: Colors.white,
-      body: CreatePlayer(gameBloc: gameBloc,),
+      backgroundColor: Theme.of(context).primaryColor,
+      body: CreatePlayer(gameBloc: gameBloc),
     );
   }
 }

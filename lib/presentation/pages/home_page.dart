@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,10 +28,10 @@ class _HomePageState extends State<HomePage> {
       return PlayerGrid(currentGame: state.game);
     } else if (state is GameUpdatedState) {
       return PlayerGrid(currentGame: state.game);
-    } else if (state is GameErrorState) {
-      return ErrorContainer(erorrMessage: state.errorMessage);
     } else if (state is GameOverState) {
       return GameOver(winner: state.player);
+    } else if(state is GameErrorState){
+      return ErrorContainer(erorrMessage: state.errorMessage,);
     }
   }
 
@@ -38,7 +39,8 @@ class _HomePageState extends State<HomePage> {
     if (state is! GameInitialState && state is! GameOverState) {
       return OpenContainer(
         openBuilder: (BuildContext context, VoidCallback _) {
-          return AddPlayerPage(gameBloc: BlocProvider.of<GameBloc>(builderContext));
+          return AddPlayerPage(
+              gameBloc: BlocProvider.of<GameBloc>(builderContext));
         },
         closedElevation: 6.0,
         closedShape: RoundedRectangleBorder(
@@ -69,7 +71,27 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameBloc, GameState>(
+    return BlocConsumer<GameBloc, GameState>(
+      listenWhen: (previousState, currentState) {
+        if (currentState is GameErrorState) return true;
+      },
+      listener: (builderContext, state) {
+        if (state is GameErrorState) {
+          Flushbar(
+            message: state.errorMessage,
+            icon: Icon(
+              Icons.error,
+              size: 28.0,
+              color: Colors.red,
+            ),
+            duration: Duration(seconds: 3),
+            leftBarIndicatorColor: Colors.red,
+          )..show(builderContext);
+        }
+      },
+      buildWhen: (previousState, currentState) {
+        if (currentState is GameErrorState) return false;
+      },
       builder: (builderContext, state) {
         return Scaffold(
           body: Column(

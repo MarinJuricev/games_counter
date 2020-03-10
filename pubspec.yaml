@@ -25,10 +25,11 @@ dependencies:
   hive_flutter: ^0.3.0+2
   # Android-like android picker
   numberpicker: ^1.1.0
+  # SnackBar on steroids
+  flushbar: ^1.9.1
   # Remote API
   # data_connection_checker: ^0.3.4
   # http: ^0.12.0+4
-  
 
 dev_dependencies:
   flutter_test:

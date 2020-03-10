@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorContainer extends StatelessWidget {
-  final String erorrMessage;
-
-  const ErrorContainer({Key key, this.erorrMessage}) : super(key: key);
+class NoPlayers extends StatelessWidget {
+  const NoPlayers({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,9 @@ class ErrorContainer extends StatelessWidget {
           color: Theme.of(context).accentColor,
           boxShadow: [
             BoxShadow(
-                blurRadius: 8, color: Colors.black26, offset: Offset(0, 2)),
+                blurRadius: 8,
+                color: Colors.black26,
+                offset: Offset(0, 2)),
           ],
         ),
         child: Padding(
@@ -23,9 +25,16 @@ class ErrorContainer extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(Icons.error_outline, color: Colors.white),
-              SizedBox(height: 16.0),
-              Text(erorrMessage),
+              const Text(
+                '¯\\_(ツ)_/¯',
+                style: TextStyle(fontSize: 36),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'No players created, create one by clicking the + button',
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),

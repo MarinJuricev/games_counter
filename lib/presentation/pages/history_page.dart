@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/game_title.dart';
-
 class HistoryPage extends StatefulWidget {
   HistoryPage({Key key}) : super(key: key);
 
@@ -15,7 +13,6 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          GameTitle(),
           Expanded(
             child: Center(
               child: Text('History'),
