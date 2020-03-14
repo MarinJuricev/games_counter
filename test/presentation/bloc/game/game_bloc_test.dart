@@ -35,40 +35,39 @@ void main() {
       mockInputConverter = MockInputConverter();
     },
   );
-
-  final gameName = 'Treseta';
-  final pointsToWin = '41';
-  final numberOfPlayers = '4';
-  final pointsToWinParsed = 41;
-  final numberOfPlayersParsed = 4;
-  final testGame = Game(
-      name: gameName,
-      pointsToWin: pointsToWinParsed,
-      numberOfPlayers: numberOfPlayersParsed,
-      players: []);
-
-  final playerName = 'validName';
-  final playerPoints = '0';
-  final playerBonusPoints = '0';
-  final playerPointsParsed = 0;
-  final playerBonusPointsParsed = 0;
-
-  final testPlayer = Player(
-      name: playerName,
-      points: playerPointsParsed,
-      bonusPoints: playerBonusPointsParsed);
-
-  final testGameOverGame = Game(
-      name: gameName,
-      pointsToWin: pointsToWinParsed,
-      numberOfPlayers: numberOfPlayersParsed,
-      winner: playerName,
-      players: [testPlayer]);
-
   //TODO separate by event...
   group(
     'GameBlocEvents',
     () {
+      final gameName = 'Treseta';
+      final pointsToWin = '41';
+      final numberOfPlayers = '4';
+      final pointsToWinParsed = 41;
+      final numberOfPlayersParsed = 4;
+      final testGame = Game(
+          name: gameName,
+          pointsToWin: pointsToWinParsed,
+          numberOfPlayers: numberOfPlayersParsed,
+          players: []);
+
+      final playerName = 'validName';
+      final playerPoints = '0';
+      final playerBonusPoints = '0';
+      final playerPointsParsed = 0;
+      final playerBonusPointsParsed = 0;
+
+      final testPlayer = Player(
+          name: playerName,
+          points: playerPointsParsed,
+          bonusPoints: playerBonusPointsParsed);
+
+      final testGameOverGame = Game(
+          name: gameName,
+          pointsToWin: pointsToWinParsed,
+          numberOfPlayers: numberOfPlayersParsed,
+          winner: playerName,
+          players: [testPlayer]);
+
       void _setupMockInputConverterSuccess() {
         when(mockInputConverter.stringToUnsignedInteger(pointsToWin))
             .thenReturn(Right(pointsToWinParsed));

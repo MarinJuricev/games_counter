@@ -1,3 +1,4 @@
+import 'package:game_counter/domain/usecases/reset_player.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -26,16 +27,19 @@ Future<void> init() async {
         gameRepository: sl<GameRepository>(),
         gameBloc: sl<GameBloc>(),
         updateGame: sl<UpdateGame>(),
+        resetPlayer: sl<ResetPlayer>(),
       ));
 
   // Use cases
-  sl.registerLazySingleton(() => CreateGame(
+  sl.registerFactory(() => CreateGame(
         repository: sl<GameRepository>(),
       ));
-  sl.registerLazySingleton(
+  sl.registerFactory(
       () => CreatePlayer(repository: sl<GameRepository>()));
 
-  sl.registerLazySingleton(() => UpdateGame(repository: sl<GameRepository>()));
+  sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
+
+  sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(

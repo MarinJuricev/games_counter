@@ -19,27 +19,26 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
   void selectPage(int page) {
     setState(() {
       _selectedPageIndex = page;
-      _pageController.animateToPage(
-        page,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear 
-      );
+      _pageController.animateToPage(page,
+          duration: Duration(milliseconds: 200), curve: Curves.linear);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (page) {
-          setState(() => _selectedPageIndex = page);
-        },
-        children: <Widget>[
-          HomePage(),
-          HistoryPage(),
-          SettingsPage(),
-        ],
+      body: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (page) {
+            setState(() => _selectedPageIndex = page);
+          },
+          children: <Widget>[
+            HomePage(),
+            HistoryPage(),
+            SettingsPage(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: selectPage,

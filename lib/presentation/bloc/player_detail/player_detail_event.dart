@@ -22,4 +22,11 @@ class PlayerDetailSaveClickedEvent extends PlayerDetailEvent {
   List<Object> get props => [newMainPoints, newBonusPoints, currentPlayer];
 }
 
-class PlayerDetailResetClickedEvent extends PlayerDetailEvent {}
+class PlayerDetailResetClickedEvent extends PlayerDetailEvent {
+  final Player currentPlayer;
+
+  PlayerDetailResetClickedEvent({@required this.currentPlayer});
+
+  @override
+  List<Object> get props => [currentPlayer];
+}

@@ -40,29 +40,30 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GameEvent event,
   ) async* {
     if (event is CreatedGameEvent) {
-      final numberEither =
-          inputConverter.stringToUnsignedInteger(event.numberOfPlayers);
+      final numberResult = inputConverter
+          .stringToUnsignedInteger(event.numberOfPlayers)
+          .unwrapResult();
 
-      final pointsEither =
-          inputConverter.stringToUnsignedInteger(event.pointsToWin);
+      final pointsResult = inputConverter
+          .stringToUnsignedInteger(event.pointsToWin)
+          .unwrapResult();
 
-      //TODO Actually handle errors when creating the object in local / remote storage,
-      //TODO for now just run the validation
-      if (numberEither.isLeft() ||
-          pointsEither.isLeft() ||
+      if (numberResult is Failure ||
+          pointsResult is Failure ||
           event.gameTitle.isEmpty) {
         yield GameErrorState(errorMessage: VALIDATION_ERROR);
       }
 
-      // TODO: use the unwrapEither extension
-      final useCaseEither = await createGame(
-        createGameUseCase.Params(
-            gameTitle: event.gameTitle,
-            numberOfPlayers: numberEither.getOrElse(() => 0),
-            winningPoints: pointsEither.getOrElse(() => 0)),
-      );
+      if (numberResult is int && pointsResult is int) {
+        final useCaseEither = await createGame(
+          createGameUseCase.Params(
+              gameTitle: event.gameTitle,
+              numberOfPlayers: numberResult,
+              winningPoints: pointsResult),
+        );
 
-      yield* _mapEitherErrorOrGameCreated(useCaseEither);
+        yield* _mapEitherErrorOrGameCreated(useCaseEither);
+      }
     } else if (event is GameUpdatedEvent) {
       final updatedGame = event.newGame;
 

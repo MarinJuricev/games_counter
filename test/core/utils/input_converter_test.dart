@@ -13,6 +13,10 @@ void main() {
     },
   );
 
+  tearDown((){
+    inputConverter = null;
+  });
+
   group(
     'stringToUnsignedInt',
     () {

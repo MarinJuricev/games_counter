@@ -5,6 +5,7 @@ import '../../core/constants/budget_constants.dart';
 import '../../di.dart' as di;
 import '../../domain/entities/player.dart';
 import '../bloc/player_detail/player_detail_bloc.dart';
+import '../bloc/player_detail/player_detail_bloc.dart';
 import '../widgets/out_lined_button.dart';
 import '../widgets/player_progress.dart';
 import '../widgets/point_indicator.dart';
@@ -170,7 +171,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
               width: 64),
           SizedBox(height: 16.0),
           OutLinedButton(
-            onPressedEvent: () {},
+            onPressedEvent: () => _resetPlayerPoints(context, player),
             title: 'Reset',
             backgroundColor: Colors.white,
             width: 64,
@@ -178,6 +179,16 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
         ],
       ),
     );
+  }
+
+  void _resetPlayerPoints(
+    BuildContext context,
+    Player updatedPlayer,
+  ) {
+    BlocProvider.of<PlayerDetailBloc>(context)
+        .add(PlayerDetailResetClickedEvent(currentPlayer: updatedPlayer));
+
+    Navigator.of(context).pop();
   }
 
   void _addSaveClickedEvent(
