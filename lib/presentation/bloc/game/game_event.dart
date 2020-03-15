@@ -51,3 +51,12 @@ class PlayerCreatedEvent extends GameEvent {
 }
 
 class ResetGameEvent extends GameEvent {}
+
+class DeletePlayerGameEvent extends GameEvent {
+  final Player playerToDelete;
+
+  DeletePlayerGameEvent({@required this.playerToDelete});
+
+  @override
+  List<Object> get props => [playerToDelete];
+}

@@ -10,6 +10,7 @@ class PointPicker extends StatefulWidget {
   final Color color;
   final IntCallback callback;
   final int pointsToWin;
+  final bool shouldInvertValues;
 
   const PointPicker({
     Key key,
@@ -17,6 +18,7 @@ class PointPicker extends StatefulWidget {
     @required this.color,
     @required this.callback,
     @required this.pointsToWin,
+    this.shouldInvertValues = false,
   }) : super(key: key);
 
   @override
@@ -41,22 +43,22 @@ class _PointPickerState extends State<PointPicker> {
             textTheme: TextTheme(body1: TextStyle(color: Colors.grey)),
           ),
           child: NumberPicker.integer(
-            initialValue: _pointsValue,
-            minValue: 0,
-            maxValue: widget.pointsToWin,
+            initialValue: 0,
+            minValue: widget.shouldInvertValues ? -widget.pointsToWin : 0,
+            maxValue: widget.shouldInvertValues ? 0 : widget.pointsToWin,
             listViewWidth: 60,
             infiniteLoop: true,
-            highlightSelectedValue: true,
+            highlightSelectedValue: false,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(width: 1.5, color: widget.color),
                 bottom: BorderSide(width: 1.5, color: widget.color),
               ),
             ),
-            onChanged: (newValue) => setState(() {
+            onChanged: (newValue) {
               _pointsValue = newValue;
               widget.callback(_pointsValue);
-            }),
+            },
           ),
         ),
       ),

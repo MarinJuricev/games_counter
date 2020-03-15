@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/game/game_bloc.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
@@ -61,14 +63,41 @@ class PlayerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.0),
           splashColor: Theme.of(context).accentColor,
           child: GridTile(
-            header: Center(
-              heightFactor: 2,
-              child: Hero(
-                tag: '$HERO_TAG_CARD_TITLE+${currentPlayer.name}',
-                child: Text(
-                  '${currentPlayer.name} ',
-                  style: style,
-                ),
+            header: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: <Widget>[
+                  // Just a placeholder widget so that we get the desired 1:3:1 flex behaviour
+                  Expanded(child: SizedBox()),
+                  Expanded(
+                    flex: 3,
+                    child: Hero(
+                      tag: '$HERO_TAG_CARD_TITLE+${currentPlayer.name}',
+                      child: Text(
+                        '${currentPlayer.name} ',
+                        style: style,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    // ImageButton has material padding in-built, instead we use
+                    // a gestureDetector to achive the same result but without the
+                    // material badding from ImageButton
+                    child: GestureDetector(
+                      onTap: () =>
+                          _addDeletePlayerEvent(context, currentPlayer),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.grey,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             child: Hero(
@@ -79,5 +108,12 @@ class PlayerCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _addDeletePlayerEvent(
+    BuildContext context,
+    Player currentPlayer,
+  ) {
+    // BlocProvider.of<GameBloc>(context).add(event)
   }
 }

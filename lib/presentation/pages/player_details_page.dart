@@ -5,7 +5,6 @@ import '../../core/constants/budget_constants.dart';
 import '../../di.dart' as di;
 import '../../domain/entities/player.dart';
 import '../bloc/player_detail/player_detail_bloc.dart';
-import '../bloc/player_detail/player_detail_bloc.dart';
 import '../widgets/out_lined_button.dart';
 import '../widgets/player_progress.dart';
 import '../widgets/point_indicator.dart';
@@ -26,6 +25,8 @@ class PlayerDetailsPage extends StatefulWidget {
 }
 
 class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
+  bool _shouldDeduct = false;
+
   Widget _flightShuttleBuilder(
     BuildContext flightContext,
     Animation<double> animation,
@@ -109,7 +110,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Hero(
                   tag: '$HERO_TAG_CARD_TITLE+${player.name}',
                   child: Text(
@@ -123,7 +124,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
                   flightShuttleBuilder: _flightShuttleBuilder,
                   child: PlayerProgress(currentPlayer: player),
                 ),
-                SizedBox(height: 32.0),
+                const SizedBox(height: 32.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -133,7 +134,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
                         pointColor: Colors.orange, pointText: 'Bonus Points')
                   ],
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -143,16 +144,39 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
                       pointsToWin: pointsToWin,
                       callback: (pickerMainPoints) =>
                           mainPoints = pickerMainPoints,
+                      shouldInvertValues: _shouldDeduct,
                     ),
                     PointPicker(
-                        currentPlayer: player,
-                        color: Colors.orange,
-                        pointsToWin: pointsToWin,
-                        callback: (pickerBonusPoints) =>
-                            bonusPoints = pickerBonusPoints),
+                      currentPlayer: player,
+                      color: Colors.orange,
+                      pointsToWin: pointsToWin,
+                      callback: (pickerBonusPoints) =>
+                          bonusPoints = pickerBonusPoints,
+                      shouldInvertValues: _shouldDeduct,
+                    ),
                   ],
                 ),
-                SizedBox(height: 24.0)
+                const SizedBox(height: 16.0),
+                SwitchListTile.adaptive(
+                  value: _shouldDeduct,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      _shouldDeduct = newValue;
+                    });
+                  },
+                  contentPadding: EdgeInsets.symmetric(horizontal: 24.0),
+                  title: Text(
+                    'Deduct Points',
+                    style: TextStyle(color: Theme.of(context).accentColor),
+                  ),
+                  subtitle: Text(
+                    'Inverts the picker values.',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).scaffoldBackgroundColor),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
               ],
             ),
           ),
