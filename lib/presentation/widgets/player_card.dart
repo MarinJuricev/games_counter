@@ -90,7 +90,7 @@ class PlayerCard extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: Icon(
-                          Icons.delete,
+                          Icons.clear,
                           color: Colors.grey,
                           size: 18,
                         ),
