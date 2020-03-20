@@ -1,3 +1,4 @@
+import 'package:game_counter/domain/usecases/delete_player.dart';
 import 'package:game_counter/domain/usecases/reset_player.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,6 +20,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GameBloc(
         createGame: sl<CreateGame>(),
         createPlayer: sl<CreatePlayer>(),
+        deletePlayer: sl<DeletePlayer>(),
         inputConverter: sl<InputConverter>(),
         gameRepository: sl<GameRepository>(),
       ));
@@ -38,8 +40,8 @@ Future<void> init() async {
       () => CreatePlayer(repository: sl<GameRepository>()));
 
   sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
-
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
+  sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(

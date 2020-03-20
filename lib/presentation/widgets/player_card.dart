@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
@@ -108,10 +110,12 @@ class PlayerCard extends StatelessWidget {
     );
   }
 
-  void _addDeletePlayerEvent(
+  _addDeletePlayerEvent(
     BuildContext context,
     Player currentPlayer,
   ) {
-    // BlocProvider.of<GameBloc>(context).add(event)
+    context
+        .bloc<GameBloc>()
+        .add(DeletePlayerGameEvent(playerToDelete: currentPlayer));
   }
 }

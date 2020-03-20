@@ -30,8 +30,10 @@ class _HomePageState extends State<HomePage> {
       return PlayerGrid(currentGame: state.game);
     } else if (state is GameOverState) {
       return GameOver(winner: state.player);
-    } else if(state is GameErrorState){
-      return ErrorContainer(erorrMessage: state.errorMessage,);
+    } else if (state is GameErrorState) {
+      return ErrorContainer(
+        erorrMessage: state.errorMessage,
+      );
     }
   }
 
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         }
       },
       buildWhen: (previousState, currentState) {
-        return (currentState is !GameErrorState);
+        return (currentState is! GameErrorState);
       },
       builder: (builderContext, state) {
         return Scaffold(

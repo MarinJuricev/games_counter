@@ -10,10 +10,15 @@ import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/create_game.dart'
     as createGameUseCase;
 import 'package:game_counter/domain/usecases/create_player.dart';
+import 'package:game_counter/domain/usecases/delete_player.dart'
+    as deletePlayerUseCase;
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 class MockCreateGame extends Mock implements createGameUseCase.CreateGame {}
+
+class MockDeletePlayer extends Mock
+    implements deletePlayerUseCase.DeletePlayer {}
 
 class MockCreatePlayer extends Mock implements CreatePlayer {}
 
@@ -24,6 +29,7 @@ class MockInputConverter extends Mock implements InputConverter {}
 void main() {
   MockCreateGame mockCreateGame;
   MockCreatePlayer mockCreatePlayer;
+  MockDeletePlayer mockDeletePlayer;
   MockGameRepository mockGameRepository;
   MockInputConverter mockInputConverter;
 
@@ -32,6 +38,7 @@ void main() {
       mockCreatePlayer = MockCreatePlayer();
       mockGameRepository = MockGameRepository();
       mockCreateGame = MockCreateGame();
+      mockDeletePlayer = MockDeletePlayer();
       mockInputConverter = MockInputConverter();
     },
   );
@@ -111,6 +118,7 @@ void main() {
       blocTest('should call createGame with correctly parsed arguments',
           build: () async => GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository),
@@ -136,6 +144,7 @@ void main() {
           _setupMockInputConverterFails();
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -158,6 +167,7 @@ void main() {
 
             return GameBloc(
                 createGame: mockCreateGame,
+                deletePlayer: mockDeletePlayer,
                 inputConverter: mockInputConverter,
                 createPlayer: mockCreatePlayer,
                 gameRepository: mockGameRepository);
@@ -178,6 +188,7 @@ void main() {
 
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -196,6 +207,7 @@ void main() {
         'should emit [GameUpdatedState] when [GameUpdatedEvent] is triggered',
         build: () async => GameBloc(
             createGame: mockCreateGame,
+            deletePlayer: mockDeletePlayer,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -207,6 +219,7 @@ void main() {
         'should emit [GameOverEvent] when [GameUpdatedEvent] is triggered with winner field different from null',
         build: () async => GameBloc(
             createGame: mockCreateGame,
+            deletePlayer: mockDeletePlayer,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -219,6 +232,7 @@ void main() {
         'should call createPlayer with correctly parsed arguments',
         build: () async => GameBloc(
             createGame: mockCreateGame,
+            deletePlayer: mockDeletePlayer,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -245,6 +259,7 @@ void main() {
 
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -269,6 +284,7 @@ void main() {
 
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -293,6 +309,7 @@ void main() {
 
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -316,6 +333,7 @@ void main() {
 
           return GameBloc(
               createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -331,16 +349,66 @@ void main() {
       );
 
       blocTest(
-        'should emit [GameInitialState] when [ResetGameEvent] is called',
-        build: () async => GameBloc(
-            createGame: mockCreateGame,
-            inputConverter: mockInputConverter,
-            createPlayer: mockCreatePlayer,
-            gameRepository: mockGameRepository),
-        act: (gameBloc) => gameBloc.add(ResetGameEvent()),
-        skip: 0,
+        'should emit [GameErrorState] when [DeletePlayerGameEvent] game repo result doesn\t return a valid game instance',
+        build: () async {
+          _setupRepositoryFailureCase();
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
+        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+          playerToDelete: testPlayer,
+        )),
         expect: [
-          GameInitialState(),
+          GameErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
+        ],
+      );
+
+      blocTest(
+        'should emit [GameErrorState] when [DeletePlayerGameEvent] delete player usecase returns a failure',
+        build: () async {
+          _setupRepositorySuccessCase();
+          when(mockDeletePlayer.call(any)).thenAnswer(
+                (_) async => Left(NotImplementedFailure()));
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
+        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+          playerToDelete: testPlayer,
+        )),
+        expect: [
+          GameErrorState(errorMessage: ''),
+        ],
+      );
+
+      blocTest(
+        'should emit [GameUpdatedState] when [DeletePlayerGameEvent] delete player usecase succeds',
+        build: () async {
+          _setupRepositorySuccessCase();
+          when(mockDeletePlayer.call(any)).thenAnswer(
+                (_) async => Right(testGame));
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
+        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+          playerToDelete: testPlayer,
+        )),
+        expect: [
+          GameUpdatedState(game: testGame),
         ],
       );
     },

@@ -1,35 +1,29 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-import 'package:game_counter/core/error/failure.dart';
-
+import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';
 import '../repositories/game_repository.dart';
-import 'package:meta/meta.dart';
 
-class ResetPlayer implements BaseUseCase<Game, Params> {
+class DeletePlayer implements BaseUseCase<Game, Params> {
   final GameRepository repository;
 
-  ResetPlayer({@required this.repository});
+  DeletePlayer({@required this.repository});
 
   @override
-  Future<Either<Failure, Game>> call(params) async {
+  Future<Either<Failure, Game>> call(Params params) async {
     final currentGame = params.currentGame;
-    final currentPlayer = params.currentPlayer;
+    final playerToDelete = params.playerToDelete;
 
-    if (currentGame.players.contains(currentPlayer)) {
-      final currentPlayerPosition = currentGame.players.indexOf(currentPlayer);
+    int currentPlayerIndex =
+        currentGame.players.indexWhere((player) => player == playerToDelete);
 
-      final updatedPlayer = Player(
-        name: currentPlayer.name,
-        points: 0,
-        bonusPoints: 0,
-      );
-
-      currentGame.players[currentPlayerPosition] = updatedPlayer;
-
+    // If index is greater than 0 we found the index, else return a error
+    if (currentPlayerIndex >= 0) {
+      currentGame.players.removeAt(currentPlayerIndex);
       await repository.saveGame(currentGame);
 
       return await Future<Either<Failure, Game>>.value(Right(currentGame));
@@ -43,13 +37,14 @@ class ResetPlayer implements BaseUseCase<Game, Params> {
 
 class Params extends Equatable {
   final Game currentGame;
-  final Player currentPlayer;
+  final Player playerToDelete;
 
   Params({
     @required this.currentGame,
-    @required this.currentPlayer,
+    @required this.playerToDelete,
+    Player currentPlayer,
   });
 
   @override
-  List<Object> get props => [currentGame, currentPlayer];
+  List<Object> get props => [currentGame, playerToDelete];
 }

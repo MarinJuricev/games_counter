@@ -14,18 +14,15 @@ class CreateGame implements BaseUseCase<Game, Params> {
 
   @override
   Future<Either<Failure, Game>> call(Params params) async {
-    return await _createGame(
-        params.gameTitle, params.numberOfPlayers, params.winningPoints);
-  }
+    final gameTitle = params.gameTitle;
+    final winningPoints = params.winningPoints;
+    final numberOfPlayers = params.numberOfPlayers;
 
-  Future<Either<Failure, Game>> _createGame(
-      String gameTitle, int numberOfPlayers, int winningPoints) async {
     final game = Game(
-      name: gameTitle,
-      pointsToWin: winningPoints,
-      numberOfPlayers: numberOfPlayers,
-      players: []
-    );
+        name: gameTitle,
+        pointsToWin: winningPoints,
+        numberOfPlayers: numberOfPlayers,
+        players: []);
 
     await repository.saveGame(game);
     return await repository.getGame();

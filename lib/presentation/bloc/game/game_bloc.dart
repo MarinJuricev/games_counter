@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:game_counter/domain/entities/player.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
 import '../../../core/extensions/functional.dart';
 import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/game.dart';
+import '../../../domain/entities/player.dart';
 import '../../../domain/repositories/game_repository.dart';
 import '../../../domain/usecases/create_game.dart' as createGameUseCase;
 import '../../../domain/usecases/create_player.dart';
+import '../../../domain/usecases/delete_player.dart' as deletePlayerUseCase;
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -21,6 +22,7 @@ const String VALIDATION_ERROR = 'Validation Error';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final createGameUseCase.CreateGame createGame;
+  final deletePlayerUseCase.DeletePlayer deletePlayer;
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
   final GameRepository gameRepository;
@@ -28,6 +30,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.createGame,
     @required this.createPlayer,
+    @required this.deletePlayer,
     @required this.inputConverter,
     @required this.gameRepository,
   });
@@ -114,6 +117,27 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     } else if (event is ResetGameEvent) {
       yield GameInitialState();
+    } else if (event is DeletePlayerGameEvent) {
+      final playerToDelete = event.playerToDelete;
+
+      final gameEither = await gameRepository.getGame();
+      final gameRepoResult = gameEither.unwrapResult();
+
+      if (gameRepoResult is Failure)
+        yield GameErrorState(errorMessage: gameRepoResult.message);
+      else if (gameRepoResult is Game) {
+        final useCaseResult = await deletePlayer(
+          deletePlayerUseCase.Params(
+              currentGame: gameRepoResult, playerToDelete: playerToDelete),
+        );
+        final deletePlayerResult = useCaseResult.unwrapResult();
+
+        if (deletePlayerResult is Failure)
+          yield GameErrorState(errorMessage: deletePlayerResult.message);
+        else if (deletePlayerResult is Game) {
+          yield GameUpdatedState(game: deletePlayerResult);
+        }
+      }
     }
   }
 }
