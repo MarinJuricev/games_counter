@@ -4,7 +4,16 @@ A universal game counter which can be used in various games.
 My friends and I like to play different boardgames and most of the time we used pen & paper to keep
 the score.
 
-Since I started learning Flutter why not fix that issue :)
+Since I started learning Flutter why not fix that issue.
+
+### Architecture
+
+The overall app architecture heavily borrows from Uncle Bob’s Clean Architecture.
+
+For the presentation layer the BLOC design pattern was used.
+
+During the development of the project, strict TDD was followed.
+The domain/data layers are fully tested, while inside the presentation layer only the blocs are unit tested, didn't dip my toe in widget tests yet.
 
 # Screenshots
 
