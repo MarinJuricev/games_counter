@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
         errorColor: const Color(0xff00FFF0),
       ),
       home: BlocProvider(
-          create: (context) => di.sl<GameBloc>(), child: HomeBottomNavRoute()),
+        create: (BuildContext context) => di.sl<GameBloc>(),
+        child: HomeBottomNavRoute(),
+      ),
     );
   }
 }

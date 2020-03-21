@@ -17,6 +17,13 @@ class Player extends Equatable {
     return points + bonusPoints;
   }
 
+  Player.clone(Player playerObject)
+  :this(
+    name: playerObject.name,
+    points: playerObject.points,
+    bonusPoints: playerObject.bonusPoints,
+  );
+
   @override
   List<Object> get props => [name, points, bonusPoints];
 }

@@ -21,6 +21,45 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<GameBloc, GameState>(
+      listenWhen: (previousState, currentState) {
+        return (currentState is GameErrorState);
+      },
+      listener: (builderContext, state) {
+        if (state is GameErrorState) {
+          Flushbar(
+            message: state.errorMessage,
+            icon: Icon(
+              Icons.error,
+              size: 28.0,
+              color: Colors.red,
+            ),
+            duration: Duration(seconds: 3),
+            leftBarIndicatorColor: Colors.red,
+          )..show(builderContext);
+        }
+      },
+      buildWhen: (previousState, currentState) {
+        return (currentState is! GameErrorState);
+      },
+      builder: (builderContext, state) {
+        return Scaffold(
+          body: Column(
+            children: <Widget>[
+              GameTitle(),
+              Expanded(
+                child: _buildCreateGame(state),
+              ),
+            ],
+          ),
+          floatingActionButton: _buildAddPlayerFab(builderContext, state),
+        );
+      },
+    );
+  }
+
   Widget _buildCreateGame(GameState state) {
     if (state is GameInitialState) {
       return CreateGame();
@@ -69,44 +108,5 @@ class _HomePageState extends State<HomePage> {
       );
     } else
       return null; // returning null won't render the widget
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<GameBloc, GameState>(
-      listenWhen: (previousState, currentState) {
-        return (currentState is GameErrorState);
-      },
-      listener: (builderContext, state) {
-        if (state is GameErrorState) {
-          Flushbar(
-            message: state.errorMessage,
-            icon: Icon(
-              Icons.error,
-              size: 28.0,
-              color: Colors.red,
-            ),
-            duration: Duration(seconds: 3),
-            leftBarIndicatorColor: Colors.red,
-          )..show(builderContext);
-        }
-      },
-      buildWhen: (previousState, currentState) {
-        return (currentState is! GameErrorState);
-      },
-      builder: (builderContext, state) {
-        return Scaffold(
-          body: Column(
-            children: <Widget>[
-              GameTitle(),
-              Expanded(
-                child: _buildCreateGame(state),
-              ),
-            ],
-          ),
-          floatingActionButton: _buildAddPlayerFab(builderContext, state),
-        );
-      },
-    );
   }
 }

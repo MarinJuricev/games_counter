@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
+import 'package:game_counter/presentation/widgets/out_lined_button.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
@@ -89,10 +91,14 @@ class PlayerCard extends StatelessWidget {
                           _addDeletePlayerEvent(context, currentPlayer),
                       child: Padding(
                         padding: const EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          Icons.clear,
-                          color: Colors.grey,
-                          size: 18,
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          child: Icon(
+                            Icons.clear,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
@@ -111,11 +117,33 @@ class PlayerCard extends StatelessWidget {
   }
 
   _addDeletePlayerEvent(
-    BuildContext context,
+    BuildContext parentContext,
     Player currentPlayer,
   ) {
-    context
-        .bloc<GameBloc>()
-        .add(DeletePlayerGameEvent(playerToDelete: currentPlayer));
+    return showDialog<void>(
+      context: parentContext,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('Delete Player'),
+          content: const Text('Do you really want to delete this player?'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              child: const Text('Yes'),
+              onPressed: () {
+                BlocProvider.of<GameBloc>(parentContext)
+                  ..add(DeletePlayerGameEvent(playerToDelete: currentPlayer));
+                Navigator.of(context).pop();
+              },
+            ),
+            CupertinoDialogAction(
+              child: const Text('No'),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      },
+    );
   }
 }

@@ -15,7 +15,9 @@ class DeletePlayer implements BaseUseCase<Game, Params> {
 
   @override
   Future<Either<Failure, Game>> call(Params params) async {
-    final currentGame = params.currentGame;
+    // Copies the object by value, if we don't do this for some reason the bloc doesn't
+    // detect a change ( possiblity it say's it's the same object and refuses to re-render)
+    final currentGame = Game.clone(params.currentGame);
     final playerToDelete = params.playerToDelete;
 
     int currentPlayerIndex =
@@ -25,6 +27,8 @@ class DeletePlayer implements BaseUseCase<Game, Params> {
     if (currentPlayerIndex >= 0) {
       currentGame.players.removeAt(currentPlayerIndex);
       await repository.saveGame(currentGame);
+
+      print('test');
 
       return await Future<Either<Failure, Game>>.value(Right(currentGame));
     } else {
@@ -42,7 +46,6 @@ class Params extends Equatable {
   Params({
     @required this.currentGame,
     @required this.playerToDelete,
-    Player currentPlayer,
   });
 
   @override

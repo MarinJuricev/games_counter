@@ -20,6 +20,15 @@ class Game extends Equatable {
     this.bonusPoints,
   });
 
+  Game.clone(Game gameObject)
+      : this(
+            players: List.from(gameObject.players),
+            name: gameObject.name,
+            pointsToWin: gameObject.pointsToWin,
+            bonusPoints: gameObject.bonusPoints,
+            numberOfPlayers: gameObject.numberOfPlayers,
+            winner: gameObject.winner);
+
   @override
   List<Object> get props => [
         players,
