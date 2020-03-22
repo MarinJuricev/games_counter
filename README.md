@@ -37,6 +37,6 @@ The domain/data layers are fully tested, while inside the presentation layer onl
 # TODOS:
   - [ ] History with local persistence
   - [ ] Settings
-  - [ ] Delete Player
-  - [ ] End game sooner feature, since not all games have a point limit.
+  - [X] Delete Player
+  - [X] End game sooner feature, since not all games have a point limit.
   - [ ] Many more...
