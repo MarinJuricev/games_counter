@@ -14,6 +14,7 @@ void main() {
 
   final playerName = 'validPlayerName';
   final playerNameWithMorePoints = 'validPlayerNameWithMorePoints';
+  final playerNameWithSamePoints = 'samePoints';
   final playerPoints = 0;
   final playerBonusPoints = 0;
   final newPlayerPoints = 14;
@@ -24,6 +25,7 @@ void main() {
   Game testGame;
   Player testPlayer;
   Player testPlayerWithMorePoints;
+  Player testPlayerWithSamePoints;
 
   setUp(
     () {
@@ -37,6 +39,12 @@ void main() {
       );
 
       testPlayerWithMorePoints = Player(
+        name: playerNameWithMorePoints,
+        points: newPlayerPoints,
+        bonusPoints: newPlayerBonusPoints,
+      );
+
+      testPlayerWithSamePoints = Player(
         name: playerNameWithMorePoints,
         points: newPlayerPoints,
         bonusPoints: newPlayerBonusPoints,
@@ -60,7 +68,7 @@ void main() {
           final actualResult =
               await endGameSooner(Params(currentGame: testGame));
 
-          final expectedResult = Right('validPlayerNameWithMorePoints');
+          final expectedResult = Right(testPlayerWithMorePoints);
 
           verify(mockGameRepository.saveGame(testGame)).called(1);
           expect(actualResult, expectedResult);

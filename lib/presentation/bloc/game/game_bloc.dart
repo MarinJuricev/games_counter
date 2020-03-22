@@ -14,6 +14,7 @@ import '../../../domain/repositories/game_repository.dart';
 import '../../../domain/usecases/create_game.dart' as createGameUseCase;
 import '../../../domain/usecases/create_player.dart';
 import '../../../domain/usecases/delete_player.dart' as deletePlayerUseCase;
+import '../../../domain/usecases/end_game_sooner.dart' as endGameSoonerUseCase;
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -23,6 +24,7 @@ const String VALIDATION_ERROR = 'Validation Error';
 class GameBloc extends Bloc<GameEvent, GameState> {
   final createGameUseCase.CreateGame createGame;
   final deletePlayerUseCase.DeletePlayer deletePlayer;
+  final endGameSoonerUseCase.EndGameSooner endGameSooner;
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
   final GameRepository gameRepository;
@@ -31,6 +33,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     @required this.createGame,
     @required this.createPlayer,
     @required this.deletePlayer,
+    @required this.endGameSooner,
     @required this.inputConverter,
     @required this.gameRepository,
   });
@@ -140,7 +143,16 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       }
     } else if (event is EndGameSoonerEvent) {
       final currentGame = event.currentGame;
-      
+      final useCaseResult = await endGameSooner(
+        endGameSoonerUseCase.Params(currentGame: currentGame),
+      );
+
+      final endGameSoonerResult = useCaseResult.unwrapResult();
+      if (endGameSoonerResult is Failure)
+          yield GameErrorState(errorMessage: endGameSoonerResult.message);
+        else if (endGameSoonerResult is Player) {
+          yield GameOverState(player: endGameSoonerResult);
+        }
     }
   }
 }

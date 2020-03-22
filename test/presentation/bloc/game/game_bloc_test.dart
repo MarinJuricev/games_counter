@@ -12,6 +12,8 @@ import 'package:game_counter/domain/usecases/create_game.dart'
 import 'package:game_counter/domain/usecases/create_player.dart';
 import 'package:game_counter/domain/usecases/delete_player.dart'
     as deletePlayerUseCase;
+import 'package:game_counter/domain/usecases/end_game_sooner.dart'
+    as endGameSoonerUseCase;
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:mockito/mockito.dart';
 
@@ -19,6 +21,9 @@ class MockCreateGame extends Mock implements createGameUseCase.CreateGame {}
 
 class MockDeletePlayer extends Mock
     implements deletePlayerUseCase.DeletePlayer {}
+
+class MockEndGameSooner extends Mock
+    implements endGameSoonerUseCase.EndGameSooner {}
 
 class MockCreatePlayer extends Mock implements CreatePlayer {}
 
@@ -30,6 +35,7 @@ void main() {
   MockCreateGame mockCreateGame;
   MockCreatePlayer mockCreatePlayer;
   MockDeletePlayer mockDeletePlayer;
+  MockEndGameSooner mockEndGameSooner;
   MockGameRepository mockGameRepository;
   MockInputConverter mockInputConverter;
 
@@ -39,6 +45,7 @@ void main() {
       mockGameRepository = MockGameRepository();
       mockCreateGame = MockCreateGame();
       mockDeletePlayer = MockDeletePlayer();
+      mockEndGameSooner = MockEndGameSooner();
       mockInputConverter = MockInputConverter();
     },
   );
@@ -119,6 +126,7 @@ void main() {
           build: () async => GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository),
@@ -145,6 +153,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -168,6 +177,7 @@ void main() {
             return GameBloc(
                 createGame: mockCreateGame,
                 deletePlayer: mockDeletePlayer,
+                endGameSooner: mockEndGameSooner,
                 inputConverter: mockInputConverter,
                 createPlayer: mockCreatePlayer,
                 gameRepository: mockGameRepository);
@@ -189,6 +199,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -208,6 +219,7 @@ void main() {
         build: () async => GameBloc(
             createGame: mockCreateGame,
             deletePlayer: mockDeletePlayer,
+            endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -220,6 +232,7 @@ void main() {
         build: () async => GameBloc(
             createGame: mockCreateGame,
             deletePlayer: mockDeletePlayer,
+            endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -233,6 +246,7 @@ void main() {
         build: () async => GameBloc(
             createGame: mockCreateGame,
             deletePlayer: mockDeletePlayer,
+            endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
@@ -260,6 +274,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -285,6 +300,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -310,6 +326,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -334,6 +351,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -356,6 +374,7 @@ void main() {
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -372,12 +391,13 @@ void main() {
         'should emit [GameErrorState] when [DeletePlayerGameEvent] delete player usecase returns a failure',
         build: () async {
           _setupRepositorySuccessCase();
-          when(mockDeletePlayer.call(any)).thenAnswer(
-                (_) async => Left(NotImplementedFailure()));
+          when(mockDeletePlayer.call(any))
+              .thenAnswer((_) async => Left(NotImplementedFailure()));
 
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -394,12 +414,13 @@ void main() {
         'should emit [GameUpdatedState] when [DeletePlayerGameEvent] delete player usecase succeds',
         build: () async {
           _setupRepositorySuccessCase();
-          when(mockDeletePlayer.call(any)).thenAnswer(
-                (_) async => Right(testGame));
+          when(mockDeletePlayer.call(any))
+              .thenAnswer((_) async => Right(testGame));
 
           return GameBloc(
               createGame: mockCreateGame,
               deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
@@ -409,6 +430,52 @@ void main() {
         )),
         expect: [
           GameUpdatedState(game: testGame),
+        ],
+      );
+
+      blocTest(
+        'should emit [GameOverState] when endGameSoonerUseCase result succeds',
+        build: () async {
+          testGame.players.add(testPlayer);
+
+          when(mockEndGameSooner.call(any))
+              .thenAnswer((_) async => Right(testPlayer));
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
+        act: (gameBloc) =>
+            gameBloc.add(EndGameSoonerEvent(currentGame: testGame)),
+        expect: [
+          GameOverState(player: testPlayer),
+        ],
+      );
+
+      blocTest(
+        'should emit [GameErrorState] when endGameSoonerUseCase result fails',
+        build: () async {
+          testGame.players.add(testPlayer);
+
+          when(mockEndGameSooner.call(any))
+              .thenAnswer((_) async => Left(NotImplementedFailure()));
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
+        act: (gameBloc) =>
+            gameBloc.add(EndGameSoonerEvent(currentGame: testGame)),
+        expect: [
+          GameErrorState(errorMessage: ''),
         ],
       );
     },

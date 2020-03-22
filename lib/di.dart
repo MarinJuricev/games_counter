@@ -1,4 +1,5 @@
 import 'package:game_counter/domain/usecases/delete_player.dart';
+import 'package:game_counter/domain/usecases/end_game_sooner.dart';
 import 'package:game_counter/domain/usecases/reset_player.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +22,7 @@ Future<void> init() async {
         createGame: sl<CreateGame>(),
         createPlayer: sl<CreatePlayer>(),
         deletePlayer: sl<DeletePlayer>(),
+        endGameSooner: sl<EndGameSooner>(),
         inputConverter: sl<InputConverter>(),
         gameRepository: sl<GameRepository>(),
       ));
@@ -33,15 +35,12 @@ Future<void> init() async {
       ));
 
   // Use cases
-  sl.registerFactory(() => CreateGame(
-        repository: sl<GameRepository>(),
-      ));
-  sl.registerFactory(
-      () => CreatePlayer(repository: sl<GameRepository>()));
-
+  sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));
+  sl.registerFactory(() => CreatePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
+  sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
