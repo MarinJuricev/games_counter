@@ -28,7 +28,6 @@ void main() {
   setUp(
     () {
       mockGameRepository = MockGameRepository();
-
       updateGame = UpdateGame(repository: mockGameRepository);
 
       testPlayer = Player(

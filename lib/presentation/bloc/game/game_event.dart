@@ -59,3 +59,12 @@ class DeletePlayerGameEvent extends GameEvent {
   @override
   List<Object> get props => [playerToDelete];
 }
+
+class EndGameSoonerEvent extends GameEvent {
+  final Game currentGame;
+
+  EndGameSoonerEvent({@required this.currentGame});
+
+  @override
+  List<Object> get props => [currentGame];
+}

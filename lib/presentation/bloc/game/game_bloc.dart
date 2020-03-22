@@ -138,6 +138,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           yield GameUpdatedState(game: deletePlayerResult);
         }
       }
+    } else if (event is EndGameSoonerEvent) {
+      final currentGame = event.currentGame;
+      
     }
   }
 }
