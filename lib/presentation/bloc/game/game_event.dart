@@ -1,6 +1,10 @@
 part of 'game_bloc.dart';
 
-abstract class GameEvent extends Equatable {
+abstract class GameEvent with _$GameEvent {
+  factory GameEvent.gameCreated(
+          String gameTitle, String numberOfPlayers, String pointsToWin) =
+      _OnGameCreated;
+
   const GameEvent();
 
   List<Object> get props => [];

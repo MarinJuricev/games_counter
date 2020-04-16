@@ -27,6 +27,8 @@ dependencies:
   numberpicker: ^1.1.0
   # SnackBar on steroids
   flushbar: ^1.9.1
+  # Annotations for freezed
+  freezed_annotation: ^0.7.1
   # Remote API
   # data_connection_checker: ^0.3.4
   # http: ^0.12.0+4
@@ -39,6 +41,8 @@ dev_dependencies:
   hive_generator: ^0.7.0+2
   build_runner: ^1.8.0
   bloc_test: ^4.0.0
+  # Class code gen and Kotlin like when statement
+  freezed: ^0.10.6
 
 
 flutter:
