@@ -48,7 +48,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> mapEventToState(
     GameEvent event,
   ) async* {
-    event.map(
+    yield* event.map(
       gameCreated: (params) => _handleGameCreatedEvent(
           params.numberOfPlayers, params.pointsToWin, params.gameTitle),
       gameUpdated: (params) => _handleGameUpdatedEvent(params.newGame),
