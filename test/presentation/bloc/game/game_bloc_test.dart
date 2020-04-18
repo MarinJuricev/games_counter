@@ -130,7 +130,7 @@ void main() {
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository),
-          act: (gameBloc) => gameBloc.add(CreatedGameEvent(
+          act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
@@ -158,7 +158,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(CreatedGameEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
           gameTitle: gameName,
           numberOfPlayers: numberOfPlayers,
           pointsToWin: pointsToWin,
@@ -182,7 +182,7 @@ void main() {
                 createPlayer: mockCreatePlayer,
                 gameRepository: mockGameRepository);
           },
-          act: (gameBloc) => gameBloc.add((CreatedGameEvent(
+          act: (gameBloc) => gameBloc.add((GameEvent.gameCreated(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
@@ -204,7 +204,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(CreatedGameEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
           gameTitle: gameName,
           numberOfPlayers: numberOfPlayers,
           pointsToWin: pointsToWin,
@@ -223,7 +223,8 @@ void main() {
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
-        act: (gameBloc) => gameBloc.add(GameUpdatedEvent(newGame: testGame)),
+        act: (gameBloc) =>
+            gameBloc.add(GameEvent.gameUpdated(newGame: testGame)),
         expect: [GameUpdatedState(game: testGame)],
       );
 
@@ -237,7 +238,7 @@ void main() {
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
         act: (gameBloc) =>
-            gameBloc.add(GameUpdatedEvent(newGame: testGameOverGame)),
+            gameBloc.add(GameEvent.gameUpdated(newGame: testGameOverGame)),
         expect: [GameOverState(player: testPlayer)],
       );
 
@@ -250,7 +251,7 @@ void main() {
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
             gameRepository: mockGameRepository),
-        act: (gameBloc) => gameBloc.add((PlayerCreatedEvent(
+        act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -279,7 +280,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(PlayerCreatedEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -305,7 +306,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add((PlayerCreatedEvent(
+        act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -331,7 +332,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add((PlayerCreatedEvent(
+        act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -356,7 +357,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add((PlayerCreatedEvent(
+        act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
@@ -379,7 +380,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
           playerToDelete: testPlayer,
         )),
         expect: [
@@ -402,7 +403,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
           playerToDelete: testPlayer,
         )),
         expect: [
@@ -425,7 +426,7 @@ void main() {
               createPlayer: mockCreatePlayer,
               gameRepository: mockGameRepository);
         },
-        act: (gameBloc) => gameBloc.add(DeletePlayerGameEvent(
+        act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
           playerToDelete: testPlayer,
         )),
         expect: [
@@ -450,7 +451,7 @@ void main() {
               gameRepository: mockGameRepository);
         },
         act: (gameBloc) =>
-            gameBloc.add(EndGameSoonerEvent(currentGame: testGame)),
+            gameBloc.add(GameEvent.endGameSooner(currentGame: testGame)),
         expect: [
           GameOverState(player: testPlayer),
         ],
@@ -473,7 +474,7 @@ void main() {
               gameRepository: mockGameRepository);
         },
         act: (gameBloc) =>
-            gameBloc.add(EndGameSoonerEvent(currentGame: testGame)),
+            gameBloc.add(GameEvent.endGameSooner(currentGame: testGame)),
         expect: [
           GameErrorState(errorMessage: ''),
         ],

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
@@ -18,6 +20,7 @@ import '../../../domain/usecases/end_game_sooner.dart' as endGameSoonerUseCase;
 
 part 'game_event.dart';
 part 'game_state.dart';
+part 'game_bloc.freezed.dart';
 
 const String VALIDATION_ERROR = 'Validation Error';
 
@@ -45,133 +48,186 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> mapEventToState(
     GameEvent event,
   ) async* {
-    if (event is CreatedGameEvent) {
-      final numberResult = inputConverter
-          .stringToUnsignedInteger(event.numberOfPlayers)
-          .unwrapResult();
+    event.map(
+      gameCreated: (params) => _handleGameCreatedEvent(
+          params.numberOfPlayers, params.pointsToWin, params.gameTitle),
+      gameUpdated: (params) => _handleGameUpdatedEvent(params.newGame),
+      playerCreationStarted: (params) => _handlePlayerCreationStartedEvent(
+          params.playername, params.points, params.bonusPoints),
+      resetGame: (_) => _handleResetGameEvent(),
+      deletePlayer: (params) => _handleDeletePlayerEvent(params.playerToDelete),
+      endGameSooner: (params) => _handleEndGameSoonerEvent(params.currentGame),
+      playerCreated: (params) => _handlePlayerCreatedEvent(
+          params.playerName, params.points, params.bonusPoints),
+    );
+  }
 
-      final pointsResult = inputConverter
-          .stringToUnsignedInteger(event.pointsToWin)
-          .unwrapResult();
+  Stream<GameState> _handleGameCreatedEvent(
+      String numberOfPlayers, String pointsToWin, String gameTitle) async* {
+    final numberResult =
+        inputConverter.stringToUnsignedInteger(numberOfPlayers).unwrapResult();
 
-      if (numberResult is Failure ||
-          pointsResult is Failure ||
-          event.gameTitle.isEmpty) {
-        yield GameErrorState(errorMessage: VALIDATION_ERROR);
-      }
+    final pointsResult =
+        inputConverter.stringToUnsignedInteger(pointsToWin).unwrapResult();
 
-      if (numberResult is int && pointsResult is int) {
-        final useCaseEither = await createGame(
-          createGameUseCase.Params(
-              gameTitle: event.gameTitle,
-              numberOfPlayers: numberResult,
-              winningPoints: pointsResult),
-        );
+    if (numberResult is Failure ||
+        pointsResult is Failure ||
+        gameTitle.isEmpty) {
+      yield GameErrorState(errorMessage: VALIDATION_ERROR);
+    }
 
-        yield* _mapEitherErrorOrGameCreated(useCaseEither);
-      }
-    } else if (event is GameUpdatedEvent) {
-      final updatedGame = event.newGame;
-
-      if (updatedGame.winner == null) {
-        yield GameUpdatedState(game: event.newGame);
-      } else {
-        Player winner = updatedGame.players.firstWhere(
-            (itemToCheck) => itemToCheck.name == updatedGame.winner);
-
-        //TODO add a usecase for this.. it'll need to store this game and the winner into local persistence
-        yield GameOverState(player: winner);
-      }
-    } else if (event is PlayerCreatedEvent) {
-      final playerName = event.playerName;
-
-      final pointsEitherResult =
-          inputConverter.stringToUnsignedInteger(event.points).unwrapResult();
-
-      final bonusPointsEitherResult = inputConverter
-          .stringToUnsignedInteger(event.bonusPoints)
-          .unwrapResult();
-
-      yield* _validatePointsEitherResults(
-        pointsEitherResult,
-        bonusPointsEitherResult,
+    if (numberResult is int && pointsResult is int) {
+      final useCaseEither = await createGame(
+        createGameUseCase.Params(
+            gameTitle: gameTitle,
+            numberOfPlayers: numberResult,
+            winningPoints: pointsResult),
       );
 
-      final gameEither = await gameRepository.getGame();
-      final gameRepoResult = gameEither.unwrapResult();
-
-      if (gameRepoResult is Failure)
-        yield GameErrorState(errorMessage: gameRepoResult.message);
-      else if (gameRepoResult is Game) {
-        final createPlayerUseCase = await createPlayer(
-          Params(
-              playerName: playerName,
-              points: pointsEitherResult,
-              bonusPoints: bonusPointsEitherResult,
-              currentGame: gameRepoResult),
-        );
-        final createPlayerResult = createPlayerUseCase.unwrapResult();
-
-        if (createPlayerResult is Failure)
-          yield GameErrorState(errorMessage: createPlayerResult.message);
-        else if (createPlayerResult is Game) {
-          yield GameUpdatedState(game: createPlayerResult);
-        }
-      }
-    } else if (event is ResetGameEvent) {
-      yield GameInitialState();
-    } else if (event is DeletePlayerGameEvent) {
-      final playerToDelete = event.playerToDelete;
-
-      final gameEither = await gameRepository.getGame();
-      final gameRepoResult = gameEither.unwrapResult();
-
-      if (gameRepoResult is Failure)
-        yield GameErrorState(errorMessage: gameRepoResult.message);
-      else if (gameRepoResult is Game) {
-        final useCaseResult = await deletePlayer(
-          deletePlayerUseCase.Params(
-              currentGame: gameRepoResult, playerToDelete: playerToDelete),
-        );
-        final deletePlayerResult = useCaseResult.unwrapResult();
-
-        if (deletePlayerResult is Failure)
-          yield GameErrorState(errorMessage: deletePlayerResult.message);
-        else if (deletePlayerResult is Game) {
-          yield GameUpdatedState(game: deletePlayerResult);
-        }
-      }
-    } else if (event is EndGameSoonerEvent) {
-      final currentGame = event.currentGame;
-      final useCaseResult = await endGameSooner(
-        endGameSoonerUseCase.Params(currentGame: currentGame),
-      );
-
-      final endGameSoonerResult = useCaseResult.unwrapResult();
-      if (endGameSoonerResult is Failure)
-          yield GameErrorState(errorMessage: endGameSoonerResult.message);
-        else if (endGameSoonerResult is Player) {
-          yield GameOverState(player: endGameSoonerResult);
-        }
+      yield* _mapEitherErrorOrGameCreated(useCaseEither);
     }
   }
-}
 
-Stream<GameState> _validatePointsEitherResults(
-    pointsEitherResult, bonusPointsEitherResult) async* {
-  if (pointsEitherResult is Failure) {
-    yield GameErrorState(errorMessage: pointsEitherResult.message);
+  Stream<GameState> _handleGameUpdatedEvent(Game newGame) async* {
+    final updatedGame = newGame;
+
+    if (updatedGame.winner == null) {
+      yield GameUpdatedState(game: newGame);
+    } else {
+      Player winner = updatedGame.players
+          .firstWhere((itemToCheck) => itemToCheck.name == updatedGame.winner);
+
+      //TODO add a usecase for this.. it'll need to store this game and the winner into local persistence
+      yield GameOverState(player: winner);
+    }
   }
 
-  if (bonusPointsEitherResult is Failure) {
-    yield GameErrorState(errorMessage: pointsEitherResult.errorMessage);
-  }
-}
+  Stream<GameState> _handlePlayerCreationStartedEvent(
+      String playerName, String points, String bonusPoints) async* {
+    final pointsEitherResult =
+        inputConverter.stringToUnsignedInteger(points).unwrapResult();
 
-Stream<GameState> _mapEitherErrorOrGameCreated(
-    Either<Failure, Game> useCaseEither) async* {
-  yield useCaseEither.fold(
-    (failure) => GameErrorState(errorMessage: VALIDATION_ERROR),
-    (game) => GameCreatedState(game: game),
-  );
+    final bonusPointsEitherResult =
+        inputConverter.stringToUnsignedInteger(bonusPoints).unwrapResult();
+
+    yield* _validatePointsEitherResults(
+      pointsEitherResult,
+      bonusPointsEitherResult,
+    );
+
+    final gameEither = await gameRepository.getGame();
+    final gameRepoResult = gameEither.unwrapResult();
+
+    if (gameRepoResult is Failure)
+      yield GameErrorState(errorMessage: gameRepoResult.message);
+    else if (gameRepoResult is Game) {
+      final createPlayerUseCase = await createPlayer(
+        Params(
+            playerName: playerName,
+            points: pointsEitherResult,
+            bonusPoints: bonusPointsEitherResult,
+            currentGame: gameRepoResult),
+      );
+      final createPlayerResult = createPlayerUseCase.unwrapResult();
+
+      if (createPlayerResult is Failure)
+        yield GameErrorState(errorMessage: createPlayerResult.message);
+      else if (createPlayerResult is Game) {
+        yield GameUpdatedState(game: createPlayerResult);
+      }
+    }
+  }
+
+  Stream<GameState> _handleResetGameEvent() async* {
+    yield GameInitialState();
+  }
+
+  Stream<GameState> _handleDeletePlayerEvent(Player playerToDelete) async* {
+    final gameEither = await gameRepository.getGame();
+    final gameRepoResult = gameEither.unwrapResult();
+
+    if (gameRepoResult is Failure)
+      yield GameErrorState(errorMessage: gameRepoResult.message);
+    else if (gameRepoResult is Game) {
+      final useCaseResult = await deletePlayer(
+        deletePlayerUseCase.Params(
+            currentGame: gameRepoResult, playerToDelete: playerToDelete),
+      );
+      final deletePlayerResult = useCaseResult.unwrapResult();
+
+      if (deletePlayerResult is Failure)
+        yield GameErrorState(errorMessage: deletePlayerResult.message);
+      else if (deletePlayerResult is Game) {
+        yield GameUpdatedState(game: deletePlayerResult);
+      }
+    }
+  }
+
+  Stream<GameState> _handleEndGameSoonerEvent(Game currentGame) async* {
+    final useCaseResult = await endGameSooner(
+      endGameSoonerUseCase.Params(currentGame: currentGame),
+    );
+
+    final endGameSoonerResult = useCaseResult.unwrapResult();
+    if (endGameSoonerResult is Failure)
+      yield GameErrorState(errorMessage: endGameSoonerResult.message);
+    else if (endGameSoonerResult is Player) {
+      yield GameOverState(player: endGameSoonerResult);
+    }
+  }
+
+  Stream<GameState> _handlePlayerCreatedEvent(
+      String playerName, String points, String bonusPoints) async* {
+    final pointsEitherResult =
+        inputConverter.stringToUnsignedInteger(points).unwrapResult();
+
+    final bonusPointsEitherResult =
+        inputConverter.stringToUnsignedInteger(bonusPoints).unwrapResult();
+
+    yield* _validatePointsEitherResults(
+      pointsEitherResult,
+      bonusPointsEitherResult,
+    );
+
+    final gameEither = await gameRepository.getGame();
+    final gameRepoResult = gameEither.unwrapResult();
+
+    if (gameRepoResult is Failure)
+      yield GameErrorState(errorMessage: gameRepoResult.message);
+    else if (gameRepoResult is Game) {
+      final createPlayerUseCase = await createPlayer(
+        Params(
+            playerName: playerName,
+            points: pointsEitherResult,
+            bonusPoints: bonusPointsEitherResult,
+            currentGame: gameRepoResult),
+      );
+      final createPlayerResult = createPlayerUseCase.unwrapResult();
+
+      if (createPlayerResult is Failure)
+        yield GameErrorState(errorMessage: createPlayerResult.message);
+      else if (createPlayerResult is Game) {
+        yield GameUpdatedState(game: createPlayerResult);
+      }
+    }
+  }
+
+  Stream<GameState> _validatePointsEitherResults(
+      pointsEitherResult, bonusPointsEitherResult) async* {
+    if (pointsEitherResult is Failure) {
+      yield GameErrorState(errorMessage: pointsEitherResult.message);
+    }
+
+    if (bonusPointsEitherResult is Failure) {
+      yield GameErrorState(errorMessage: pointsEitherResult.errorMessage);
+    }
+  }
+
+  Stream<GameState> _mapEitherErrorOrGameCreated(
+      Either<Failure, Game> useCaseEither) async* {
+    yield useCaseEither.fold(
+      (failure) => GameErrorState(errorMessage: VALIDATION_ERROR),
+      (game) => GameCreatedState(game: game),
+    );
+  }
 }

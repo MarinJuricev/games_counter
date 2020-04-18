@@ -72,7 +72,7 @@ _addEndGameSoonerEvent(
             child: const Text('Yes'),
             onPressed: () {
               BlocProvider.of<GameBloc>(parentContext)
-                ..add(EndGameSoonerEvent(currentGame: currentGame));
+                ..add(GameEvent.endGameSooner(currentGame: currentGame));
               Navigator.of(context).pop();
             },
           ),

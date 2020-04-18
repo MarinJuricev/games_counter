@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
-import 'package:game_counter/presentation/widgets/out_lined_button.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
+import '../bloc/game/game_bloc.dart';
 import '../pages/player_details_page.dart';
 import 'player_progress.dart';
 
@@ -133,7 +132,9 @@ class PlayerCard extends StatelessWidget {
               child: const Text('Yes'),
               onPressed: () {
                 BlocProvider.of<GameBloc>(parentContext)
-                  ..add(DeletePlayerGameEvent(playerToDelete: currentPlayer));
+                  ..add(GameEvent.deletePlayer(
+                    playerToDelete: currentPlayer,
+                  ));
                 Navigator.of(context).pop();
               },
             ),

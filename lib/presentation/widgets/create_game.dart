@@ -159,10 +159,11 @@ class _CreateGameState extends State<CreateGame> {
 
   void _addCreateGameEvent() {
     if (_gameFormKey.currentState.validate()) {
-      BlocProvider.of<GameBloc>(context).add(CreatedGameEvent(
-          gameTitle: gameTitle,
-          numberOfPlayers: numberOfPlayers,
-          pointsToWin: winningPoints));
+      BlocProvider.of<GameBloc>(context).add(GameEvent.gameCreated(
+        gameTitle: gameTitle,
+        numberOfPlayers: numberOfPlayers,
+        pointsToWin: winningPoints,
+      ));
     }
   }
 }

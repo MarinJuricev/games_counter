@@ -1,74 +1,25 @@
 part of 'game_bloc.dart';
+// part 'game_event.freezed.dart';
 
+@freezed
 abstract class GameEvent with _$GameEvent {
-  factory GameEvent.gameCreated(
-          String gameTitle, String numberOfPlayers, String pointsToWin) =
-      _OnGameCreated;
-
-  const GameEvent();
-
-  List<Object> get props => [];
-}
-
-class CreatedGameEvent extends GameEvent {
-  final String gameTitle;
-  final String numberOfPlayers;
-  final String pointsToWin;
-
-  CreatedGameEvent({
-    @required this.gameTitle,
-    @required this.numberOfPlayers,
-    @required this.pointsToWin,
-  });
-
-  @override
-  List<Object> get props => [gameTitle, numberOfPlayers, pointsToWin];
-}
-
-class GameUpdatedEvent extends GameEvent {
-  final Game newGame;
-
-  GameUpdatedEvent({
-    @required this.newGame,
-  });
-
-  @override
-  List<Object> get props => [newGame];
-}
-
-class PlayerCreationStartedEvent extends GameEvent {}
-
-class PlayerCreatedEvent extends GameEvent {
-  final String playerName;
-  final String points;
-  final String bonusPoints;
-
-  PlayerCreatedEvent({
-    @required this.playerName,
-    @required this.points,
-    @required this.bonusPoints,
-  });
-
-  @override
-  List<Object> get props => [playerName, points, bonusPoints];
-}
-
-class ResetGameEvent extends GameEvent {}
-
-class DeletePlayerGameEvent extends GameEvent {
-  final Player playerToDelete;
-
-  DeletePlayerGameEvent({@required this.playerToDelete});
-
-  @override
-  List<Object> get props => [playerToDelete];
-}
-
-class EndGameSoonerEvent extends GameEvent {
-  final Game currentGame;
-
-  EndGameSoonerEvent({@required this.currentGame});
-
-  @override
-  List<Object> get props => [currentGame];
+  factory GameEvent.gameCreated({
+    String gameTitle,
+    String numberOfPlayers,
+    String pointsToWin,
+  }) = _OnGameCreated;
+  factory GameEvent.gameUpdated({Game newGame}) = _OnGameUpdated;
+  factory GameEvent.playerCreationStarted({
+    String playername,
+    String points,
+    String bonusPoints,
+  }) = _OnPlayerCreationStarted;
+  factory GameEvent.playerCreated({
+    String playerName,
+    String points,
+    String bonusPoints,
+  }) = _OnPlayerCreatedEvent;
+  factory GameEvent.resetGame() = _OnGameReset;
+  factory GameEvent.deletePlayer({Player playerToDelete}) = _OnDeletePlayer;
+  factory GameEvent.endGameSooner({Game currentGame}) = _OnEndGameSooner;
 }

@@ -64,5 +64,5 @@ class GameOver extends StatelessWidget {
 }
 
 _resetGame(BuildContext context) {
-  BlocProvider.of<GameBloc>(context)..add(ResetGameEvent());
+  BlocProvider.of<GameBloc>(context)..add(GameEvent.resetGame());
 }

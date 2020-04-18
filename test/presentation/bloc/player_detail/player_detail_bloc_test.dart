@@ -6,7 +6,8 @@ import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
-import 'package:game_counter/domain/usecases/reset_player.dart' as resetPlayerUseCase;
+import 'package:game_counter/domain/usecases/reset_player.dart'
+    as resetPlayerUseCase;
 import 'package:game_counter/domain/usecases/update_game.dart';
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:game_counter/presentation/bloc/player_detail/player_detail_bloc.dart';
@@ -174,7 +175,7 @@ void main() {
           newBonusPoints: newBonusPoints,
         )),
         verify: (playerDetailBloc) async {
-          mockGameBloc.add(GameUpdatedEvent(newGame: testGame));
+          mockGameBloc.add(GameEvent.gameUpdated(newGame: testGame));
         },
         expect: [PlayerDetailUpdatedState(player: updatedPlayer)],
       );
@@ -218,11 +219,10 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.Params(currentGame: testGame, currentPlayer: currentPlayer));
+          mockResetPlayer(resetPlayerUseCase.Params(
+              currentGame: testGame, currentPlayer: currentPlayer));
         },
-        expect: [
-          PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)
-        ],
+        expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
       );
 
       blocTest(
@@ -242,11 +242,10 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.Params(currentGame: testGame, currentPlayer: currentPlayer));
+          mockResetPlayer(resetPlayerUseCase.Params(
+              currentGame: testGame, currentPlayer: currentPlayer));
         },
-        expect: [
-          PlayerDetailUpdatedState(player: currentPlayer)
-        ],
+        expect: [PlayerDetailUpdatedState(player: currentPlayer)],
       );
     },
   );

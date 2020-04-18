@@ -64,7 +64,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
               (updatedPlayer) => updatedPlayer.name == currentPlayer.name);
           yield PlayerDetailUpdatedState(player: updatedPlayer);
 
-          gameBloc.add(GameUpdatedEvent(newGame: updateGameResult));
+          gameBloc.add(GameEvent.gameUpdated(newGame: updateGameResult));
         }
       }
     } else if (event is PlayerDetailResetClickedEvent) {
@@ -89,7 +89,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
               (updatedPlayer) => updatedPlayer.name == playerToReset.name);
           yield PlayerDetailUpdatedState(player: updatedPlayer);
 
-          gameBloc.add(GameUpdatedEvent(newGame: resetPlayerResult));
+          gameBloc.add(GameEvent.gameUpdated(newGame: resetPlayerResult));
         }
       }
     }

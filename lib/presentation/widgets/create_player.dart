@@ -162,7 +162,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
   void _addPlayerCreatedEvent() {
     if (_createPlayerFormKey.currentState.validate()) {
       widget.gameBloc.add(
-        PlayerCreatedEvent(
+        GameEvent.playerCreated(
           playerName: playerName,
           points: points,
           bonusPoints: bonusPoints,

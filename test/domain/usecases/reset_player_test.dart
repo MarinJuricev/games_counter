@@ -15,10 +15,6 @@ void main() {
   final playerName = 'validPlayerName';
   final playerPoints = 0;
   final playerBonusPoints = 0;
-  final newPlayerBonusPointsThatExceed = 45;
-  final newPlayerPoints = 14;
-  final newPlayerPointsThatExceed = 45;
-  final newPlayerBonusPoints = 3;
   final gameName = 'Treseta';
   final pointsToWin = 41;
   final numberOfPlayers = 2;
