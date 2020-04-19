@@ -18,9 +18,9 @@ import '../../../domain/usecases/create_player.dart';
 import '../../../domain/usecases/delete_player.dart' as deletePlayerUseCase;
 import '../../../domain/usecases/end_game_sooner.dart' as endGameSoonerUseCase;
 
+part 'game_bloc.freezed.dart';
 part 'game_event.dart';
 part 'game_state.dart';
-part 'game_bloc.freezed.dart';
 
 const String VALIDATION_ERROR = 'Validation Error';
 

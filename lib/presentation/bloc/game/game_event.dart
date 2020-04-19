@@ -1,5 +1,4 @@
 part of 'game_bloc.dart';
-// part 'game_event.freezed.dart';
 
 @freezed
 abstract class GameEvent with _$GameEvent {

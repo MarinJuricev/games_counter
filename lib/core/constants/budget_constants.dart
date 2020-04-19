@@ -13,5 +13,7 @@ const String ERROR_RETREVING_LOCAL_DATA =
 const String UPDATE_GAME_ERROR =
     'There was an error updating your game, try again later!';
 
+const String APP_THEME = 'appTheme';
+
 const String HERO_TAG_CARD_TITLE = 'hero-card-title';
 const String HERO_TAG_CARD_POINTS = 'hero-card-points';
