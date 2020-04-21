@@ -1,6 +1,7 @@
 import 'package:game_counter/domain/usecases/delete_player.dart';
 import 'package:game_counter/domain/usecases/end_game_sooner.dart';
 import 'package:game_counter/domain/usecases/reset_player.dart';
+import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -18,6 +19,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
+  // TODO this really doesn't need to be a singleton
   sl.registerLazySingleton(() => GameBloc(
         createGame: sl<CreateGame>(),
         createPlayer: sl<CreatePlayer>(),
@@ -33,6 +35,8 @@ Future<void> init() async {
         updateGame: sl<UpdateGame>(),
         resetPlayer: sl<ResetPlayer>(),
       ));
+
+  sl.registerFactory(() => ColorBloc());
 
   // Use cases
   sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));

@@ -9,7 +9,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  ColorSwatch _tempMainColor;
   ColorSwatch _mainColor = Colors.blue;
 
   @override
@@ -37,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
           InkWell(
             onTap: () {},
             child: ListTile(
-              title: Text('Primary Color'),
+              title: Text('Primary Color, '),
               subtitle: Text('Choose primary color of the app'),
               trailing: CircleColor(
                 circleSize: 26.0,
@@ -74,9 +73,9 @@ class _SettingsPageState extends State<SettingsPage> {
     _openDialog(
       'Background Color',
       MaterialColorPicker(
-        selectedColor: _mainColor,
-        onColorChange: (color) => setState(() => _mainColor = color),
-        onMainColorChange: (color) => setState(() => _tempMainColor = color),
+        allowShades: false,
+        selectedColor: Theme.of(context).scaffoldBackgroundColor,
+        onMainColorChange: (color) => setState(() => _mainColor = color),
         onBack: () => print("Back button pressed"),
       ),
     );
@@ -102,7 +101,6 @@ class _SettingsPageState extends State<SettingsPage> {
               child: const Text('SUBMIT'),
               onPressed: () {
                 Navigator.of(context).pop();
-                setState(() => _mainColor = _tempMainColor);
               },
             ),
           ],
