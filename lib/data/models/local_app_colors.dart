@@ -2,6 +2,8 @@ import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 
+part 'local_app_colors.g.dart';
+
 @HiveType(typeId: 0)
 class LocalAppColors extends HiveObject {
   @HiveField(0)

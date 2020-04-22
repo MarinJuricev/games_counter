@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/data/models/local_app_colors.dart';
 import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,6 +13,8 @@ import 'presentation/pages/home_bottom_navigation_route.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
+
   await di.init();
   runApp(MyApp());
 }

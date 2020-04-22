@@ -40,13 +40,19 @@ void main() {
         'should return Future<void> when the appColor is successfully saved into local storage',
         () async {
           Hive.init('testPath');
+          Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
+
           when(mockHiveInterface.openBox(APP_THEME)).thenAnswer(
             (_) async => Hive.openBox(APP_THEME),
           );
 
-          dataSource.cacheAppColors(testAppColor);
+          final actualResult = await dataSource.cacheAppColors(testAppColor);
+          final expectedResult = await Future<void>.value();
 
           verify(mockHiveInterface.openBox(APP_THEME));
+
+          //TODO reafctor local_color to use Either type
+          assert(2 == 2);
         },
       );
     },
