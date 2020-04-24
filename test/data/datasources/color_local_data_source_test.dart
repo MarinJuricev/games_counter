@@ -1,22 +1,27 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/color_local_data_source.dart';
 import 'package:game_counter/data/models/local_app_colors.dart';
 import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
+import 'package:matcher/matcher.dart';
 
-class MockHiveInterface extends Mock implements HiveInterface {}
+class MockBox extends Mock implements Box<dynamic> {}
 
 void main() {
   ColorLocalDataSourceImpl dataSource;
-  MockHiveInterface mockHiveInterface;
+  MockBox mockBox;
 
   AppColors testAppColor;
   LocalAppColors testLocalAppColor;
 
+  Hive.init('testPath');
+  Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
+
   setUp(() {
-    mockHiveInterface = MockHiveInterface();
-    dataSource = ColorLocalDataSourceImpl(hiveBox: mockHiveInterface);
+    mockBox = MockBox();
+    dataSource = ColorLocalDataSourceImpl(hiveBox: mockBox);
 
     testAppColor = AppColors(
       backGroundColor: '0xff58C6B2',
@@ -37,22 +42,49 @@ void main() {
     'colorLocalDataSource',
     () {
       test(
-        'should return Future<void> when the appColor is successfully saved into local storage',
+        'should call box.add with the re-mapped appColor value when cachAppColors is called',
         () async {
-          Hive.init('testPath');
-          Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
+          when(mockBox.add(testLocalAppColor)).thenAnswer((_) async => 1);
+          await dataSource.cacheAppColors(testLocalAppColor);
 
-          when(mockHiveInterface.openBox(APP_THEME)).thenAnswer(
-            (_) async => Hive.openBox(APP_THEME),
-          );
+          verify(mockBox.add(testLocalAppColor));
+        },
+      );
 
-          final actualResult = await dataSource.cacheAppColors(testAppColor);
-          final expectedResult = await Future<void>.value();
+      test(
+        'should throw [CacheException] when the index is lower then 0',
+        () async {
+          when(mockBox.add(testLocalAppColor)).thenAnswer((_) async => -1);
 
-          verify(mockHiveInterface.openBox(APP_THEME));
+          expect(() => dataSource.cacheAppColors(testLocalAppColor),
+              throwsA(TypeMatcher<CacheException>()));
 
-          //TODO reafctor local_color to use Either type
-          assert(2 == 2);
+          verify(mockBox.add(testLocalAppColor));
+        },
+      );
+
+      test(
+        'should get the latest LocalAppColors instance inside local persistence',
+        () async {
+          when(mockBox.get(APP_THEME))
+              .thenAnswer((_) async => testLocalAppColor);
+
+          final actualResult = await dataSource.getAppColors();
+          final expectedResult = testAppColor;
+
+          verify(mockBox.get(APP_THEME));
+          assert(expectedResult == actualResult);
+        },
+      );
+
+      test(
+        'should throw [CacheException] when there isnt any data present inside local persistence',
+        () async {
+          when(mockBox.get(APP_THEME)).thenAnswer((_) async => null);
+
+          expect(() => dataSource.getAppColors(),
+              throwsA(TypeMatcher<CacheException>()));
+          verify(mockBox.get(APP_THEME));
         },
       );
     },
