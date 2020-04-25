@@ -1,16 +1,20 @@
-import 'package:game_counter/domain/usecases/delete_player.dart';
-import 'package:game_counter/domain/usecases/end_game_sooner.dart';
-import 'package:game_counter/domain/usecases/reset_player.dart';
-import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
+import 'data/datasources/color_local_data_source.dart';
 import 'data/datasources/game_local_data_source.dart';
+import 'data/datasources/local_persistence_provider.dart';
+import 'data/repositories/color_repository_impl.dart';
 import 'data/repositories/game_repository_impl.dart';
+import 'domain/repositories/color_repository.dart';
 import 'domain/repositories/game_repository.dart';
 import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
+import 'domain/usecases/delete_player.dart';
+import 'domain/usecases/end_game_sooner.dart';
+import 'domain/usecases/reset_player.dart';
 import 'domain/usecases/update_game.dart';
+import 'presentation/bloc/color/bloc/color_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/bloc/player_detail/player_detail_bloc.dart';
 
@@ -36,7 +40,7 @@ Future<void> init() async {
         resetPlayer: sl<ResetPlayer>(),
       ));
 
-  sl.registerFactory(() => ColorBloc());
+  sl.registerFactory(() => ColorBloc(colorRepository: sl()));
 
   // Use cases
   sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));
@@ -50,10 +54,20 @@ Future<void> init() async {
   sl.registerLazySingleton<GameRepository>(
       () => GameRepositoryImpl(gameLocalDataSource: sl()));
 
+  sl.registerLazySingleton<ColorRepository>(
+      () => ColorRepositoryImpl(colorLocalDataSource: sl()));
+
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
       () => GameLocalDataSourceImpl());
 
+  sl.registerLazySingleton<ColorLocalDataSource>(
+      () => ColorLocalDataSourceImpl(localPersistenceProvider: sl()));
+
   // Core
   sl.registerLazySingleton(() => InputConverter());
+
+  // External
+  sl.registerLazySingleton<LocalPersistenceProvider>(
+      () => LocalPersistenceProviderImpl());
 }

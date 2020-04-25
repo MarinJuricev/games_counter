@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   # Service locator
-  get_it: ^3.1.0
+  get_it: ^4.0.1
   # Bloc for state managment
   bloc: ^4.0.0
   flutter_bloc: ^4.0.0

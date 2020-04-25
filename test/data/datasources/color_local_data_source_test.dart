@@ -1,17 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/color_local_data_source.dart';
+import 'package:game_counter/data/datasources/local_persistence_provider.dart';
 import 'package:game_counter/data/models/local_app_colors.dart';
 import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
 import 'package:matcher/matcher.dart';
 
-class MockBox extends Mock implements Box<dynamic> {}
+class MockLocalPersistenceProvider extends Mock
+    implements LocalPersistenceProvider {}
 
 void main() {
   ColorLocalDataSourceImpl dataSource;
-  MockBox mockBox;
+  MockLocalPersistenceProvider mockLocalPersistenceProvider;
 
   AppColors testAppColor;
   LocalAppColors testLocalAppColor;
@@ -20,8 +22,9 @@ void main() {
   Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
 
   setUp(() {
-    mockBox = MockBox();
-    dataSource = ColorLocalDataSourceImpl(hiveBox: mockBox);
+    mockLocalPersistenceProvider = MockLocalPersistenceProvider();
+    dataSource = ColorLocalDataSourceImpl(
+        localPersistenceProvider: mockLocalPersistenceProvider);
 
     testAppColor = AppColors(
       backGroundColor: '0xff58C6B2',
@@ -39,40 +42,20 @@ void main() {
   });
 
   group(
-    'colorLocalDataSource',
+    'getAppColors',
     () {
       test(
-        'should call box.add with the re-mapped appColor value when cachAppColors is called',
+        'should return localAppColors when localPersistenceProvider.getFromPersistence result isnt null',
         () async {
-          when(mockBox.add(testLocalAppColor)).thenAnswer((_) async => 1);
-          await dataSource.cacheAppColors(testLocalAppColor);
-
-          verify(mockBox.add(testLocalAppColor));
-        },
-      );
-
-      test(
-        'should throw [CacheException] when the index is lower then 0',
-        () async {
-          when(mockBox.add(testLocalAppColor)).thenAnswer((_) async => -1);
-
-          expect(() => dataSource.cacheAppColors(testLocalAppColor),
-              throwsA(TypeMatcher<CacheException>()));
-
-          verify(mockBox.add(testLocalAppColor));
-        },
-      );
-
-      test(
-        'should get the latest LocalAppColors instance inside local persistence',
-        () async {
-          when(mockBox.get(APP_THEME))
+          when(mockLocalPersistenceProvider.getFromPersistence(
+                  boxToGetDataFrom: APP_THEME_BOX))
               .thenAnswer((_) async => testLocalAppColor);
 
           final actualResult = await dataSource.getAppColors();
           final expectedResult = testAppColor;
 
-          verify(mockBox.get(APP_THEME));
+          verify(mockLocalPersistenceProvider.getFromPersistence(
+              boxToGetDataFrom: APP_THEME_BOX));
           assert(expectedResult == actualResult);
         },
       );
@@ -80,11 +63,47 @@ void main() {
       test(
         'should throw [CacheException] when there isnt any data present inside local persistence',
         () async {
-          when(mockBox.get(APP_THEME)).thenAnswer((_) async => null);
+          when(mockLocalPersistenceProvider.getFromPersistence(
+                  boxToGetDataFrom: APP_THEME_BOX))
+              .thenAnswer((_) async => null);
 
           expect(() => dataSource.getAppColors(),
               throwsA(TypeMatcher<CacheException>()));
-          verify(mockBox.get(APP_THEME));
+          verify(mockLocalPersistenceProvider.getFromPersistence(
+              boxToGetDataFrom: APP_THEME_BOX));
+        },
+      );
+    },
+  );
+
+  group(
+    'cacheAppColors',
+    () {
+      test(
+        'should return Future<void> when the index inside the box is greater than 0',
+        () async {
+          when(mockLocalPersistenceProvider.saveIntoPersistence(
+                  boxToSaveInto: APP_THEME_BOX, valueToSave: testLocalAppColor))
+              .thenAnswer((_) async => 1);
+          await dataSource.cacheAppColors(testLocalAppColor);
+
+          verify(mockLocalPersistenceProvider.saveIntoPersistence(
+              boxToSaveInto: APP_THEME_BOX, valueToSave: testLocalAppColor));
+        },
+      );
+
+      test(
+        'should throw [CacheException] when the index is lower then 0',
+        () async {
+          when(mockLocalPersistenceProvider.saveIntoPersistence(
+                  boxToSaveInto: APP_THEME_BOX, valueToSave: testLocalAppColor))
+              .thenAnswer((_) async => -1);
+
+          expect(() => dataSource.cacheAppColors(testLocalAppColor),
+              throwsA(TypeMatcher<CacheException>()));
+
+          verify(mockLocalPersistenceProvider.saveIntoPersistence(
+              boxToSaveInto: APP_THEME_BOX, valueToSave: testLocalAppColor));
         },
       );
     },

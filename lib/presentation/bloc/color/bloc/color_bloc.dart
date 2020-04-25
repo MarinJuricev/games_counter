@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:game_counter/domain/repositories/color_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'color_event.dart';
@@ -11,6 +12,10 @@ part 'color_state.dart';
 part 'color_bloc.freezed.dart';
 
 class ColorBloc extends Bloc<ColorEvent, ColorState> {
+  final ColorRepository colorRepository;
+
+  ColorBloc({@required this.colorRepository});
+
   @override
   ColorState get initialState => ColorInitial(
         backGroundColor: Color(0xff58C6B2),

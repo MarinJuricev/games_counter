@@ -15,11 +15,11 @@ class GameRepositoryImpl implements GameRepository {
 
   @override
   Future<Either<Failure, Game>> getGame() async {
-    try{
+    try {
       final localResult = await gameLocalDataSource.getGame();
 
-    return Right(localResult);
-    } on CacheException{
+      return Right(localResult);
+    } on CacheException {
       return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
     }
   }
