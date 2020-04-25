@@ -109,27 +109,25 @@ void main() {
             .thenAnswer((_) async => Right(testGame));
       }
 
-      void _setupMockInputConverterFail() {
-        when(mockInputConverter.stringToUnsignedInteger(playerPoints))
-            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
-
-        when(mockInputConverter.stringToUnsignedInteger(playerBonusPoints))
-            .thenReturn(Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
-      }
-
       void _setupRepositoryFailureCase() {
         when(mockGameRepository.getGame()).thenAnswer(
             (_) async => Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA)));
       }
 
       blocTest('should call createGame with correctly parsed arguments',
-          build: () async => GameBloc(
-              createGame: mockCreateGame,
-              deletePlayer: mockDeletePlayer,
-              endGameSooner: mockEndGameSooner,
-              inputConverter: mockInputConverter,
-              createPlayer: mockCreatePlayer,
-              gameRepository: mockGameRepository),
+          build: () async {
+            _setupMockInputConverterSuccess();
+            when(mockCreateGame.call(any))
+                .thenAnswer((_) async => Right(testGame));
+
+            return GameBloc(
+                createGame: mockCreateGame,
+                deletePlayer: mockDeletePlayer,
+                endGameSooner: mockEndGameSooner,
+                inputConverter: mockInputConverter,
+                createPlayer: mockCreatePlayer,
+                gameRepository: mockGameRepository);
+          },
           act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
@@ -141,7 +139,7 @@ void main() {
                 numberOfPlayers: numberOfPlayersParsed,
                 winningPoints: pointsToWinParsed));
           },
-          expect: []);
+          expect: [GameCreatedState(game: testGame)]);
 
       blocTest(
         'should emit [ErrorState] when the usecase validation fails',
@@ -244,13 +242,20 @@ void main() {
 
       blocTest(
         'should call createPlayer with correctly parsed arguments',
-        build: () async => GameBloc(
-            createGame: mockCreateGame,
-            deletePlayer: mockDeletePlayer,
-            endGameSooner: mockEndGameSooner,
-            inputConverter: mockInputConverter,
-            createPlayer: mockCreatePlayer,
-            gameRepository: mockGameRepository),
+        build: () async {
+          _setupMockInputConverterSuccess();
+          _setupRepositorySuccessCase();
+          when(mockCreatePlayer.call(any))
+              .thenAnswer((_) async => Right(testGame));
+
+          return GameBloc(
+              createGame: mockCreateGame,
+              deletePlayer: mockDeletePlayer,
+              endGameSooner: mockEndGameSooner,
+              inputConverter: mockInputConverter,
+              createPlayer: mockCreatePlayer,
+              gameRepository: mockGameRepository);
+        },
         act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
           playerName: playerName,
           points: playerBonusPoints,
@@ -262,13 +267,14 @@ void main() {
           bonusPoints: playerBonusPointsParsed,
           currentGame: testGame,
         )),
-        expect: [],
+        expect: [GameUpdatedState(game: testGame)],
       );
 
       blocTest(
         'should emit [GameErrorState] when the usecase validation fails',
         build: () async {
-          _setupMockInputConverterFail();
+          _setupMockInputConverterSuccess();
+          _setupRepositorySuccessCase();
           when(mockCreatePlayer.call(any)).thenAnswer(
               (_) async => Left(ValidationFailure(INVALID_NUMBER_PROVIDED)));
 
