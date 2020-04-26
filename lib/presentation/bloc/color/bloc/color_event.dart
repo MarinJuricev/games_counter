@@ -2,6 +2,7 @@ part of 'color_bloc.dart';
 
 @freezed
 abstract class ColorEvent with _$ColorEvent {
+  factory ColorEvent.onGetCurrentAppColors() = _OnGetCurrentAppColors;
   factory ColorEvent.onScaffoldColorChange(Color newScaffoldColor) =
       _OnScaffoldColorChange;
   factory ColorEvent.onErrorColorChange() = _OnErrorColorChange;

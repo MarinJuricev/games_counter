@@ -19,6 +19,7 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
   @override
   Future getFromPersistence({String boxToGetDataFrom}) async {
     final box = await Hive.openBox(boxToGetDataFrom);
-    return await box.get(boxToGetDataFrom);
+
+    return await box.get(box.length - 1);
   }
 }

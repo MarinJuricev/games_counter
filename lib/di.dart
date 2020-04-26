@@ -40,7 +40,7 @@ Future<void> init() async {
         resetPlayer: sl<ResetPlayer>(),
       ));
 
-  sl.registerFactory(() => ColorBloc(colorRepository: sl()));
+  sl.registerFactory(() => ColorBloc(colorRepository: sl<ColorRepository>()));
 
   // Use cases
   sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));

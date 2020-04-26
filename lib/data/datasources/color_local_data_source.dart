@@ -24,8 +24,16 @@ class ColorLocalDataSourceImpl implements ColorLocalDataSource {
 
     if (localAppColors != null)
       return Future.value(localAppColors.toAppColors());
-    else
-      throw CacheException();
+    else {
+      final defaultAppColors = AppColors(
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
+      );
+
+      return defaultAppColors;
+    }
   }
 
   @override

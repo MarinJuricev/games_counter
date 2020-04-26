@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
-import '../../../core/extensions/functional.dart';
+import '../../../core/extensions/extensions.dart';
 import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/game.dart';
 import '../../../domain/entities/player.dart';

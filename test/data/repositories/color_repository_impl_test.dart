@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/exceptions.dart';
@@ -26,17 +27,17 @@ void main() {
           ColorRepositoryImpl(colorLocalDataSource: mockLocalColorDataSource);
 
       testAppColor = AppColors(
-        backGroundColor: '0xff58C6B2',
-        accentColor: '0xff34AB95',
-        errorColor: '0xff00FFF0',
-        primaryColor: '0xff249681',
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
       );
 
       testLocalAppColor = LocalAppColors(
-        backGroundColor: '0xff58C6B2',
-        accentColor: '0xff34AB95',
-        errorColor: '0xff00FFF0',
-        primaryColor: '0xff249681',
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
       );
     },
   );

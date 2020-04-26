@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/constants/budget_constants.dart';
 import '../../../core/error/failure.dart';
-import '../../../core/extensions/functional.dart';
+import '../../../core/extensions/extensions.dart';
 import '../../../domain/entities/game.dart';
 import '../../../domain/entities/player.dart';
 import '../../../domain/repositories/game_repository.dart';

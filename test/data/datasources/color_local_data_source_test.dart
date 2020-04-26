@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/color_local_data_source.dart';
@@ -16,30 +17,40 @@ void main() {
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
 
   AppColors testAppColor;
+  AppColors defaultAppColors;
   LocalAppColors testLocalAppColor;
 
   Hive.init('testPath');
   Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
 
-  setUp(() {
-    mockLocalPersistenceProvider = MockLocalPersistenceProvider();
-    dataSource = ColorLocalDataSourceImpl(
-        localPersistenceProvider: mockLocalPersistenceProvider);
+  setUp(
+    () {
+      mockLocalPersistenceProvider = MockLocalPersistenceProvider();
+      dataSource = ColorLocalDataSourceImpl(
+          localPersistenceProvider: mockLocalPersistenceProvider);
 
-    testAppColor = AppColors(
-      backGroundColor: '0xff58C6B2',
-      accentColor: '0xff34AB95',
-      errorColor: '0xff00FFF0',
-      primaryColor: '0xff249681',
-    );
+      testAppColor = AppColors(
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
+      );
 
-    testLocalAppColor = LocalAppColors(
-      backGroundColor: '0xff58C6B2',
-      accentColor: '0xff34AB95',
-      errorColor: '0xff00FFF0',
-      primaryColor: '0xff249681',
-    );
-  });
+      testLocalAppColor = LocalAppColors(
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
+      );
+
+      defaultAppColors = AppColors(
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
+      );
+    },
+  );
 
   group(
     'getAppColors',
@@ -61,14 +72,16 @@ void main() {
       );
 
       test(
-        'should throw [CacheException] when there isnt any data present inside local persistence',
+        'should return defaultAppColors when there isnt any data in local persistence',
         () async {
           when(mockLocalPersistenceProvider.getFromPersistence(
                   boxToGetDataFrom: APP_THEME_BOX))
               .thenAnswer((_) async => null);
 
-          expect(() => dataSource.getAppColors(),
-              throwsA(TypeMatcher<CacheException>()));
+          final actualResult = await dataSource.getAppColors();
+          final expectedResult = defaultAppColors;
+
+          expect(expectedResult, actualResult);
           verify(mockLocalPersistenceProvider.getFromPersistence(
               boxToGetDataFrom: APP_THEME_BOX));
         },

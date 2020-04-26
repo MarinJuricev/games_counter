@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_counter/data/models/local_app_colors.dart';
+import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'core/extensions/extensions.dart';
 import 'di.dart' as di;
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/pages/home_bottom_navigation_route.dart';
@@ -38,27 +40,40 @@ class MyApp extends StatelessWidget {
       ],
       // BlocBuilder<, PlayerDetailState>(
       child: BlocBuilder<ColorBloc, ColorState>(
-        builder: (_, state) {
+        builder: (builderContext, state) {
           if (state is ColorInitial) {
+            BlocProvider.of<ColorBloc>(builderContext)
+              ..add(ColorEvent.onGetCurrentAppColors());
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                scaffoldBackgroundColor: state.backGroundColor,
-                primaryColor: state.primaryColor,
-                accentColor: state.accentColor,
-                errorColor: state.errorColor,
-                primaryTextTheme:
-                    Typography(platform: TargetPlatform.iOS).white,
-                textTheme: Typography(platform: TargetPlatform.iOS).white,
-                accentTextTheme: Typography(platform: TargetPlatform.iOS).black,
-              ),
-              home: BlocProvider(
-                create: (BuildContext context) => di.sl<GameBloc>(),
-                child: HomeBottomNavRoute(),
+              home: Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
             );
+          } else if (state is ColorUpdated) {
+            return buildApp(state.appColors);
           }
         },
+      ),
+    );
+  }
+
+  Widget buildApp(AppColors appColors) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: HexColor.fromHex(appColors.backGroundColor),
+        primaryColor: HexColor.fromHex(appColors.primaryColor),
+        accentColor: HexColor.fromHex(appColors.accentColor),
+        errorColor: HexColor.fromHex(appColors.errorColor),
+        primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
+        textTheme: Typography(platform: TargetPlatform.iOS).white,
+        accentTextTheme: Typography(platform: TargetPlatform.iOS).black,
+      ),
+      home: BlocProvider(
+        create: (BuildContext context) => di.sl<GameBloc>(),
+        child: HomeBottomNavRoute(),
       ),
     );
   }

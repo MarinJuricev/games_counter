@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';

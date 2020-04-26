@@ -12,6 +12,10 @@ T _$identity<T>(T value) => value;
 class _$ColorEventTearOff {
   const _$ColorEventTearOff();
 
+  _OnGetCurrentAppColors onGetCurrentAppColors() {
+    return _OnGetCurrentAppColors();
+  }
+
   _OnScaffoldColorChange onScaffoldColorChange(Color newScaffoldColor) {
     return _OnScaffoldColorChange(
       newScaffoldColor,
@@ -37,6 +41,7 @@ const $ColorEvent = _$ColorEventTearOff();
 mixin _$ColorEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
     @required Result onErrorColorChange(),
     @required Result onPrimaryColorChange(),
@@ -44,6 +49,7 @@ mixin _$ColorEvent {
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
     Result onErrorColorChange(),
     Result onPrimaryColorChange(),
@@ -52,6 +58,7 @@ mixin _$ColorEvent {
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
@@ -59,6 +66,7 @@ mixin _$ColorEvent {
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     Result onScaffoldColorChange(_OnScaffoldColorChange value),
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
@@ -79,6 +87,121 @@ class _$ColorEventCopyWithImpl<$Res> implements $ColorEventCopyWith<$Res> {
   final ColorEvent _value;
   // ignore: unused_field
   final $Res Function(ColorEvent) _then;
+}
+
+abstract class _$OnGetCurrentAppColorsCopyWith<$Res> {
+  factory _$OnGetCurrentAppColorsCopyWith(_OnGetCurrentAppColors value,
+          $Res Function(_OnGetCurrentAppColors) then) =
+      __$OnGetCurrentAppColorsCopyWithImpl<$Res>;
+}
+
+class __$OnGetCurrentAppColorsCopyWithImpl<$Res>
+    extends _$ColorEventCopyWithImpl<$Res>
+    implements _$OnGetCurrentAppColorsCopyWith<$Res> {
+  __$OnGetCurrentAppColorsCopyWithImpl(_OnGetCurrentAppColors _value,
+      $Res Function(_OnGetCurrentAppColors) _then)
+      : super(_value, (v) => _then(v as _OnGetCurrentAppColors));
+
+  @override
+  _OnGetCurrentAppColors get _value => super._value as _OnGetCurrentAppColors;
+}
+
+class _$_OnGetCurrentAppColors
+    with DiagnosticableTreeMixin
+    implements _OnGetCurrentAppColors {
+  _$_OnGetCurrentAppColors();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ColorEvent.onGetCurrentAppColors()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ColorEvent.onGetCurrentAppColors'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnGetCurrentAppColors);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
+    @required Result onScaffoldColorChange(Color newScaffoldColor),
+    @required Result onErrorColorChange(),
+    @required Result onPrimaryColorChange(),
+    @required Result onAccentColorChange(),
+  }) {
+    assert(onGetCurrentAppColors != null);
+    assert(onScaffoldColorChange != null);
+    assert(onErrorColorChange != null);
+    assert(onPrimaryColorChange != null);
+    assert(onAccentColorChange != null);
+    return onGetCurrentAppColors();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
+    Result onScaffoldColorChange(Color newScaffoldColor),
+    Result onErrorColorChange(),
+    Result onPrimaryColorChange(),
+    Result onAccentColorChange(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (onGetCurrentAppColors != null) {
+      return onGetCurrentAppColors();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
+    @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
+    @required Result onErrorColorChange(_OnErrorColorChange value),
+    @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
+    @required Result onAccentColorChange(_OnAccentColorChange value),
+  }) {
+    assert(onGetCurrentAppColors != null);
+    assert(onScaffoldColorChange != null);
+    assert(onErrorColorChange != null);
+    assert(onPrimaryColorChange != null);
+    assert(onAccentColorChange != null);
+    return onGetCurrentAppColors(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
+    Result onScaffoldColorChange(_OnScaffoldColorChange value),
+    Result onErrorColorChange(_OnErrorColorChange value),
+    Result onPrimaryColorChange(_OnPrimaryColorChange value),
+    Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (onGetCurrentAppColors != null) {
+      return onGetCurrentAppColors(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGetCurrentAppColors implements ColorEvent {
+  factory _OnGetCurrentAppColors() = _$_OnGetCurrentAppColors;
 }
 
 abstract class _$OnScaffoldColorChangeCopyWith<$Res> {
@@ -154,11 +277,13 @@ class _$_OnScaffoldColorChange
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
     @required Result onErrorColorChange(),
     @required Result onPrimaryColorChange(),
     @required Result onAccentColorChange(),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -169,6 +294,7 @@ class _$_OnScaffoldColorChange
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
     Result onErrorColorChange(),
     Result onPrimaryColorChange(),
@@ -185,11 +311,13 @@ class _$_OnScaffoldColorChange
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -200,6 +328,7 @@ class _$_OnScaffoldColorChange
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     Result onScaffoldColorChange(_OnScaffoldColorChange value),
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
@@ -267,11 +396,13 @@ class _$_OnErrorColorChange
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
     @required Result onErrorColorChange(),
     @required Result onPrimaryColorChange(),
     @required Result onAccentColorChange(),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -282,6 +413,7 @@ class _$_OnErrorColorChange
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
     Result onErrorColorChange(),
     Result onPrimaryColorChange(),
@@ -298,11 +430,13 @@ class _$_OnErrorColorChange
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -313,6 +447,7 @@ class _$_OnErrorColorChange
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     Result onScaffoldColorChange(_OnScaffoldColorChange value),
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
@@ -376,11 +511,13 @@ class _$_OnPrimaryColorChange
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
     @required Result onErrorColorChange(),
     @required Result onPrimaryColorChange(),
     @required Result onAccentColorChange(),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -391,6 +528,7 @@ class _$_OnPrimaryColorChange
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
     Result onErrorColorChange(),
     Result onPrimaryColorChange(),
@@ -407,11 +545,13 @@ class _$_OnPrimaryColorChange
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -422,6 +562,7 @@ class _$_OnPrimaryColorChange
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     Result onScaffoldColorChange(_OnScaffoldColorChange value),
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
@@ -485,11 +626,13 @@ class _$_OnAccentColorChange
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
     @required Result onErrorColorChange(),
     @required Result onPrimaryColorChange(),
     @required Result onAccentColorChange(),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -500,6 +643,7 @@ class _$_OnAccentColorChange
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
     Result onErrorColorChange(),
     Result onPrimaryColorChange(),
@@ -516,11 +660,13 @@ class _$_OnAccentColorChange
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
   }) {
+    assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
@@ -531,6 +677,7 @@ class _$_OnAccentColorChange
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
     Result onScaffoldColorChange(_OnScaffoldColorChange value),
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
