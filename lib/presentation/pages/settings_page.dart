@@ -31,71 +31,80 @@ class _SettingsPageState extends State<SettingsPage> {
         color: _backgroundColor,
         duration: Duration(milliseconds: 250),
         child: ListView(
-            children: ListTile.divideTiles(
-          context: context,
-          tiles: [
-            InkWell(
-              onTap: () => _buildColorDialog(
-                title: 'BackgroundColor',
-                selectedColor: _backgroundColor,
-                onTapAction: _addOnScaffoldChangeEvent,
-              ),
-              child: ListTile(
-                title: Text('Background Color'),
-                subtitle: Text('Choose background color of the app'),
-                trailing: CircleColor(
-                  circleSize: 26.0,
-                  color: _backgroundColor,
+          children: ListTile.divideTiles(
+            context: context,
+            tiles: [
+              InkWell(
+                onTap: () => _buildColorDialog(
+                  title: 'BackgroundColor',
+                  selectedColor: _backgroundColor,
+                  onTapAction: _addOnScaffoldChangeEvent,
+                ),
+                child: ListTile(
+                  title: Text('Background Color'),
+                  subtitle: Text('Choose background color of the app'),
+                  trailing: CircleColor(
+                    circleSize: 26.0,
+                    color: _backgroundColor,
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () => _buildColorDialog(
-                title: 'Primary Color',
-                selectedColor: _primaryColor,
-                onTapAction: _addOnPrimaryChangeEvent,
-              ),
-              child: ListTile(
-                title: Text('Primary Color'),
-                subtitle: Text('Choose primary color of the app'),
-                trailing: CircleColor(
-                  circleSize: 26.0,
-                  color: _primaryColor,
+              InkWell(
+                onTap: () => _buildColorDialog(
+                  title: 'Primary Color',
+                  selectedColor: _primaryColor,
+                  onTapAction: _addOnPrimaryChangeEvent,
+                ),
+                child: ListTile(
+                  title: Text('Primary Color'),
+                  subtitle: Text('Choose primary color of the app'),
+                  trailing: CircleColor(
+                    circleSize: 26.0,
+                    color: _primaryColor,
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () => _buildColorDialog(
-                title: 'Accent Color',
-                selectedColor: _accentColor,
-                onTapAction: _addOnAccentChangeEvent,
-              ),
-              child: ListTile(
-                title: Text('Accent Color'),
-                subtitle: Text('Choose accent color of the app'),
-                trailing: CircleColor(
-                  circleSize: 26.0,
-                  color: _accentColor,
+              InkWell(
+                onTap: () => _buildColorDialog(
+                  title: 'Accent Color',
+                  selectedColor: _accentColor,
+                  onTapAction: _addOnAccentChangeEvent,
+                ),
+                child: ListTile(
+                  title: Text('Accent Color'),
+                  subtitle: Text('Choose accent color of the app'),
+                  trailing: CircleColor(
+                    circleSize: 26.0,
+                    color: _accentColor,
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () => _buildColorDialog(
-                title: 'Error Color',
-                selectedColor: _errorColor,
-                onTapAction: _addOnErrorChangeEvent,
-              ),
-              child: ListTile(
-                title: Text('Error Color'),
-                subtitle: Text('Choose error color of the app'),
-                trailing: CircleColor(
-                  circleSize: 26.0,
-                  color: _errorColor,
+              InkWell(
+                onTap: () => _buildColorDialog(
+                  title: 'Error Color',
+                  selectedColor: _errorColor,
+                  onTapAction: _addOnErrorChangeEvent,
+                ),
+                child: ListTile(
+                  title: Text('Error Color'),
+                  subtitle: Text('Choose error color of the app'),
+                  trailing: CircleColor(
+                    circleSize: 26.0,
+                    color: _errorColor,
+                  ),
                 ),
               ),
-            )
-          ],
-        ).toList()),
+              InkWell(
+                onTap: () => BlocProvider.of<ColorBloc>(context)
+                  ..add(ColorEvent.onResetAppColors()),
+                child: ListTile(
+                  title: Text('Reset App Colors'),
+                  subtitle: Text('Resets the theme to default'),
+                ),
+              ),
+            ],
+          ).toList(),
+        ),
       ),
     );
   }

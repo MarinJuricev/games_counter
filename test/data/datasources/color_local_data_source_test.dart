@@ -121,4 +121,19 @@ void main() {
       );
     },
   );
+
+  group(
+    'getDefaultAppColors',
+    () {
+      test(
+        'should return defaultAppColors when getDefaultAppColors is triggered',
+        () async {
+          final actualResult = await dataSource.getDefaultAppColors();
+          final expectedResult = defaultAppColors;
+
+          expect(expectedResult, actualResult);
+        },
+      );
+    },
+  );
 }

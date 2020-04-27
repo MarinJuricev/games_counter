@@ -41,6 +41,10 @@ class _$ColorEventTearOff {
       newAccentColor: newAccentColor,
     );
   }
+
+  _OnResetAppColors onResetAppColors() {
+    return _OnResetAppColors();
+  }
 }
 
 // ignore: unused_element
@@ -54,6 +58,7 @@ mixin _$ColorEvent {
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -62,6 +67,7 @@ mixin _$ColorEvent {
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -71,6 +77,7 @@ mixin _$ColorEvent {
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -79,6 +86,7 @@ mixin _$ColorEvent {
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   });
 }
@@ -147,12 +155,14 @@ class _$_OnGetCurrentAppColors
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onGetCurrentAppColors();
   }
 
@@ -164,6 +174,7 @@ class _$_OnGetCurrentAppColors
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -181,12 +192,14 @@ class _$_OnGetCurrentAppColors
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onGetCurrentAppColors(this);
   }
 
@@ -198,6 +211,7 @@ class _$_OnGetCurrentAppColors
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -290,12 +304,14 @@ class _$_OnScaffoldColorChange
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onScaffoldColorChange(newScaffoldColor);
   }
 
@@ -307,6 +323,7 @@ class _$_OnScaffoldColorChange
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -324,12 +341,14 @@ class _$_OnScaffoldColorChange
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onScaffoldColorChange(this);
   }
 
@@ -341,6 +360,7 @@ class _$_OnScaffoldColorChange
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -435,12 +455,14 @@ class _$_OnErrorColorChange
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onErrorColorChange(newErrorColor);
   }
 
@@ -452,6 +474,7 @@ class _$_OnErrorColorChange
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -469,12 +492,14 @@ class _$_OnErrorColorChange
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onErrorColorChange(this);
   }
 
@@ -486,6 +511,7 @@ class _$_OnErrorColorChange
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -582,12 +608,14 @@ class _$_OnPrimaryColorChange
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onPrimaryColorChange(newPrimaryColor);
   }
 
@@ -599,6 +627,7 @@ class _$_OnPrimaryColorChange
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -616,12 +645,14 @@ class _$_OnPrimaryColorChange
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onPrimaryColorChange(this);
   }
 
@@ -633,6 +664,7 @@ class _$_OnPrimaryColorChange
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -729,12 +761,14 @@ class _$_OnAccentColorChange
     @required Result onErrorColorChange(Color newErrorColor),
     @required Result onPrimaryColorChange(Color newPrimaryColor),
     @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onAccentColorChange(newAccentColor);
   }
 
@@ -746,6 +780,7 @@ class _$_OnAccentColorChange
     Result onErrorColorChange(Color newErrorColor),
     Result onPrimaryColorChange(Color newPrimaryColor),
     Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -763,12 +798,14 @@ class _$_OnAccentColorChange
     @required Result onErrorColorChange(_OnErrorColorChange value),
     @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
     @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
     return onAccentColorChange(this);
   }
 
@@ -780,6 +817,7 @@ class _$_OnAccentColorChange
     Result onErrorColorChange(_OnErrorColorChange value),
     Result onPrimaryColorChange(_OnPrimaryColorChange value),
     Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -796,4 +834,124 @@ abstract class _OnAccentColorChange implements ColorEvent {
 
   Color get newAccentColor;
   _$OnAccentColorChangeCopyWith<_OnAccentColorChange> get copyWith;
+}
+
+abstract class _$OnResetAppColorsCopyWith<$Res> {
+  factory _$OnResetAppColorsCopyWith(
+          _OnResetAppColors value, $Res Function(_OnResetAppColors) then) =
+      __$OnResetAppColorsCopyWithImpl<$Res>;
+}
+
+class __$OnResetAppColorsCopyWithImpl<$Res>
+    extends _$ColorEventCopyWithImpl<$Res>
+    implements _$OnResetAppColorsCopyWith<$Res> {
+  __$OnResetAppColorsCopyWithImpl(
+      _OnResetAppColors _value, $Res Function(_OnResetAppColors) _then)
+      : super(_value, (v) => _then(v as _OnResetAppColors));
+
+  @override
+  _OnResetAppColors get _value => super._value as _OnResetAppColors;
+}
+
+class _$_OnResetAppColors
+    with DiagnosticableTreeMixin
+    implements _OnResetAppColors {
+  _$_OnResetAppColors();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ColorEvent.onResetAppColors()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ColorEvent.onResetAppColors'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnResetAppColors);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result onGetCurrentAppColors(),
+    @required Result onScaffoldColorChange(Color newScaffoldColor),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
+    @required Result onResetAppColors(),
+  }) {
+    assert(onGetCurrentAppColors != null);
+    assert(onScaffoldColorChange != null);
+    assert(onErrorColorChange != null);
+    assert(onPrimaryColorChange != null);
+    assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
+    return onResetAppColors();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result onGetCurrentAppColors(),
+    Result onScaffoldColorChange(Color newScaffoldColor),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
+    Result onResetAppColors(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (onResetAppColors != null) {
+      return onResetAppColors();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
+    @required Result onScaffoldColorChange(_OnScaffoldColorChange value),
+    @required Result onErrorColorChange(_OnErrorColorChange value),
+    @required Result onPrimaryColorChange(_OnPrimaryColorChange value),
+    @required Result onAccentColorChange(_OnAccentColorChange value),
+    @required Result onResetAppColors(_OnResetAppColors value),
+  }) {
+    assert(onGetCurrentAppColors != null);
+    assert(onScaffoldColorChange != null);
+    assert(onErrorColorChange != null);
+    assert(onPrimaryColorChange != null);
+    assert(onAccentColorChange != null);
+    assert(onResetAppColors != null);
+    return onResetAppColors(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result onGetCurrentAppColors(_OnGetCurrentAppColors value),
+    Result onScaffoldColorChange(_OnScaffoldColorChange value),
+    Result onErrorColorChange(_OnErrorColorChange value),
+    Result onPrimaryColorChange(_OnPrimaryColorChange value),
+    Result onAccentColorChange(_OnAccentColorChange value),
+    Result onResetAppColors(_OnResetAppColors value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (onResetAppColors != null) {
+      return onResetAppColors(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnResetAppColors implements ColorEvent {
+  factory _OnResetAppColors() = _$_OnResetAppColors;
 }

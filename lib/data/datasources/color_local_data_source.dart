@@ -7,6 +7,7 @@ import 'local_persistence_provider.dart';
 
 abstract class ColorLocalDataSource {
   Future<AppColors> getAppColors();
+  Future<AppColors> getDefaultAppColors();
   Future<void> cacheAppColors(LocalAppColors appColors);
 }
 
@@ -32,7 +33,7 @@ class ColorLocalDataSourceImpl implements ColorLocalDataSource {
         primaryColor: 'ff249681',
       );
 
-      return defaultAppColors;
+      return Future.value(defaultAppColors);
     }
   }
 
@@ -47,5 +48,17 @@ class ColorLocalDataSourceImpl implements ColorLocalDataSource {
       return Future<void>.value();
     else
       throw CacheException();
+  }
+
+  @override
+  Future<AppColors> getDefaultAppColors() {
+    final defaultAppColors = AppColors(
+      backGroundColor: 'ff58C6B2',
+      accentColor: 'ff34AB95',
+      errorColor: 'ff00FFF0',
+      primaryColor: 'ff249681',
+    );
+
+    return Future.value(defaultAppColors);
   }
 }

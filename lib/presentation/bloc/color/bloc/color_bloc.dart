@@ -45,6 +45,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
         ColorField.accent,
       ),
       onGetCurrentAppColors: (_) => _handleOnGetCurrentAppColors(),
+      onResetAppColors: (_) => _handleOnResetAppColors(),
     );
   }
 
@@ -90,6 +91,15 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
 
   Stream<ColorState> _handleOnGetCurrentAppColors() async* {
     final colorRepoResult = await colorRepository.getColor();
+    final colorEither = colorRepoResult.unwrapResult();
+
+    if (colorEither is AppColors) {
+      yield ColorUpdated(appColors: colorEither);
+    }
+  }
+
+  Stream<ColorState> _handleOnResetAppColors() async* {
+    final colorRepoResult = await colorRepository.resetAppColors();
     final colorEither = colorRepoResult.unwrapResult();
 
     if (colorEither is AppColors) {

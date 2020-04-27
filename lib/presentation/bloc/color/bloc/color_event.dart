@@ -11,4 +11,5 @@ abstract class ColorEvent with _$ColorEvent {
       _OnPrimaryColorChange;
   factory ColorEvent.onAccentColorChange({@required Color newAccentColor}) =
       _OnAccentColorChange;
+  factory ColorEvent.onResetAppColors() = _OnResetAppColors;
 }

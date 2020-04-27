@@ -37,4 +37,15 @@ class ColorRepositoryImpl implements ColorRepository {
       return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
     }
   }
+
+  @override
+  Future<Either<Failure, AppColors>> resetAppColors() async {
+    try {
+      final localResult = await colorLocalDataSource.getDefaultAppColors();
+
+      return Right(localResult);
+    } on CacheException {
+      return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+    }
+  }
 }

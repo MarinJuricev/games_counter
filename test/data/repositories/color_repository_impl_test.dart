@@ -17,6 +17,7 @@ void main() {
   ColorRepositoryImpl repository;
 
   AppColors testAppColor;
+  AppColors defaultAppColors;
   LocalAppColors testLocalAppColor;
 
   setUp(
@@ -34,6 +35,13 @@ void main() {
       );
 
       testLocalAppColor = LocalAppColors(
+        backGroundColor: 'ff58C6B2',
+        accentColor: 'ff34AB95',
+        errorColor: 'ff00FFF0',
+        primaryColor: 'ff249681',
+      );
+
+      defaultAppColors = AppColors(
         backGroundColor: 'ff58C6B2',
         accentColor: 'ff34AB95',
         errorColor: 'ff00FFF0',
@@ -98,6 +106,39 @@ void main() {
               .thenThrow(CacheException());
 
           final actualResult = await repository.updateAppColors(testAppColor);
+          final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+
+          expect(expectedResult, actualResult);
+        },
+      );
+    },
+  );
+
+  group(
+    'resetAppColors',
+    () {
+      test(
+        'should return defaultAppColors when getDefaultAppColors is a success',
+        () async {
+          when(mockLocalColorDataSource.getDefaultAppColors()).thenAnswer(
+            (_) async => Future.value(defaultAppColors),
+          );
+
+          final actualResult = await repository.resetAppColors();
+          final expectedResult = Right(defaultAppColors);
+
+          expect(expectedResult, actualResult);
+          verify(mockLocalColorDataSource.getDefaultAppColors());
+        },
+      );
+
+      test(
+        'should return Left<CacheFailure> when local persistence throws [CacheException]',
+        () async {
+          when(mockLocalColorDataSource.getDefaultAppColors())
+              .thenThrow(CacheException());
+
+          final actualResult = await repository.resetAppColors();
           final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
           expect(expectedResult, actualResult);
