@@ -16,22 +16,30 @@ class _$ColorEventTearOff {
     return _OnGetCurrentAppColors();
   }
 
-  _OnScaffoldColorChange onScaffoldColorChange(Color newScaffoldColor) {
+  _OnScaffoldColorChange onScaffoldColorChange(
+      {@required Color newScaffoldColor}) {
     return _OnScaffoldColorChange(
-      newScaffoldColor,
+      newScaffoldColor: newScaffoldColor,
     );
   }
 
-  _OnErrorColorChange onErrorColorChange() {
-    return _OnErrorColorChange();
+  _OnErrorColorChange onErrorColorChange({@required Color newErrorColor}) {
+    return _OnErrorColorChange(
+      newErrorColor: newErrorColor,
+    );
   }
 
-  _OnPrimaryColorChange onPrimaryColorChange() {
-    return _OnPrimaryColorChange();
+  _OnPrimaryColorChange onPrimaryColorChange(
+      {@required Color newPrimaryColor}) {
+    return _OnPrimaryColorChange(
+      newPrimaryColor: newPrimaryColor,
+    );
   }
 
-  _OnAccentColorChange onAccentColorChange() {
-    return _OnAccentColorChange();
+  _OnAccentColorChange onAccentColorChange({@required Color newAccentColor}) {
+    return _OnAccentColorChange(
+      newAccentColor: newAccentColor,
+    );
   }
 }
 
@@ -43,17 +51,17 @@ mixin _$ColorEvent {
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -136,9 +144,9 @@ class _$_OnGetCurrentAppColors
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
@@ -153,9 +161,9 @@ class _$_OnGetCurrentAppColors
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -226,7 +234,7 @@ class __$OnScaffoldColorChangeCopyWithImpl<$Res>
     Object newScaffoldColor = freezed,
   }) {
     return _then(_OnScaffoldColorChange(
-      newScaffoldColor == freezed
+      newScaffoldColor: newScaffoldColor == freezed
           ? _value.newScaffoldColor
           : newScaffoldColor as Color,
     ));
@@ -236,7 +244,7 @@ class __$OnScaffoldColorChangeCopyWithImpl<$Res>
 class _$_OnScaffoldColorChange
     with DiagnosticableTreeMixin
     implements _OnScaffoldColorChange {
-  _$_OnScaffoldColorChange(this.newScaffoldColor)
+  _$_OnScaffoldColorChange({@required this.newScaffoldColor})
       : assert(newScaffoldColor != null);
 
   @override
@@ -279,9 +287,9 @@ class _$_OnScaffoldColorChange
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
@@ -296,9 +304,9 @@ class _$_OnScaffoldColorChange
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -344,7 +352,7 @@ class _$_OnScaffoldColorChange
 }
 
 abstract class _OnScaffoldColorChange implements ColorEvent {
-  factory _OnScaffoldColorChange(Color newScaffoldColor) =
+  factory _OnScaffoldColorChange({@required Color newScaffoldColor}) =
       _$_OnScaffoldColorChange;
 
   Color get newScaffoldColor;
@@ -355,6 +363,7 @@ abstract class _$OnErrorColorChangeCopyWith<$Res> {
   factory _$OnErrorColorChangeCopyWith(
           _OnErrorColorChange value, $Res Function(_OnErrorColorChange) then) =
       __$OnErrorColorChangeCopyWithImpl<$Res>;
+  $Res call({Color newErrorColor});
 }
 
 class __$OnErrorColorChangeCopyWithImpl<$Res>
@@ -366,48 +375,73 @@ class __$OnErrorColorChangeCopyWithImpl<$Res>
 
   @override
   _OnErrorColorChange get _value => super._value as _OnErrorColorChange;
+
+  @override
+  $Res call({
+    Object newErrorColor = freezed,
+  }) {
+    return _then(_OnErrorColorChange(
+      newErrorColor: newErrorColor == freezed
+          ? _value.newErrorColor
+          : newErrorColor as Color,
+    ));
+  }
 }
 
 class _$_OnErrorColorChange
     with DiagnosticableTreeMixin
     implements _OnErrorColorChange {
-  _$_OnErrorColorChange();
+  _$_OnErrorColorChange({@required this.newErrorColor})
+      : assert(newErrorColor != null);
+
+  @override
+  final Color newErrorColor;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ColorEvent.onErrorColorChange()';
+    return 'ColorEvent.onErrorColorChange(newErrorColor: $newErrorColor)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ColorEvent.onErrorColorChange'));
+      ..add(DiagnosticsProperty('type', 'ColorEvent.onErrorColorChange'))
+      ..add(DiagnosticsProperty('newErrorColor', newErrorColor));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnErrorColorChange);
+    return identical(this, other) ||
+        (other is _OnErrorColorChange &&
+            (identical(other.newErrorColor, newErrorColor) ||
+                const DeepCollectionEquality()
+                    .equals(other.newErrorColor, newErrorColor)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(newErrorColor);
+
+  @override
+  _$OnErrorColorChangeCopyWith<_OnErrorColorChange> get copyWith =>
+      __$OnErrorColorChangeCopyWithImpl<_OnErrorColorChange>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
-    return onErrorColorChange();
+    return onErrorColorChange(newErrorColor);
   }
 
   @override
@@ -415,14 +449,14 @@ class _$_OnErrorColorChange
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (onErrorColorChange != null) {
-      return onErrorColorChange();
+      return onErrorColorChange(newErrorColor);
     }
     return orElse();
   }
@@ -463,13 +497,18 @@ class _$_OnErrorColorChange
 }
 
 abstract class _OnErrorColorChange implements ColorEvent {
-  factory _OnErrorColorChange() = _$_OnErrorColorChange;
+  factory _OnErrorColorChange({@required Color newErrorColor}) =
+      _$_OnErrorColorChange;
+
+  Color get newErrorColor;
+  _$OnErrorColorChangeCopyWith<_OnErrorColorChange> get copyWith;
 }
 
 abstract class _$OnPrimaryColorChangeCopyWith<$Res> {
   factory _$OnPrimaryColorChangeCopyWith(_OnPrimaryColorChange value,
           $Res Function(_OnPrimaryColorChange) then) =
       __$OnPrimaryColorChangeCopyWithImpl<$Res>;
+  $Res call({Color newPrimaryColor});
 }
 
 class __$OnPrimaryColorChangeCopyWithImpl<$Res>
@@ -481,48 +520,75 @@ class __$OnPrimaryColorChangeCopyWithImpl<$Res>
 
   @override
   _OnPrimaryColorChange get _value => super._value as _OnPrimaryColorChange;
+
+  @override
+  $Res call({
+    Object newPrimaryColor = freezed,
+  }) {
+    return _then(_OnPrimaryColorChange(
+      newPrimaryColor: newPrimaryColor == freezed
+          ? _value.newPrimaryColor
+          : newPrimaryColor as Color,
+    ));
+  }
 }
 
 class _$_OnPrimaryColorChange
     with DiagnosticableTreeMixin
     implements _OnPrimaryColorChange {
-  _$_OnPrimaryColorChange();
+  _$_OnPrimaryColorChange({@required this.newPrimaryColor})
+      : assert(newPrimaryColor != null);
+
+  @override
+  final Color newPrimaryColor;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ColorEvent.onPrimaryColorChange()';
+    return 'ColorEvent.onPrimaryColorChange(newPrimaryColor: $newPrimaryColor)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ColorEvent.onPrimaryColorChange'));
+      ..add(DiagnosticsProperty('type', 'ColorEvent.onPrimaryColorChange'))
+      ..add(DiagnosticsProperty('newPrimaryColor', newPrimaryColor));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnPrimaryColorChange);
+    return identical(this, other) ||
+        (other is _OnPrimaryColorChange &&
+            (identical(other.newPrimaryColor, newPrimaryColor) ||
+                const DeepCollectionEquality()
+                    .equals(other.newPrimaryColor, newPrimaryColor)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(newPrimaryColor);
+
+  @override
+  _$OnPrimaryColorChangeCopyWith<_OnPrimaryColorChange> get copyWith =>
+      __$OnPrimaryColorChangeCopyWithImpl<_OnPrimaryColorChange>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
-    return onPrimaryColorChange();
+    return onPrimaryColorChange(newPrimaryColor);
   }
 
   @override
@@ -530,14 +596,14 @@ class _$_OnPrimaryColorChange
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (onPrimaryColorChange != null) {
-      return onPrimaryColorChange();
+      return onPrimaryColorChange(newPrimaryColor);
     }
     return orElse();
   }
@@ -578,13 +644,18 @@ class _$_OnPrimaryColorChange
 }
 
 abstract class _OnPrimaryColorChange implements ColorEvent {
-  factory _OnPrimaryColorChange() = _$_OnPrimaryColorChange;
+  factory _OnPrimaryColorChange({@required Color newPrimaryColor}) =
+      _$_OnPrimaryColorChange;
+
+  Color get newPrimaryColor;
+  _$OnPrimaryColorChangeCopyWith<_OnPrimaryColorChange> get copyWith;
 }
 
 abstract class _$OnAccentColorChangeCopyWith<$Res> {
   factory _$OnAccentColorChangeCopyWith(_OnAccentColorChange value,
           $Res Function(_OnAccentColorChange) then) =
       __$OnAccentColorChangeCopyWithImpl<$Res>;
+  $Res call({Color newAccentColor});
 }
 
 class __$OnAccentColorChangeCopyWithImpl<$Res>
@@ -596,48 +667,75 @@ class __$OnAccentColorChangeCopyWithImpl<$Res>
 
   @override
   _OnAccentColorChange get _value => super._value as _OnAccentColorChange;
+
+  @override
+  $Res call({
+    Object newAccentColor = freezed,
+  }) {
+    return _then(_OnAccentColorChange(
+      newAccentColor: newAccentColor == freezed
+          ? _value.newAccentColor
+          : newAccentColor as Color,
+    ));
+  }
 }
 
 class _$_OnAccentColorChange
     with DiagnosticableTreeMixin
     implements _OnAccentColorChange {
-  _$_OnAccentColorChange();
+  _$_OnAccentColorChange({@required this.newAccentColor})
+      : assert(newAccentColor != null);
+
+  @override
+  final Color newAccentColor;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ColorEvent.onAccentColorChange()';
+    return 'ColorEvent.onAccentColorChange(newAccentColor: $newAccentColor)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ColorEvent.onAccentColorChange'));
+      ..add(DiagnosticsProperty('type', 'ColorEvent.onAccentColorChange'))
+      ..add(DiagnosticsProperty('newAccentColor', newAccentColor));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnAccentColorChange);
+    return identical(this, other) ||
+        (other is _OnAccentColorChange &&
+            (identical(other.newAccentColor, newAccentColor) ||
+                const DeepCollectionEquality()
+                    .equals(other.newAccentColor, newAccentColor)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(newAccentColor);
+
+  @override
+  _$OnAccentColorChangeCopyWith<_OnAccentColorChange> get copyWith =>
+      __$OnAccentColorChangeCopyWithImpl<_OnAccentColorChange>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result onGetCurrentAppColors(),
     @required Result onScaffoldColorChange(Color newScaffoldColor),
-    @required Result onErrorColorChange(),
-    @required Result onPrimaryColorChange(),
-    @required Result onAccentColorChange(),
+    @required Result onErrorColorChange(Color newErrorColor),
+    @required Result onPrimaryColorChange(Color newPrimaryColor),
+    @required Result onAccentColorChange(Color newAccentColor),
   }) {
     assert(onGetCurrentAppColors != null);
     assert(onScaffoldColorChange != null);
     assert(onErrorColorChange != null);
     assert(onPrimaryColorChange != null);
     assert(onAccentColorChange != null);
-    return onAccentColorChange();
+    return onAccentColorChange(newAccentColor);
   }
 
   @override
@@ -645,14 +743,14 @@ class _$_OnAccentColorChange
   Result maybeWhen<Result extends Object>({
     Result onGetCurrentAppColors(),
     Result onScaffoldColorChange(Color newScaffoldColor),
-    Result onErrorColorChange(),
-    Result onPrimaryColorChange(),
-    Result onAccentColorChange(),
+    Result onErrorColorChange(Color newErrorColor),
+    Result onPrimaryColorChange(Color newPrimaryColor),
+    Result onAccentColorChange(Color newAccentColor),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (onAccentColorChange != null) {
-      return onAccentColorChange();
+      return onAccentColorChange(newAccentColor);
     }
     return orElse();
   }
@@ -693,5 +791,9 @@ class _$_OnAccentColorChange
 }
 
 abstract class _OnAccentColorChange implements ColorEvent {
-  factory _OnAccentColorChange() = _$_OnAccentColorChange;
+  factory _OnAccentColorChange({@required Color newAccentColor}) =
+      _$_OnAccentColorChange;
+
+  Color get newAccentColor;
+  _$OnAccentColorChangeCopyWith<_OnAccentColorChange> get copyWith;
 }
