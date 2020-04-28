@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+
+import '../../domain/entities/game.dart';
 import '../bloc/color/bloc/color_bloc.dart';
+import '../bloc/game/game_bloc.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key}) : super(key: key);
@@ -102,11 +105,41 @@ class _SettingsPageState extends State<SettingsPage> {
                   subtitle: Text('Resets the theme to default'),
                 ),
               ),
+              BlocBuilder<GameBloc, GameState>(
+                builder: (builderContext, state) {
+                  if (state is GameCreatedState) {
+                    return _buildGameInformation(state.game);
+                  } else if (state is GameUpdatedState) {
+                    return _buildGameInformation(state.game);
+                  } else {
+                    // In any other case just return a sizedBox
+                    return SizedBox();
+                  }
+                },
+              )
             ],
           ).toList(),
         ),
       ),
     );
+  }
+
+  Widget _buildGameInformation(Game currentGame) {
+    return InkWell(
+      onTap: () {},
+      child: ListTile(
+        title: Text('Points to win'),
+        subtitle: Text('${currentGame.pointsToWin}'),
+      ),
+    );
+
+    //   InkWell(
+    //     onTap: () {},
+    //     child: ListTile(
+    //       title: Text('Maximum number of players'),
+    //       subtitle: Text('${currentGame.numberOfPlayers}'),
+    //     ),
+    // );
   }
 
   void _addOnScaffoldChangeEvent(Color color) {

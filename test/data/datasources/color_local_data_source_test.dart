@@ -131,6 +131,8 @@ void main() {
           final actualResult = await dataSource.getDefaultAppColors();
           final expectedResult = defaultAppColors;
 
+          verify(mockLocalPersistenceProvider.clearPersistence(
+              boxToClear: APP_THEME_BOX));
           expect(expectedResult, actualResult);
         },
       );

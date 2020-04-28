@@ -1,3 +1,4 @@
+import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/error/exceptions.dart';
@@ -51,13 +52,15 @@ class ColorLocalDataSourceImpl implements ColorLocalDataSource {
   }
 
   @override
-  Future<AppColors> getDefaultAppColors() {
+  Future<AppColors> getDefaultAppColors() async {
     final defaultAppColors = AppColors(
       backGroundColor: 'ff58C6B2',
       accentColor: 'ff34AB95',
       errorColor: 'ff00FFF0',
       primaryColor: 'ff249681',
     );
+
+    await localPersistenceProvider.clearPersistence(boxToClear: APP_THEME_BOX);
 
     return Future.value(defaultAppColors);
   }

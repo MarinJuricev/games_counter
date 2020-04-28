@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 
 abstract class LocalPersistenceProvider {
   Future<int> saveIntoPersistence({dynamic valueToSave, String boxToSaveInto});
+  Future<int> clearPersistence({String boxToClear});
   Future<dynamic> getFromPersistence({String boxToGetDataFrom});
 }
 
@@ -21,5 +22,11 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
     final box = await Hive.openBox(boxToGetDataFrom);
 
     return await box.get(box.length - 1);
+  }
+
+  @override
+  Future<int> clearPersistence({String boxToClear}) async {
+    final box = await Hive.openBox(boxToClear);
+    return box.clear();
   }
 }

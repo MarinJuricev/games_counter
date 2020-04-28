@@ -73,6 +73,8 @@ class _HomePageState extends State<HomePage> {
       return ErrorContainer(
         erorrMessage: state.errorMessage,
       );
+    } else {
+      return SizedBox();
     }
   }
 
