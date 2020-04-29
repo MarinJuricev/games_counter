@@ -11,9 +11,7 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
       builder: (_, state) {
-        if (state is GameCreatedState) {
-          return _buildGameTitle(state.game.name, context);
-        } else if (state is GameUpdatedState) {
+        if (state is GameUpdatedState) {
           return _buildGameTitle(state.game.name, context);
         } else {
           return Container(); // Just render a empty container in other states...

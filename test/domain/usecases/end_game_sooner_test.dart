@@ -14,7 +14,6 @@ void main() {
 
   final playerName = 'validPlayerName';
   final playerNameWithMorePoints = 'validPlayerNameWithMorePoints';
-  final playerNameWithSamePoints = 'samePoints';
   final playerPoints = 0;
   final playerBonusPoints = 0;
   final newPlayerPoints = 14;
@@ -25,7 +24,6 @@ void main() {
   Game testGame;
   Player testPlayer;
   Player testPlayerWithMorePoints;
-  Player testPlayerWithSamePoints;
 
   setUp(
     () {
@@ -39,12 +37,6 @@ void main() {
       );
 
       testPlayerWithMorePoints = Player(
-        name: playerNameWithMorePoints,
-        points: newPlayerPoints,
-        bonusPoints: newPlayerBonusPoints,
-      );
-
-      testPlayerWithSamePoints = Player(
         name: playerNameWithMorePoints,
         points: newPlayerPoints,
         bonusPoints: newPlayerBonusPoints,

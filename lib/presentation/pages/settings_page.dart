@@ -31,115 +31,189 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text('Settings'),
       ),
       body: AnimatedContainer(
-        color: _backgroundColor,
-        duration: Duration(milliseconds: 250),
-        child: ListView(
-          children: ListTile.divideTiles(
-            context: context,
-            tiles: [
-              InkWell(
-                onTap: () => _buildColorDialog(
-                  title: 'BackgroundColor',
-                  selectedColor: _backgroundColor,
-                  onTapAction: _addOnScaffoldChangeEvent,
-                ),
-                child: ListTile(
-                  title: Text('Background Color'),
-                  subtitle: Text('Choose background color of the app'),
-                  trailing: CircleColor(
-                    circleSize: 26.0,
-                    color: _backgroundColor,
-                  ),
-                ),
+          color: _backgroundColor,
+          duration: Duration(milliseconds: 250),
+          child: BlocBuilder<GameBloc, GameState>(
+            builder: (builderContext, state) {
+              if (state is GameUpdatedState) {
+                return _buildGameInformation(state.game);
+              } else {
+                // In any other case just return a sizedBox
+                return _buildSettingsItems();
+              }
+            },
+          )),
+    );
+  }
+
+  Widget _buildSettingsItems() {
+    return ListView(
+      children: ListTile.divideTiles(
+        context: context,
+        tiles: [
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'BackgroundColor',
+              selectedColor: _backgroundColor,
+              onTapAction: _addOnScaffoldChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Background Color'),
+              subtitle: Text('Choose background color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _backgroundColor,
               ),
-              InkWell(
-                onTap: () => _buildColorDialog(
-                  title: 'Primary Color',
-                  selectedColor: _primaryColor,
-                  onTapAction: _addOnPrimaryChangeEvent,
-                ),
-                child: ListTile(
-                  title: Text('Primary Color'),
-                  subtitle: Text('Choose primary color of the app'),
-                  trailing: CircleColor(
-                    circleSize: 26.0,
-                    color: _primaryColor,
-                  ),
-                ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Primary Color',
+              selectedColor: _primaryColor,
+              onTapAction: _addOnPrimaryChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Primary Color'),
+              subtitle: Text('Choose primary color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _primaryColor,
               ),
-              InkWell(
-                onTap: () => _buildColorDialog(
-                  title: 'Accent Color',
-                  selectedColor: _accentColor,
-                  onTapAction: _addOnAccentChangeEvent,
-                ),
-                child: ListTile(
-                  title: Text('Accent Color'),
-                  subtitle: Text('Choose accent color of the app'),
-                  trailing: CircleColor(
-                    circleSize: 26.0,
-                    color: _accentColor,
-                  ),
-                ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Accent Color',
+              selectedColor: _accentColor,
+              onTapAction: _addOnAccentChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Accent Color'),
+              subtitle: Text('Choose accent color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _accentColor,
               ),
-              InkWell(
-                onTap: () => _buildColorDialog(
-                  title: 'Error Color',
-                  selectedColor: _errorColor,
-                  onTapAction: _addOnErrorChangeEvent,
-                ),
-                child: ListTile(
-                  title: Text('Error Color'),
-                  subtitle: Text('Choose error color of the app'),
-                  trailing: CircleColor(
-                    circleSize: 26.0,
-                    color: _errorColor,
-                  ),
-                ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Error Color',
+              selectedColor: _errorColor,
+              onTapAction: _addOnErrorChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Error Color'),
+              subtitle: Text('Choose error color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _errorColor,
               ),
-              InkWell(
-                onTap: () => BlocProvider.of<ColorBloc>(context)
-                  ..add(ColorEvent.onResetAppColors()),
-                child: ListTile(
-                  title: Text('Reset App Colors'),
-                  subtitle: Text('Resets the theme to default'),
-                ),
-              ),
-              BlocBuilder<GameBloc, GameState>(
-                builder: (builderContext, state) {
-                  if (state is GameCreatedState) {
-                    return _buildGameInformation(state.game);
-                  } else if (state is GameUpdatedState) {
-                    return _buildGameInformation(state.game);
-                  } else {
-                    // In any other case just return a sizedBox
-                    return SizedBox();
-                  }
-                },
-              )
-            ],
-          ).toList(),
-        ),
-      ),
+            ),
+          ),
+          InkWell(
+            onTap: () => BlocProvider.of<ColorBloc>(context)
+              ..add(ColorEvent.onResetAppColors()),
+            child: ListTile(
+              title: Text('Reset App Colors'),
+              subtitle: Text('Resets the theme to default'),
+            ),
+          ),
+        ],
+      ).toList(),
     );
   }
 
   Widget _buildGameInformation(Game currentGame) {
-    return InkWell(
-      onTap: () {},
-      child: ListTile(
-        title: Text('Points to win'),
-        subtitle: Text('${currentGame.pointsToWin}'),
-      ),
+    return ListView(
+      children: ListTile.divideTiles(
+        context: context,
+        tiles: [
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'BackgroundColor',
+              selectedColor: _backgroundColor,
+              onTapAction: _addOnScaffoldChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Background Color'),
+              subtitle: Text('Choose background color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _backgroundColor,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Primary Color',
+              selectedColor: _primaryColor,
+              onTapAction: _addOnPrimaryChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Primary Color'),
+              subtitle: Text('Choose primary color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _primaryColor,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Accent Color',
+              selectedColor: _accentColor,
+              onTapAction: _addOnAccentChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Accent Color'),
+              subtitle: Text('Choose accent color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _accentColor,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () => _buildColorDialog(
+              title: 'Error Color',
+              selectedColor: _errorColor,
+              onTapAction: _addOnErrorChangeEvent,
+            ),
+            child: ListTile(
+              title: Text('Error Color'),
+              subtitle: Text('Choose error color of the app'),
+              trailing: CircleColor(
+                circleSize: 26.0,
+                color: _errorColor,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () => BlocProvider.of<ColorBloc>(context)
+              ..add(ColorEvent.onResetAppColors()),
+            child: ListTile(
+              title: Text('Reset App Colors'),
+              subtitle: Text('Resets the theme to default'),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text('Points to win'),
+              subtitle: Text('${currentGame.pointsToWin}'),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text('Maximum number of players'),
+              subtitle: Text('${currentGame.numberOfPlayers}'),
+            ),
+          )
+        ],
+      ).toList(),
     );
-
-    //   InkWell(
-    //     onTap: () {},
-    //     child: ListTile(
-    //       title: Text('Maximum number of players'),
-    //       subtitle: Text('${currentGame.numberOfPlayers}'),
-    //     ),
-    // );
   }
 
   void _addOnScaffoldChangeEvent(Color color) {

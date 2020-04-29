@@ -128,7 +128,7 @@ void main() {
                 createPlayer: mockCreatePlayer,
                 gameRepository: mockGameRepository);
           },
-          act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
+          act: (GameBloc gameBloc) async => gameBloc.add(GameEvent.gameCreated(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayers,
                 pointsToWin: pointsToWin,
@@ -139,7 +139,7 @@ void main() {
                 numberOfPlayers: numberOfPlayersParsed,
                 winningPoints: pointsToWinParsed));
           },
-          expect: [GameCreatedState(game: testGame)]);
+          expect: [GameUpdatedState(game: testGame)]);
 
       blocTest(
         'should emit [ErrorState] when the usecase validation fails',
@@ -208,7 +208,7 @@ void main() {
           pointsToWin: pointsToWin,
         )),
         expect: [
-          GameCreatedState(game: testGame),
+          GameUpdatedState(game: testGame),
         ],
       );
 

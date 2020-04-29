@@ -9,15 +9,6 @@ abstract class GameState extends Equatable {
 
 class GameInitialState extends GameState {}
 
-class GameCreatedState extends GameState {
-  final Game game;
-
-  GameCreatedState({@required this.game});
-
-  @override
-  List<Object> get props => [game];
-}
-
 class GameUpdatedState extends GameState {
   final Game game;
 

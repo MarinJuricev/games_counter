@@ -227,7 +227,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       Either<Failure, Game> useCaseEither) async* {
     yield useCaseEither.fold(
       (failure) => GameErrorState(errorMessage: VALIDATION_ERROR),
-      (game) => GameCreatedState(game: game),
+      (game) => GameUpdatedState(game: game),
     );
   }
 }
