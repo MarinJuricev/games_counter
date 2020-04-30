@@ -20,14 +20,7 @@ void main() {
     primaryColor: 'ff249681',
   );
 
-  final newColor = Color(0xff0000000);
-
-  final updatedScaffoldColor = AppColors(
-    backGroundColor: 'ff0000000',
-    accentColor: 'ff34AB95',
-    errorColor: 'ff00FFF0',
-    primaryColor: 'ff249681',
-  );
+  final newColor = Color(0xff000000);
 
   setUp(
     () {
@@ -38,17 +31,101 @@ void main() {
     'onScaffoldColorChange',
     () {
       blocTest(
-          'shoud emit [ColorUpdated] with newly added scaffold color when color repository returns appColors',
-          build: () async {
-            when(mockColorRepository.getColor())
-                .thenAnswer((_) async => Right(testAppColor));
-            return ColorBloc(colorRepository: mockColorRepository);
-          },
-          act: (ColorBloc colorBloc) async => colorBloc.add(ColorEvent.onScaffoldColorChange(newScaffoldColor: newColor)),
-          expect: [
-            ColorUpdated(
-                appColors: testAppColor.copyWith(backGroundColor: 'ff0000000'))
-          ]);
+        'shoud emit [ColorUpdated] with newly added scaffold color when color repository returns appColors',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async => colorBloc
+            .add(ColorEvent.onScaffoldColorChange(newScaffoldColor: newColor)),
+        expect: [isA<ColorUpdated>()],
+      );
+    },
+  );
+
+  group(
+    'onErrorColorChange',
+    () {
+      blocTest(
+        'shoud emit [ColorUpdated] with newly added error color when color repository returns appColors',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async => colorBloc
+            .add(ColorEvent.onErrorColorChange(newErrorColor: newColor)),
+        expect: [isA<ColorUpdated>()],
+      );
+    },
+  );
+
+  group(
+    'onPrimaryColorChange',
+    () {
+      blocTest(
+        'shoud emit [ColorUpdated] with newly added primary color when color repository returns appColors',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async => colorBloc
+            .add(ColorEvent.onPrimaryColorChange(newPrimaryColor: newColor)),
+        expect: [isA<ColorUpdated>()],
+      );
+    },
+  );
+
+  group(
+    'onAccentColorChange',
+    () {
+      blocTest(
+        'shoud emit [ColorUpdated] with newly added primary color when color repository returns appColors',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async => colorBloc
+            .add(ColorEvent.onAccentColorChange(newAccentColor: newColor)),
+        expect: [isA<ColorUpdated>()],
+      );
+    },
+  );
+
+  group(
+    'onGetCurrentAppColors',
+    () {
+      blocTest(
+        'shoud emit [ColorUpdated] with theapp colors from localPersistence',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async =>
+            colorBloc.add(ColorEvent.onGetCurrentAppColors()),
+        expect: [isA<ColorUpdated>()],
+      );
+    },
+  );
+
+  group(
+    'onResetAppColors',
+    () {
+      blocTest(
+        'shoud emit [ColorUpdated] with default app colors when color repository returns appColors',
+        build: () async {
+          when(mockColorRepository.getColor())
+              .thenAnswer((_) async => Right(testAppColor));
+          return ColorBloc(colorRepository: mockColorRepository);
+        },
+        act: (ColorBloc colorBloc) async =>
+            colorBloc.add(ColorEvent.onGetCurrentAppColors()),
+        expect: [isA<ColorUpdated>()],
+      );
     },
   );
 }
