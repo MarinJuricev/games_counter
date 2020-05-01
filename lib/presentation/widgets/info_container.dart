@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NoPlayers extends StatelessWidget {
-  const NoPlayers({
+class InfoContainer extends StatelessWidget {
+  final String title;
+  final String description;
+
+  const InfoContainer({
     Key key,
+    this.title,
+    @required this.description,
   }) : super(key: key);
 
   @override
@@ -15,9 +20,7 @@ class NoPlayers extends StatelessWidget {
           color: Theme.of(context).accentColor,
           boxShadow: [
             BoxShadow(
-                blurRadius: 8,
-                color: Colors.black26,
-                offset: Offset(0, 2)),
+                blurRadius: 8, color: Colors.black26, offset: Offset(0, 2)),
           ],
         ),
         child: Padding(
@@ -25,13 +28,13 @@ class NoPlayers extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                '¯\\_(ツ)_/¯',
+              Text(
+                title ?? '¯\\_(ツ)_/¯',
                 style: TextStyle(fontSize: 36),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'No players created, create one by clicking the + button',
+              Text(
+                description,
                 style: TextStyle(fontSize: 24),
                 textAlign: TextAlign.center,
               ),

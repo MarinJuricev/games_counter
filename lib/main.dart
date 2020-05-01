@@ -24,11 +24,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: const Color(0xff249681),
-      ),
-    );
     return MultiBlocProvider(
       providers: <BlocProvider>[
         BlocProvider<GameBloc>(

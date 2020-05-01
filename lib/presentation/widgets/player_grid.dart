@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
 import '../../domain/entities/game.dart';
-import 'no_players.dart';
+import '../bloc/game/game_bloc.dart';
+import 'info_container.dart';
 import 'out_lined_button.dart';
 import 'player_card.dart';
 
@@ -18,7 +18,10 @@ class PlayerGrid extends StatelessWidget {
     return OrientationBuilder(
       builder: (_, orientation) {
         if (currentGame.players.isEmpty) {
-          return NoPlayers();
+          return InfoContainer(
+            description:
+                'No players created, create one by clicking the + button',
+          );
         } else {
           return Column(
             children: <Widget>[
