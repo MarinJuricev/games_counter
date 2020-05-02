@@ -7,13 +7,13 @@ import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../repositories/game_repository.dart';
 
-class CreateGame implements BaseUseCase<Game, Params> {
+class CreateGame implements BaseUseCase<Game, CreateGameParams> {
   final GameRepository repository;
 
   CreateGame({@required this.repository});
 
   @override
-  Future<Either<Failure, Game>> call(Params params) async {
+  Future<Either<Failure, Game>> call(CreateGameParams params) async {
     final gameTitle = params.gameTitle;
     final winningPoints = params.winningPoints;
     final numberOfPlayers = params.numberOfPlayers;
@@ -29,12 +29,12 @@ class CreateGame implements BaseUseCase<Game, Params> {
   }
 }
 
-class Params extends Equatable {
+class CreateGameParams extends Equatable {
   final String gameTitle;
   final int numberOfPlayers;
   final int winningPoints;
 
-  Params({
+  CreateGameParams({
     @required this.gameTitle,
     @required this.numberOfPlayers,
     @required this.winningPoints,

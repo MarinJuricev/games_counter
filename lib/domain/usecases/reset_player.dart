@@ -9,7 +9,7 @@ import '../entities/player.dart';
 import '../repositories/game_repository.dart';
 import 'package:meta/meta.dart';
 
-class ResetPlayer implements BaseUseCase<Game, Params> {
+class ResetPlayer implements BaseUseCase<Game, ResetPlayerParams> {
   final GameRepository repository;
 
   ResetPlayer({@required this.repository});
@@ -41,11 +41,11 @@ class ResetPlayer implements BaseUseCase<Game, Params> {
   }
 }
 
-class Params extends Equatable {
+class ResetPlayerParams extends Equatable {
   final Game currentGame;
   final Player currentPlayer;
 
-  Params({
+  ResetPlayerParams({
     @required this.currentGame,
     @required this.currentPlayer,
   });

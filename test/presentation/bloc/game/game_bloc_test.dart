@@ -134,7 +134,7 @@ void main() {
                 pointsToWin: pointsToWin,
               )),
           verify: (gameBloc) async {
-            mockCreateGame(createGameUseCase.Params(
+            mockCreateGame(createGameUseCase.CreateGameParams(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayersParsed,
                 winningPoints: pointsToWinParsed));
@@ -261,7 +261,7 @@ void main() {
           points: playerBonusPoints,
           bonusPoints: playerBonusPoints,
         ))),
-        verify: (gameBloc) async => mockCreatePlayer(Params(
+        verify: (gameBloc) async => mockCreatePlayer(CreatePlayerParams(
           playerName: playerName,
           points: playerPointsParsed,
           bonusPoints: playerBonusPointsParsed,

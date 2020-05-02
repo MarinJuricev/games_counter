@@ -46,7 +46,7 @@ void main() {
 
   group('createPlayer', () {
     test('should add a new player to the already existing game', () async {
-      final actualResult = await createPlayer(Params(
+      final actualResult = await createPlayer(CreatePlayerParams(
         playerName: playerName,
         points: playerPoints,
         bonusPoints: playerBonusPoints,
@@ -67,13 +67,14 @@ void main() {
         final gameWithAddedPlayer = testGame;
         gameWithAddedPlayer.players.add(newPlayer);
 
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: playerName,
           points: playerPoints,
           bonusPoints: playerBonusPoints,
           currentGame: testGame,
         ));
-        final expectedResult = Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS));
+        final expectedResult =
+            Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS));
 
         expect(actualResult, expectedResult);
       },
@@ -82,7 +83,7 @@ void main() {
     test(
       'should return a [PointsToHighFailure] if a the new player starting points are higher than the game\'s pointsToWin',
       () async {
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: playerName,
           points: playerPointsHigherThanAllowed,
           bonusPoints: playerBonusPoints,
@@ -97,7 +98,7 @@ void main() {
     test(
       'should return a [PointsToHighFailure] if a the new player starting bonusPoints are higher than the game\'s pointsToWin',
       () async {
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: playerName,
           points: playerPoints,
           bonusPoints: playerBonusPointsHigherThanAllowed,
@@ -112,7 +113,7 @@ void main() {
     test(
       'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
       () async {
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: playerName,
           points: 25,
           bonusPoints: 25,
@@ -127,7 +128,7 @@ void main() {
     test(
       'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
       () async {
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: playerName,
           points: 25,
           bonusPoints: 25,
@@ -146,13 +147,14 @@ void main() {
         gameWithAddedPlayer.players.add(newPlayer);
         gameWithAddedPlayer.players.add(newPlayer);
 
-        final actualResult = await createPlayer(Params(
+        final actualResult = await createPlayer(CreatePlayerParams(
           playerName: 'newPlayerName',
           points: 0,
           bonusPoints: 0,
           currentGame: testGame,
         ));
-        final expectedResult = Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS));
+        final expectedResult =
+            Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS));
 
         expect(actualResult, expectedResult);
       },

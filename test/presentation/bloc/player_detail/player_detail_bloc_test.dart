@@ -219,7 +219,7 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.Params(
+          mockResetPlayer(resetPlayerUseCase.ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
         expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
@@ -242,7 +242,7 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.Params(
+          mockResetPlayer(resetPlayerUseCase.ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
         expect: [PlayerDetailUpdatedState(player: currentPlayer)],

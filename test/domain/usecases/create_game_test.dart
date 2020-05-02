@@ -35,10 +35,11 @@ void main() {
       test(
         'should return a valid game instance with valid parametars',
         () async {
-          when(mockGameRepository.getGame()).thenAnswer((_) async => Right(testGame));
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
           final actualResult = await createGame(
-            Params(
+            CreateGameParams(
               gameTitle: validGameName,
               numberOfPlayers: validNumberOfPlayers,
               winningPoints: validPointsToWin,

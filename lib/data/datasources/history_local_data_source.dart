@@ -1,4 +1,7 @@
+import 'package:meta/meta.dart';
+
 import '../../domain/entities/game.dart';
+import 'local_persistence_provider.dart';
 
 abstract class HistoryLocalDataSource {
   Future<List<Game>> getRecentSearches();
@@ -6,6 +9,10 @@ abstract class HistoryLocalDataSource {
 }
 
 class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
+  final LocalPersistenceProvider localPersistenceProvider;
+
+  HistoryLocalDataSourceImpl({@required this.localPersistenceProvider});
+
   @override
   Future<void> deleteRecentGame() {
     return null;

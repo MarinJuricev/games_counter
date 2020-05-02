@@ -8,13 +8,13 @@ import '../entities/game.dart';
 import '../entities/player.dart';
 import '../repositories/game_repository.dart';
 
-class UpdateGame implements BaseUseCase<Game, Params> {
+class UpdateGame implements BaseUseCase<Game, UpdateGameParams> {
   final GameRepository repository;
 
   UpdateGame({@required this.repository});
 
   @override
-  Future<Either<Failure, Game>> call(Params params) async {
+  Future<Either<Failure, Game>> call(UpdateGameParams params) async {
     final currentGame = params.currentGame;
     final currentPlayer = params.currentPlayer;
     final newPoints = params.newPoints;
@@ -45,13 +45,13 @@ class UpdateGame implements BaseUseCase<Game, Params> {
   }
 }
 
-class Params extends Equatable {
+class UpdateGameParams extends Equatable {
   final Game currentGame;
   final Player currentPlayer;
   final int newPoints;
   final int newBonusPoints;
 
-  Params({
+  UpdateGameParams({
     @required this.currentGame,
     @required this.currentPlayer,
     @required this.newPoints,

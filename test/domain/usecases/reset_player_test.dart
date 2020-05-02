@@ -48,7 +48,7 @@ void main() {
         'should update mainPoints and bonusPoints with 0',
         () async {
           final actualResult = await resetPlayer(
-            Params(
+            ResetPlayerParams(
               currentGame: testGame,
               currentPlayer: testPlayer,
             ),

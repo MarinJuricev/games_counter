@@ -9,13 +9,13 @@ import '../entities/game.dart';
 import '../entities/player.dart';
 import '../repositories/game_repository.dart';
 
-class CreatePlayer implements BaseUseCase<Game, Params> {
+class CreatePlayer implements BaseUseCase<Game, CreatePlayerParams> {
   final GameRepository repository;
 
   CreatePlayer({@required this.repository});
 
   @override
-  Future<Either<Failure, Game>> call(Params params) async {
+  Future<Either<Failure, Game>> call(CreatePlayerParams params) async {
     final newPlayer = Player(
       name: params.playerName,
       points: params.points,
@@ -77,13 +77,13 @@ bool checkIfPlayerWithThatNameAlreadyExists(
   return (playerAlreadyExists != null);
 }
 
-class Params extends Equatable {
+class CreatePlayerParams extends Equatable {
   final String playerName;
   final int points;
   final int bonusPoints;
   final Game currentGame;
 
-  Params({
+  CreatePlayerParams({
     @required this.playerName,
     @required this.points,
     @required this.bonusPoints,

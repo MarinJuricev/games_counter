@@ -13,10 +13,10 @@ import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/game.dart';
 import '../../../domain/entities/player.dart';
 import '../../../domain/repositories/game_repository.dart';
-import '../../../domain/usecases/create_game.dart' as createGameUseCase;
+import '../../../domain/usecases/create_game.dart';
 import '../../../domain/usecases/create_player.dart';
-import '../../../domain/usecases/delete_player.dart' as deletePlayerUseCase;
-import '../../../domain/usecases/end_game_sooner.dart' as endGameSoonerUseCase;
+import '../../../domain/usecases/delete_player.dart';
+import '../../../domain/usecases/end_game_sooner.dart';
 
 part 'game_bloc.freezed.dart';
 part 'game_event.dart';
@@ -25,9 +25,9 @@ part 'game_state.dart';
 const String VALIDATION_ERROR = 'Validation Error';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  final createGameUseCase.CreateGame createGame;
-  final deletePlayerUseCase.DeletePlayer deletePlayer;
-  final endGameSoonerUseCase.EndGameSooner endGameSooner;
+  final CreateGame createGame;
+  final DeletePlayer deletePlayer;
+  final EndGameSooner endGameSooner;
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
   final GameRepository gameRepository;
@@ -78,7 +78,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     if (numberResult is int && pointsResult is int) {
       final useCaseEither = await createGame(
-        createGameUseCase.Params(
+        CreateGameParams(
             gameTitle: gameTitle,
             numberOfPlayers: numberResult,
             winningPoints: pointsResult),
@@ -122,7 +122,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       yield GameErrorState(errorMessage: gameRepoResult.message);
     else if (gameRepoResult is Game) {
       final createPlayerUseCase = await createPlayer(
-        Params(
+        CreatePlayerParams(
             playerName: playerName,
             points: pointsEitherResult,
             bonusPoints: bonusPointsEitherResult,
@@ -150,7 +150,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       yield GameErrorState(errorMessage: gameRepoResult.message);
     else if (gameRepoResult is Game) {
       final useCaseResult = await deletePlayer(
-        deletePlayerUseCase.Params(
+        DeletePlayerParams(
             currentGame: gameRepoResult, playerToDelete: playerToDelete),
       );
       final deletePlayerResult = useCaseResult.unwrapResult();
@@ -165,7 +165,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   Stream<GameState> _handleEndGameSoonerEvent(Game currentGame) async* {
     final useCaseResult = await endGameSooner(
-      endGameSoonerUseCase.Params(currentGame: currentGame),
+      EndGameSoonerParams(currentGame: currentGame),
     );
 
     final endGameSoonerResult = useCaseResult.unwrapResult();
@@ -196,7 +196,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       yield GameErrorState(errorMessage: gameRepoResult.message);
     else if (gameRepoResult is Game) {
       final createPlayerUseCase = await createPlayer(
-        Params(
+        CreatePlayerParams(
             playerName: playerName,
             points: pointsEitherResult,
             bonusPoints: bonusPointsEitherResult,

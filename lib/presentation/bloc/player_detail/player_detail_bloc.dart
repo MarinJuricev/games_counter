@@ -10,7 +10,7 @@ import '../../../core/extensions/extensions.dart';
 import '../../../domain/entities/game.dart';
 import '../../../domain/entities/player.dart';
 import '../../../domain/repositories/game_repository.dart';
-import '../../../domain/usecases/reset_player.dart' as resetPlayerUseCase;
+import '../../../domain/usecases/reset_player.dart';
 import '../../../domain/usecases/update_game.dart';
 import '../game/game_bloc.dart';
 
@@ -21,7 +21,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
   final GameRepository gameRepository;
   final GameBloc gameBloc;
   final UpdateGame updateGame;
-  final resetPlayerUseCase.ResetPlayer resetPlayer;
+  final ResetPlayer resetPlayer;
 
   PlayerDetailBloc({
     @required this.gameRepository,
@@ -48,7 +48,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
       if (gameRepoResult is Failure)
         yield PlayerDetailErrorState(errorMessage: gameRepoResult.message);
       else if (gameRepoResult is Game) {
-        final updateGameEither = await updateGame(Params(
+        final updateGameEither = await updateGame(UpdateGameParams(
           currentGame: gameRepoResult,
           currentPlayer: currentPlayer,
           newPoints: newPoints,
@@ -76,7 +76,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
       if (gameRepoResult is Failure)
         yield PlayerDetailErrorState(errorMessage: gameRepoResult.message);
       else if (gameRepoResult is Game) {
-        final resetPlayerEither = await resetPlayer(resetPlayerUseCase.Params(
+        final resetPlayerEither = await resetPlayer(ResetPlayerParams(
           currentGame: gameRepoResult,
           currentPlayer: playerToReset,
         ));

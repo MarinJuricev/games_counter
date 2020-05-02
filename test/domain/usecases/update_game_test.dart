@@ -52,7 +52,7 @@ void main() {
         'should update mainPoints and bonusPoints with the new values',
         () async {
           final actualResult = await updateGame(
-            Params(
+            UpdateGameParams(
                 currentGame: testGame,
                 currentPlayer: testPlayer,
                 newPoints: newPlayerPoints,
@@ -82,7 +82,7 @@ void main() {
         'should update mainPoints and bonus points and set the winner field if the sum exceed\'s games pointsToWin ( when mainPoints exceed )',
         () async {
           final actualResult = await updateGame(
-            Params(
+            UpdateGameParams(
                 currentGame: testGame,
                 currentPlayer: testPlayer,
                 newPoints: newPlayerPointsThatExceed,
@@ -112,7 +112,7 @@ void main() {
         'should update mainPoints and bonus points and set the winner field if the sum exceed\'s games pointsToWin ( when bonusPoints exceed )',
         () async {
           final actualResult = await updateGame(
-            Params(
+            UpdateGameParams(
                 currentGame: testGame,
                 currentPlayer: testPlayer,
                 newPoints: playerPoints,

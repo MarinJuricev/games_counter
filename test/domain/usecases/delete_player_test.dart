@@ -56,8 +56,8 @@ void main() {
       test(
         'should return a updated game object that doesn\t contain the provided player object',
         () async {
-          final actualResult = await deletePlayer(
-              Params(currentGame: testGame, playerToDelete: testPlayer));
+          final actualResult = await deletePlayer(DeletePlayerParams(
+              currentGame: testGame, playerToDelete: testPlayer));
 
           final expectedGame = Game(
             name: gameName,
@@ -76,8 +76,8 @@ void main() {
       test(
         'should return [NotImplementedFailure] when the playerToRemove isn\t present in the game object',
         () async {
-          final actualResult = await deletePlayer(
-              Params(currentGame: testGame, playerToDelete: testPlayer2));
+          final actualResult = await deletePlayer(DeletePlayerParams(
+              currentGame: testGame, playerToDelete: testPlayer2));
           final expectedResult = Left(NotImplementedFailure());
 
           expect(actualResult, expectedResult);

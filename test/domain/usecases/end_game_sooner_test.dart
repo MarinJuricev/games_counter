@@ -58,7 +58,7 @@ void main() {
         'should update winner field in game object with the player with most points',
         () async {
           final actualResult =
-              await endGameSooner(Params(currentGame: testGame));
+              await endGameSooner(EndGameSoonerParams(currentGame: testGame));
 
           final expectedResult = Right(testPlayerWithMorePoints);
 
