@@ -57,14 +57,14 @@ void main() {
       test(
         'should return localAppColors when localPersistenceProvider.getFromPersistence result isnt null',
         () async {
-          when(mockLocalPersistenceProvider.getFromPersistence(
+          when(mockLocalPersistenceProvider.getLatestFromPersistence(
                   boxToGetDataFrom: APP_THEME_BOX))
               .thenAnswer((_) async => testLocalAppColor);
 
           final actualResult = await dataSource.getAppColors();
           final expectedResult = testAppColor;
 
-          verify(mockLocalPersistenceProvider.getFromPersistence(
+          verify(mockLocalPersistenceProvider.getLatestFromPersistence(
               boxToGetDataFrom: APP_THEME_BOX));
           assert(expectedResult == actualResult);
         },
@@ -73,7 +73,7 @@ void main() {
       test(
         'should return defaultAppColors when there isnt any data in local persistence',
         () async {
-          when(mockLocalPersistenceProvider.getFromPersistence(
+          when(mockLocalPersistenceProvider.getLatestFromPersistence(
                   boxToGetDataFrom: APP_THEME_BOX))
               .thenAnswer((_) async => null);
 
@@ -81,7 +81,7 @@ void main() {
           final expectedResult = defaultAppColors;
 
           expect(expectedResult, actualResult);
-          verify(mockLocalPersistenceProvider.getFromPersistence(
+          verify(mockLocalPersistenceProvider.getLatestFromPersistence(
               boxToGetDataFrom: APP_THEME_BOX));
         },
       );

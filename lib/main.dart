@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/data/models/local_app_colors.dart';
-import 'package:game_counter/domain/entities/app_colors.dart';
-import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/extensions/extensions.dart';
+import 'data/models/local_app_colors.dart';
 import 'di.dart' as di;
+import 'domain/entities/app_colors.dart';
+import 'presentation/bloc/color/bloc/color_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
 import 'presentation/pages/home_bottom_navigation_route.dart';
 

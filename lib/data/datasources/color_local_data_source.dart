@@ -21,7 +21,7 @@ class ColorLocalDataSourceImpl implements ColorLocalDataSource {
   @override
   Future<AppColors> getAppColors() async {
     final LocalAppColors localAppColors = await localPersistenceProvider
-        .getFromPersistence(boxToGetDataFrom: APP_THEME_BOX);
+        .getLatestFromPersistence(boxToGetDataFrom: APP_THEME_BOX);
 
     if (localAppColors != null)
       return Future.value(localAppColors.toAppColors());

@@ -1,14 +1,22 @@
-import 'package:game_counter/core/error/exceptions.dart';
-import 'package:game_counter/domain/entities/game.dart';
+import 'package:meta/meta.dart';
+
+import '../../core/error/exceptions.dart';
+import '../../domain/entities/game.dart';
+import 'local_persistence_provider.dart';
 
 abstract class GameLocalDataSource {
   Future<Game> getGame();
   Future<void> cacheGame(Game game);
 }
 
-// TODO for now everything will be kept in memory, local persistance will be added later
+const CURRENT_GAME_BOX = 'CURRENT_GAME_BOX';
+
 class GameLocalDataSourceImpl implements GameLocalDataSource {
+  final LocalPersistenceProvider localPersistenceProvider;
+
   Game currentGame;
+
+  GameLocalDataSourceImpl({@required this.localPersistenceProvider});
 
   @override
   Future<Game> getGame() async {
