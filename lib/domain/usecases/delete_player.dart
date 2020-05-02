@@ -17,7 +17,8 @@ class DeletePlayer implements BaseUseCase<Game, DeletePlayerParams> {
   Future<Either<Failure, Game>> call(DeletePlayerParams params) async {
     // Copies the object by value, if we don't do this for some reason the bloc doesn't
     // detect a change ( possiblity it say's it's the same object and refuses to re-render)
-    final currentGame = Game.clone(params.currentGame);
+    // final currentGame = Game.clone(params.currentGame);
+    final currentGame = params.currentGame;
     final playerToDelete = params.playerToDelete;
 
     int currentPlayerIndex =

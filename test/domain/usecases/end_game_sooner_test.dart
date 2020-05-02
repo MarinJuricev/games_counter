@@ -62,7 +62,6 @@ void main() {
 
           final expectedResult = Right(testPlayerWithMorePoints);
 
-          verify(mockGameRepository.saveGame(testGame)).called(1);
           expect(actualResult, expectedResult);
         },
       );

@@ -321,6 +321,8 @@ abstract class _$OnGameUpdatedCopyWith<$Res> {
           _OnGameUpdated value, $Res Function(_OnGameUpdated) then) =
       __$OnGameUpdatedCopyWithImpl<$Res>;
   $Res call({Game newGame});
+
+  $GameCopyWith<$Res> get newGame;
 }
 
 class __$OnGameUpdatedCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
@@ -339,6 +341,16 @@ class __$OnGameUpdatedCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
     return _then(_OnGameUpdated(
       newGame: newGame == freezed ? _value.newGame : newGame as Game,
     ));
+  }
+
+  @override
+  $GameCopyWith<$Res> get newGame {
+    if (_value.newGame == null) {
+      return null;
+    }
+    return $GameCopyWith<$Res>(_value.newGame, (value) {
+      return _then(_value.copyWith(newGame: value));
+    });
   }
 }
 
@@ -1147,6 +1159,8 @@ abstract class _$OnEndGameSoonerCopyWith<$Res> {
           _OnEndGameSooner value, $Res Function(_OnEndGameSooner) then) =
       __$OnEndGameSoonerCopyWithImpl<$Res>;
   $Res call({Game currentGame});
+
+  $GameCopyWith<$Res> get currentGame;
 }
 
 class __$OnEndGameSoonerCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
@@ -1166,6 +1180,16 @@ class __$OnEndGameSoonerCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
       currentGame:
           currentGame == freezed ? _value.currentGame : currentGame as Game,
     ));
+  }
+
+  @override
+  $GameCopyWith<$Res> get currentGame {
+    if (_value.currentGame == null) {
+      return null;
+    }
+    return $GameCopyWith<$Res>(_value.currentGame, (value) {
+      return _then(_value.copyWith(currentGame: value));
+    });
   }
 }
 

@@ -59,7 +59,7 @@ Future<void> init() async {
 
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
-      () => GameLocalDataSourceImpl());
+      () => GameLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   sl.registerLazySingleton<ColorLocalDataSource>(
       () => ColorLocalDataSourceImpl(localPersistenceProvider: sl()));

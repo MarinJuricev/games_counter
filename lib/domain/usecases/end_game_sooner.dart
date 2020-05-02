@@ -19,7 +19,6 @@ class EndGameSooner implements BaseUseCase<Player, EndGameSoonerParams> {
     int currentMaximumPoints = -1;
     Player gameWinner;
 
-    //TODO Implement behavior when multiple players have the same points that the winner is playerA,playerB not just one winner
     for (var i = 0; i < currentGame.players.length; i++) {
       final player = currentGame.players[i];
       if (player.sumOfAllPoints > currentMaximumPoints) {
@@ -28,8 +27,8 @@ class EndGameSooner implements BaseUseCase<Player, EndGameSoonerParams> {
       }
     }
 
-    currentGame.winner = gameWinner.name;
-    await repository.saveGame(currentGame);
+    final updatedGame = currentGame.copyWith(winner: gameWinner.name);
+    await repository.saveGame(updatedGame);
 
     return await Future<Either<Failure, Player>>.value(Right(gameWinner));
   }

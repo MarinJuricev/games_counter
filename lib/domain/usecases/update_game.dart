@@ -20,6 +20,8 @@ class UpdateGame implements BaseUseCase<Game, UpdateGameParams> {
     final newPoints = params.newPoints;
     final newBonusPoints = params.newBonusPoints;
 
+    Game updatedGame;
+
     if (currentGame.players.contains(currentPlayer)) {
       final currentPlayerPosition = currentGame.players.indexOf(currentPlayer);
 
@@ -31,16 +33,17 @@ class UpdateGame implements BaseUseCase<Game, UpdateGameParams> {
       currentGame.players[currentPlayerPosition] = updatedPlayer;
 
       if (updatedPlayer.sumOfAllPoints >= currentGame.pointsToWin) {
-        currentGame.winner = updatedPlayer.name;
+        updatedGame = currentGame.copyWith(winner: updatedPlayer.name);
+      } else {
+        updatedGame = currentGame;
       }
 
-      await repository.saveGame(currentGame);
+      await repository.saveGame(updatedGame);
 
-      return await Future<Either<Failure, Game>>.value(Right(currentGame));
+      return await Future<Either<Failure, Game>>.value(Right(updatedGame));
     } else {
       return await Future<Either<Failure, Game>>.value(
           Left(NotImplementedFailure()));
-      //TODO 2.0 when we implement the backend for potential errors
     }
   }
 }

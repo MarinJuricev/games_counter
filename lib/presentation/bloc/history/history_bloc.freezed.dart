@@ -172,6 +172,8 @@ abstract class _$OnGameDeletedCopyWith<$Res> {
           _OnGameDeleted value, $Res Function(_OnGameDeleted) then) =
       __$OnGameDeletedCopyWithImpl<$Res>;
   $Res call({Game gameToDelete});
+
+  $GameCopyWith<$Res> get gameToDelete;
 }
 
 class __$OnGameDeletedCopyWithImpl<$Res>
@@ -192,6 +194,16 @@ class __$OnGameDeletedCopyWithImpl<$Res>
       gameToDelete:
           gameToDelete == freezed ? _value.gameToDelete : gameToDelete as Game,
     ));
+  }
+
+  @override
+  $GameCopyWith<$Res> get gameToDelete {
+    if (_value.gameToDelete == null) {
+      return null;
+    }
+    return $GameCopyWith<$Res>(_value.gameToDelete, (value) {
+      return _then(_value.copyWith(gameToDelete: value));
+    });
   }
 }
 
