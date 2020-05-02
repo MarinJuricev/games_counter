@@ -66,7 +66,7 @@ void main() {
 
           verify(mockLocalPersistenceProvider.getLatestFromPersistence(
               boxToGetDataFrom: APP_THEME_BOX));
-          assert(expectedResult == actualResult);
+          expect(expectedResult, actualResult);
         },
       );
 
