@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
@@ -56,8 +57,11 @@ void main() {
       test(
         'should return a updated game object that doesn\t contain the provided player object',
         () async {
-          final actualResult = await deletePlayer(DeletePlayerParams(
-              currentGame: testGame, playerToDelete: testPlayer));
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final actualResult = await deletePlayer(
+              DeletePlayerParams(playerToDelete: testPlayer));
 
           final expectedGame = Game(
             name: gameName,
@@ -76,9 +80,26 @@ void main() {
       test(
         'should return [NotImplementedFailure] when the playerToRemove isn\t present in the game object',
         () async {
-          final actualResult = await deletePlayer(DeletePlayerParams(
-              currentGame: testGame, playerToDelete: testPlayer2));
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final actualResult = await deletePlayer(
+              DeletePlayerParams(playerToDelete: testPlayer2));
           final expectedResult = Left(NotImplementedFailure());
+
+          expect(actualResult, expectedResult);
+        },
+      );
+
+      test(
+        'should return [CacheFailure] when the repository doesnt return a game object',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(null));
+
+          final actualResult = await deletePlayer(
+              DeletePlayerParams(playerToDelete: testPlayer2));
+          final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
           expect(actualResult, expectedResult);
         },

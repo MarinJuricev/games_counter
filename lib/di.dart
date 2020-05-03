@@ -30,7 +30,6 @@ Future<void> init() async {
         deletePlayer: sl<DeletePlayer>(),
         endGameSooner: sl<EndGameSooner>(),
         inputConverter: sl<InputConverter>(),
-        gameRepository: sl<GameRepository>(),
       ));
 
   sl.registerFactory(() => PlayerDetailBloc(

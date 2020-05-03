@@ -44,120 +44,145 @@ void main() {
     },
   );
 
-  group('createPlayer', () {
-    test('should add a new player to the already existing game', () async {
-      final actualResult = await createPlayer(CreatePlayerParams(
-        playerName: playerName,
-        points: playerPoints,
-        bonusPoints: playerBonusPoints,
-        currentGame: testGame,
-      ));
+  group(
+    'createPlayer',
+    () {
+      void _setupRepositorySuccessCase() {
+        when(mockGameRepository.getGame())
+            .thenAnswer((_) async => Right(testGame));
+      }
 
-      final expectedGame = testGame;
-      expectedGame.players.add(newPlayer);
+      test(
+        'should add a new player to the already existing game',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
-      final expectedResult = Right(expectedGame);
+          final actualResult = await createPlayer(CreatePlayerParams(
+              playerName: playerName,
+              points: playerPoints,
+              bonusPoints: playerBonusPoints));
 
-      expect(actualResult, expectedResult);
-    });
+          final expectedGame = testGame;
+          expectedGame.players.add(newPlayer);
 
-    test(
-      'should return a [PlayerAlreadyExistsFailure] if a player with the same name already exists',
-      () async {
-        final gameWithAddedPlayer = testGame;
-        gameWithAddedPlayer.players.add(newPlayer);
+          final expectedResult = Right(expectedGame);
 
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: playerName,
-          points: playerPoints,
-          bonusPoints: playerBonusPoints,
-          currentGame: testGame,
-        ));
-        final expectedResult =
-            Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS));
+          expect(actualResult, expectedResult);
+        },
+      );
 
-        expect(actualResult, expectedResult);
-      },
-    );
+      test(
+        'should return a [PlayerAlreadyExistsFailure] if a player with the same name already exists',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
-    test(
-      'should return a [PointsToHighFailure] if a the new player starting points are higher than the game\'s pointsToWin',
-      () async {
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: playerName,
-          points: playerPointsHigherThanAllowed,
-          bonusPoints: playerBonusPoints,
-          currentGame: testGame,
-        ));
-        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+          final gameWithAddedPlayer = testGame;
+          gameWithAddedPlayer.players.add(newPlayer);
 
-        expect(actualResult, expectedResult);
-      },
-    );
+          final actualResult = await createPlayer(CreatePlayerParams(
+              playerName: playerName,
+              points: playerPoints,
+              bonusPoints: playerBonusPoints));
+          final expectedResult =
+              Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS));
 
-    test(
-      'should return a [PointsToHighFailure] if a the new player starting bonusPoints are higher than the game\'s pointsToWin',
-      () async {
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: playerName,
-          points: playerPoints,
-          bonusPoints: playerBonusPointsHigherThanAllowed,
-          currentGame: testGame,
-        ));
-        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+          expect(actualResult, expectedResult);
+        },
+      );
 
-        expect(actualResult, expectedResult);
-      },
-    );
+      test(
+        'should return a [PointsToHighFailure] if a the new player starting points are higher than the game\'s pointsToWin',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
-    test(
-      'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
-      () async {
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: playerName,
-          points: 25,
-          bonusPoints: 25,
-          currentGame: testGame,
-        ));
-        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+          final actualResult = await createPlayer(CreatePlayerParams(
+            playerName: playerName,
+            points: playerPointsHigherThanAllowed,
+            bonusPoints: playerBonusPoints,
+          ));
+          final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
-        expect(actualResult, expectedResult);
-      },
-    );
+          expect(actualResult, expectedResult);
+        },
+      );
 
-    test(
-      'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
-      () async {
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: playerName,
-          points: 25,
-          bonusPoints: 25,
-          currentGame: testGame,
-        ));
-        final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+      test(
+        'should return a [PointsToHighFailure] if a the new player starting bonusPoints are higher than the game\'s pointsToWin',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
-        expect(actualResult, expectedResult);
-      },
-    );
+          final actualResult = await createPlayer(CreatePlayerParams(
+            playerName: playerName,
+            points: playerPoints,
+            bonusPoints: playerBonusPointsHigherThanAllowed,
+          ));
+          final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
 
-    test(
-      'should return a [CantAddMorePlayersFailure] if the newPlayer exceeds the numberOfPLayers inisde Game entity',
-      () async {
-        final gameWithAddedPlayer = testGame;
-        gameWithAddedPlayer.players.add(newPlayer);
-        gameWithAddedPlayer.players.add(newPlayer);
+          expect(actualResult, expectedResult);
+        },
+      );
 
-        final actualResult = await createPlayer(CreatePlayerParams(
-          playerName: 'newPlayerName',
-          points: 0,
-          bonusPoints: 0,
-          currentGame: testGame,
-        ));
-        final expectedResult =
-            Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS));
+      test(
+        'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
 
-        expect(actualResult, expectedResult);
-      },
-    );
-  });
+          final actualResult = await createPlayer(CreatePlayerParams(
+            playerName: playerName,
+            points: 25,
+            bonusPoints: 25,
+          ));
+          final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+
+          expect(actualResult, expectedResult);
+        },
+      );
+
+      test(
+        'should return a [PointsToHighFailure] if a the new player sum of starting bonusPoints  and starting points are higher than the game\'s pointsToWin',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final actualResult = await createPlayer(CreatePlayerParams(
+            playerName: playerName,
+            points: 25,
+            bonusPoints: 25,
+          ));
+          final expectedResult = Left(PointsToHighFailure(POINTS_TO_HIGH));
+
+          expect(actualResult, expectedResult);
+        },
+      );
+
+      test(
+        'should return a [CantAddMorePlayersFailure] if the newPlayer exceeds the numberOfPLayers inisde Game entity',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final gameWithAddedPlayer = testGame;
+          gameWithAddedPlayer.players.add(newPlayer);
+          gameWithAddedPlayer.players.add(newPlayer);
+
+          final actualResult = await createPlayer(
+            CreatePlayerParams(
+              playerName: 'newPlayerName',
+              points: 0,
+              bonusPoints: 0,
+            ),
+          );
+          final expectedResult =
+              Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS));
+
+          expect(actualResult, expectedResult);
+        },
+      );
+    },
+  );
 }

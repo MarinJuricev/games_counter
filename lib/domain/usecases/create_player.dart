@@ -8,6 +8,7 @@ import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';
 import '../repositories/game_repository.dart';
+import '../../core/extensions/extensions.dart';
 
 class CreatePlayer implements BaseUseCase<Game, CreatePlayerParams> {
   final GameRepository repository;
@@ -21,73 +22,78 @@ class CreatePlayer implements BaseUseCase<Game, CreatePlayerParams> {
       points: params.points,
       bonusPoints: params.bonusPoints,
     );
-    final currentGame = params.currentGame;
+    final currentGameEither = await repository.getGame();
+    final currentGameResult = currentGameEither.unwrapResult();
 
-    if (checkIfPlayerWithThatNameAlreadyExists(
-      newPlayer,
-      currentGame.players,
-    )) {
+    if (currentGameResult is Game) {
+      if (checkIfPlayerWithThatNameAlreadyExists(
+        newPlayer,
+        currentGameResult.players,
+      )) {
+        return await Future<Either<Failure, Game>>.value(
+            Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS)));
+      }
+
+      if (pointsExceedPointsToWin(newPlayer, currentGameResult.pointsToWin)) {
+        return await Future<Either<Failure, Game>>.value(
+            Left(PointsToHighFailure(POINTS_TO_HIGH)));
+      }
+
+      if (newPlayersExceedsGamesMaximumAllowedPlayerCount(
+        currentGameResult.numberOfPlayers,
+        currentGameResult.players.length,
+      )) {
+        return await Future<Either<Failure, Game>>.value(
+            Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS)));
+      }
+
+      currentGameResult.players.add(newPlayer);
+      await repository.saveGame(currentGameResult);
       return await Future<Either<Failure, Game>>.value(
-          Left(PlayerAlreadyExistsFailure(PLAYER_ALREADY_EXISTS)));
-    }
-
-    if (pointsExceedPointsToWin(newPlayer, currentGame.pointsToWin)) {
+          Right(currentGameResult));
+    } else {
       return await Future<Either<Failure, Game>>.value(
-          Left(PointsToHighFailure(POINTS_TO_HIGH)));
+          Left(CacheFailure((ERROR_RETREVING_LOCAL_DATA))));
     }
-
-    if (newPlayersExceedsGamesMaximumAllowedPlayerCount(
-      currentGame.numberOfPlayers,
-      currentGame.players.length,
-    )) {
-      return await Future<Either<Failure, Game>>.value(
-          Left(CantAddMorePlayersFailure(CANT_ADD_MORE_PLAYERS)));
-    }
-
-    currentGame.players.add(newPlayer);
-    await repository.saveGame(currentGame);
-    return await Future<Either<Failure, Game>>.value(Right(currentGame));
   }
-}
 
-bool newPlayersExceedsGamesMaximumAllowedPlayerCount(
-  int numberOfAllowedPlayers,
-  int currentNumberOfPlayers,
-) {
-  return currentNumberOfPlayers + 1 > numberOfAllowedPlayers;
-}
+  bool newPlayersExceedsGamesMaximumAllowedPlayerCount(
+    int numberOfAllowedPlayers,
+    int currentNumberOfPlayers,
+  ) {
+    return currentNumberOfPlayers + 1 > numberOfAllowedPlayers;
+  }
 
-bool pointsExceedPointsToWin(
-  Player newPlayer,
-  int pointsToWin,
-) {
-  return ((newPlayer.points + newPlayer.bonusPoints) >= pointsToWin ||
-      newPlayer.points >= pointsToWin ||
-      newPlayer.bonusPoints >= pointsToWin);
-}
+  bool pointsExceedPointsToWin(
+    Player newPlayer,
+    int pointsToWin,
+  ) {
+    return ((newPlayer.points + newPlayer.bonusPoints) >= pointsToWin ||
+        newPlayer.points >= pointsToWin ||
+        newPlayer.bonusPoints >= pointsToWin);
+  }
 
-bool checkIfPlayerWithThatNameAlreadyExists(
-  Player newPlayer,
-  List<Player> players,
-) {
-  final playerAlreadyExists = players.firstWhere(
-      (itemToCheck) => itemToCheck.name == newPlayer.name,
-      orElse: () => null);
+  bool checkIfPlayerWithThatNameAlreadyExists(
+    Player newPlayer,
+    List<Player> players,
+  ) {
+    final playerAlreadyExists = players.firstWhere(
+        (itemToCheck) => itemToCheck.name == newPlayer.name,
+        orElse: () => null);
 
-  return (playerAlreadyExists != null);
+    return (playerAlreadyExists != null);
+  }
 }
 
 class CreatePlayerParams extends Equatable {
   final String playerName;
   final int points;
   final int bonusPoints;
-  final Game currentGame;
 
   CreatePlayerParams({
     @required this.playerName,
     @required this.points,
     @required this.bonusPoints,
-    @required this.currentGame,
   });
 
   @override
@@ -95,6 +101,5 @@ class CreatePlayerParams extends Equatable {
         playerName,
         points,
         bonusPoints,
-        currentGame,
       ];
 }

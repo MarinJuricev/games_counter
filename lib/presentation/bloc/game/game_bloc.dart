@@ -12,7 +12,6 @@ import '../../../core/extensions/extensions.dart';
 import '../../../core/util/input_converter.dart';
 import '../../../domain/entities/game.dart';
 import '../../../domain/entities/player.dart';
-import '../../../domain/repositories/game_repository.dart';
 import '../../../domain/usecases/create_game.dart';
 import '../../../domain/usecases/create_player.dart';
 import '../../../domain/usecases/delete_player.dart';
@@ -30,7 +29,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final EndGameSooner endGameSooner;
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
-  final GameRepository gameRepository;
 
   GameBloc({
     @required this.createGame,
@@ -38,7 +36,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     @required this.deletePlayer,
     @required this.endGameSooner,
     @required this.inputConverter,
-    @required this.gameRepository,
   });
 
   @override
@@ -115,26 +112,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       bonusPointsEitherResult,
     );
 
-    final gameEither = await gameRepository.getGame();
-    final gameRepoResult = gameEither.unwrapResult();
+    final createPlayerUseCase = await createPlayer(
+      CreatePlayerParams(
+          playerName: playerName,
+          points: pointsEitherResult,
+          bonusPoints: bonusPointsEitherResult),
+    );
+    final createPlayerResult = createPlayerUseCase.unwrapResult();
 
-    if (gameRepoResult is Failure)
-      yield GameErrorState(errorMessage: gameRepoResult.message);
-    else if (gameRepoResult is Game) {
-      final createPlayerUseCase = await createPlayer(
-        CreatePlayerParams(
-            playerName: playerName,
-            points: pointsEitherResult,
-            bonusPoints: bonusPointsEitherResult,
-            currentGame: gameRepoResult),
-      );
-      final createPlayerResult = createPlayerUseCase.unwrapResult();
-
-      if (createPlayerResult is Failure)
-        yield GameErrorState(errorMessage: createPlayerResult.message);
-      else if (createPlayerResult is Game) {
-        yield GameUpdatedState(game: createPlayerResult);
-      }
+    if (createPlayerResult is Failure)
+      yield GameErrorState(errorMessage: createPlayerResult.message);
+    else if (createPlayerResult is Game) {
+      yield GameUpdatedState(game: createPlayerResult);
     }
   }
 
@@ -143,30 +132,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   Stream<GameState> _handleDeletePlayerEvent(Player playerToDelete) async* {
-    final gameEither = await gameRepository.getGame();
-    final gameRepoResult = gameEither.unwrapResult();
+    final useCaseResult =
+        await deletePlayer(DeletePlayerParams(playerToDelete: playerToDelete));
+    final deletePlayerResult = useCaseResult.unwrapResult();
 
-    if (gameRepoResult is Failure)
-      yield GameErrorState(errorMessage: gameRepoResult.message);
-    else if (gameRepoResult is Game) {
-      final useCaseResult = await deletePlayer(
-        DeletePlayerParams(
-            currentGame: gameRepoResult, playerToDelete: playerToDelete),
-      );
-      final deletePlayerResult = useCaseResult.unwrapResult();
-
-      if (deletePlayerResult is Failure)
-        yield GameErrorState(errorMessage: deletePlayerResult.message);
-      else if (deletePlayerResult is Game) {
-        yield GameUpdatedState(game: deletePlayerResult);
-      }
+    if (deletePlayerResult is Failure)
+      yield GameErrorState(errorMessage: deletePlayerResult.message);
+    else if (deletePlayerResult is Game) {
+      yield GameUpdatedState(game: deletePlayerResult);
     }
   }
 
   Stream<GameState> _handleEndGameSoonerEvent(Game currentGame) async* {
-    final useCaseResult = await endGameSooner(
-      EndGameSoonerParams(currentGame: currentGame),
-    );
+    final useCaseResult = await endGameSooner(EndGameSoonerParams());
 
     final endGameSoonerResult = useCaseResult.unwrapResult();
     if (endGameSoonerResult is Failure)
@@ -189,26 +167,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       bonusPointsEitherResult,
     );
 
-    final gameEither = await gameRepository.getGame();
-    final gameRepoResult = gameEither.unwrapResult();
+    final createPlayerUseCase = await createPlayer(
+      CreatePlayerParams(
+        playerName: playerName,
+        points: pointsEitherResult,
+        bonusPoints: bonusPointsEitherResult,
+      ),
+    );
+    final createPlayerResult = createPlayerUseCase.unwrapResult();
 
-    if (gameRepoResult is Failure)
-      yield GameErrorState(errorMessage: gameRepoResult.message);
-    else if (gameRepoResult is Game) {
-      final createPlayerUseCase = await createPlayer(
-        CreatePlayerParams(
-            playerName: playerName,
-            points: pointsEitherResult,
-            bonusPoints: bonusPointsEitherResult,
-            currentGame: gameRepoResult),
-      );
-      final createPlayerResult = createPlayerUseCase.unwrapResult();
-
-      if (createPlayerResult is Failure)
-        yield GameErrorState(errorMessage: createPlayerResult.message);
-      else if (createPlayerResult is Game) {
-        yield GameUpdatedState(game: createPlayerResult);
-      }
+    if (createPlayerResult is Failure)
+      yield GameErrorState(errorMessage: createPlayerResult.message);
+    else if (createPlayerResult is Game) {
+      yield GameUpdatedState(game: createPlayerResult);
     }
   }
 

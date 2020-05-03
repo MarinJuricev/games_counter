@@ -57,8 +57,24 @@ void main() {
       test(
         'should update winner field in game object with the player with most points',
         () async {
-          final actualResult =
-              await endGameSooner(EndGameSoonerParams(currentGame: testGame));
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final actualResult = await endGameSooner(EndGameSoonerParams());
+
+          final expectedResult = Right(testPlayerWithMorePoints);
+
+          expect(actualResult, expectedResult);
+        },
+      );
+
+      test(
+        'should return ',
+        () async {
+          when(mockGameRepository.getGame())
+              .thenAnswer((_) async => Right(testGame));
+
+          final actualResult = await endGameSooner(EndGameSoonerParams());
 
           final expectedResult = Right(testPlayerWithMorePoints);
 

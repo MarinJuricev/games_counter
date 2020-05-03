@@ -2,7 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/constants/budget_constants.dart';
 import '../../core/error/failure.dart';
+import '../../core/extensions/extensions.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';
@@ -15,40 +17,43 @@ class DeletePlayer implements BaseUseCase<Game, DeletePlayerParams> {
 
   @override
   Future<Either<Failure, Game>> call(DeletePlayerParams params) async {
-    // Copies the object by value, if we don't do this for some reason the bloc doesn't
-    // detect a change ( possiblity it say's it's the same object and refuses to re-render)
-    // final currentGame = Game.clone(params.currentGame);
-    final currentGame = params.currentGame;
     final playerToDelete = params.playerToDelete;
 
-    int currentPlayerIndex =
-        currentGame.players.indexWhere((player) => player == playerToDelete);
+    final currentGameEither = await repository.getGame();
+    final currentGameResult = currentGameEither.unwrapResult();
 
-    // If index is greater than 0 we found the index, else return a error
-    if (currentPlayerIndex >= 0) {
-      currentGame.players.removeAt(currentPlayerIndex);
-      await repository.saveGame(currentGame);
+    if (currentGameResult is Game) {
+      int currentPlayerIndex = currentGameResult.players
+          .indexWhere((player) => player == playerToDelete);
 
-      print('test');
+      // If index is greater than 0 we found the index, else return a error
+      if (currentPlayerIndex >= 0) {
+        currentGameResult.players.removeAt(currentPlayerIndex);
+        await repository.saveGame(currentGameResult);
 
-      return await Future<Either<Failure, Game>>.value(Right(currentGame));
+        print('test');
+
+        return await Future<Either<Failure, Game>>.value(
+            Right(currentGameResult));
+      } else {
+        return await Future<Either<Failure, Game>>.value(
+            Left(NotImplementedFailure()));
+        //TODO 2.0 when we implement the backend for potential errors
+      }
     } else {
       return await Future<Either<Failure, Game>>.value(
-          Left(NotImplementedFailure()));
-      //TODO 2.0 when we implement the backend for potential errors
+          Left(CacheFailure((ERROR_RETREVING_LOCAL_DATA))));
     }
   }
 }
 
 class DeletePlayerParams extends Equatable {
-  final Game currentGame;
   final Player playerToDelete;
 
   DeletePlayerParams({
-    @required this.currentGame,
     @required this.playerToDelete,
   });
 
   @override
-  List<Object> get props => [currentGame, playerToDelete];
+  List<Object> get props => [playerToDelete];
 }
