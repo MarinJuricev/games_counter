@@ -10,7 +10,6 @@ import '../datasources/color_local_data_source.dart';
 import '../models/local_app_colors.dart';
 
 class ColorRepositoryImpl implements ColorRepository {
-  //TODO maybe a remote also to set the theme for valentines day, st patric day?
   final ColorLocalDataSource colorLocalDataSource;
 
   ColorRepositoryImpl({@required this.colorLocalDataSource});

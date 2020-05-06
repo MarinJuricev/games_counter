@@ -12,7 +12,7 @@ class MockLocalPersistenceProvider extends Mock
     implements LocalPersistenceProvider {}
 
 void main() {
-  ColorLocalDataSourceImpl dataSource;
+  ColorLocalDataSource dataSource;
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
 
   AppColors testAppColor;
