@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:game_counter/domain/usecases/save_game_into_history.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
@@ -29,6 +30,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final EndGameSooner endGameSooner;
   final CreatePlayer createPlayer;
   final InputConverter inputConverter;
+  final SaveGameIntoHistory saveGameIntoHistory;
 
   GameBloc({
     @required this.createGame,
@@ -36,6 +38,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     @required this.deletePlayer,
     @required this.endGameSooner,
     @required this.inputConverter,
+    @required this.saveGameIntoHistory,
   });
 
   @override
@@ -94,6 +97,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       Player winner = updatedGame.players
           .firstWhere((itemToCheck) => itemToCheck.name == updatedGame.winner);
 
+      await saveGameIntoHistory(
+          SaveGameIntoHistoryParams(gameToSave: updatedGame));
+
       yield GameOverState(player: winner);
     }
   }
@@ -149,6 +155,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (endGameSoonerResult is Failure)
       yield GameErrorState(errorMessage: endGameSoonerResult.message);
     else if (endGameSoonerResult is Player) {
+      await saveGameIntoHistory(
+          SaveGameIntoHistoryParams(gameToSave: currentGame));
+
       yield GameOverState(player: endGameSoonerResult);
     }
   }

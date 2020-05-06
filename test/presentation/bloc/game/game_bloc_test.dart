@@ -6,28 +6,25 @@ import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/core/util/input_converter.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
-import 'package:game_counter/domain/repositories/game_repository.dart';
-import 'package:game_counter/domain/usecases/create_game.dart'
-    as createGameUseCase;
+import 'package:game_counter/domain/usecases/create_game.dart';
 import 'package:game_counter/domain/usecases/create_player.dart';
-import 'package:game_counter/domain/usecases/delete_player.dart'
-    as deletePlayerUseCase;
-import 'package:game_counter/domain/usecases/end_game_sooner.dart'
-    as endGameSoonerUseCase;
+import 'package:game_counter/domain/usecases/delete_player.dart';
+import 'package:game_counter/domain/usecases/end_game_sooner.dart';
+import 'package:game_counter/domain/usecases/save_game_into_history.dart';
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:mockito/mockito.dart';
 
-class MockCreateGame extends Mock implements createGameUseCase.CreateGame {}
+class MockCreateGame extends Mock implements CreateGame {}
 
-class MockDeletePlayer extends Mock
-    implements deletePlayerUseCase.DeletePlayer {}
+class MockDeletePlayer extends Mock implements DeletePlayer {}
 
-class MockEndGameSooner extends Mock
-    implements endGameSoonerUseCase.EndGameSooner {}
+class MockEndGameSooner extends Mock implements EndGameSooner {}
 
 class MockCreatePlayer extends Mock implements CreatePlayer {}
 
 class MockInputConverter extends Mock implements InputConverter {}
+
+class MockSaveGameIntoHistory extends Mock implements SaveGameIntoHistory {}
 
 void main() {
   MockCreateGame mockCreateGame;
@@ -35,6 +32,7 @@ void main() {
   MockDeletePlayer mockDeletePlayer;
   MockEndGameSooner mockEndGameSooner;
   MockInputConverter mockInputConverter;
+  MockSaveGameIntoHistory mockSaveGameIntoHistory;
 
   setUp(
     () {
@@ -43,6 +41,7 @@ void main() {
       mockDeletePlayer = MockDeletePlayer();
       mockEndGameSooner = MockEndGameSooner();
       mockInputConverter = MockInputConverter();
+      mockSaveGameIntoHistory = MockSaveGameIntoHistory();
     },
   );
   //TODO separate by event...
@@ -112,6 +111,7 @@ void main() {
               endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
+              saveGameIntoHistory: mockSaveGameIntoHistory,
             );
           },
           act: (GameBloc gameBloc) async => gameBloc.add(GameEvent.gameCreated(
@@ -120,7 +120,7 @@ void main() {
                 pointsToWin: pointsToWin,
               )),
           verify: (gameBloc) async {
-            mockCreateGame(createGameUseCase.CreateGameParams(
+            mockCreateGame(CreateGameParams(
                 gameTitle: gameName,
                 numberOfPlayers: numberOfPlayersParsed,
                 winningPoints: pointsToWinParsed));
@@ -140,6 +140,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
@@ -164,6 +165,7 @@ void main() {
               endGameSooner: mockEndGameSooner,
               inputConverter: mockInputConverter,
               createPlayer: mockCreatePlayer,
+              saveGameIntoHistory: mockSaveGameIntoHistory,
             );
           },
           act: (gameBloc) => gameBloc.add((GameEvent.gameCreated(
@@ -186,6 +188,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.gameCreated(
@@ -206,6 +209,7 @@ void main() {
           endGameSooner: mockEndGameSooner,
           inputConverter: mockInputConverter,
           createPlayer: mockCreatePlayer,
+          saveGameIntoHistory: mockSaveGameIntoHistory,
         ),
         act: (gameBloc) =>
             gameBloc.add(GameEvent.gameUpdated(newGame: testGame)),
@@ -220,9 +224,14 @@ void main() {
           endGameSooner: mockEndGameSooner,
           inputConverter: mockInputConverter,
           createPlayer: mockCreatePlayer,
+          saveGameIntoHistory: mockSaveGameIntoHistory,
         ),
         act: (gameBloc) =>
             gameBloc.add(GameEvent.gameUpdated(newGame: testGameOverGame)),
+        verify: (gameBloc) async {
+          mockSaveGameIntoHistory(
+              SaveGameIntoHistoryParams(gameToSave: testGame));
+        },
         expect: [GameOverState(player: testPlayer)],
       );
 
@@ -239,6 +248,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
@@ -267,6 +277,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.playerCreated(
@@ -292,6 +303,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
@@ -317,6 +329,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
@@ -341,6 +354,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add((GameEvent.playerCreated(
@@ -365,6 +379,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
@@ -387,6 +402,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
@@ -409,6 +425,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) => gameBloc.add(GameEvent.deletePlayer(
@@ -433,10 +450,15 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) =>
             gameBloc.add(GameEvent.endGameSooner(currentGame: testGame)),
+        verify: (gameBloc) async {
+          mockSaveGameIntoHistory(
+              SaveGameIntoHistoryParams(gameToSave: testGame));
+        },
         expect: [
           GameOverState(player: testPlayer),
         ],
@@ -456,6 +478,7 @@ void main() {
             endGameSooner: mockEndGameSooner,
             inputConverter: mockInputConverter,
             createPlayer: mockCreatePlayer,
+            saveGameIntoHistory: mockSaveGameIntoHistory,
           );
         },
         act: (gameBloc) =>
