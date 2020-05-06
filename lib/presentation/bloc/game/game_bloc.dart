@@ -94,7 +94,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       Player winner = updatedGame.players
           .firstWhere((itemToCheck) => itemToCheck.name == updatedGame.winner);
 
-      //TODO add a usecase for this.. it'll need to store this game and the winner into local persistence
       yield GameOverState(player: winner);
     }
   }

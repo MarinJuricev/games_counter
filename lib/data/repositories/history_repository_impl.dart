@@ -20,4 +20,10 @@ class HistoryRepositoryImpl implements HistoryRepository {
   Future<Either<Failure, List<Game>>> getRecentSearches() {
     return null;
   }
+
+  @override
+  Future<Either<Failure, void>> saveGameIntoHistory(Game gameToSave) {
+    // TODO: implement saveGameIntoHistory
+    return null;
+  }
 }

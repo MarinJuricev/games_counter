@@ -3,16 +3,20 @@ import 'package:get_it/get_it.dart';
 import 'core/util/input_converter.dart';
 import 'data/datasources/color_local_data_source.dart';
 import 'data/datasources/game_local_data_source.dart';
+import 'data/datasources/history_local_data_source.dart';
 import 'data/datasources/local_persistence_provider.dart';
 import 'data/repositories/color_repository_impl.dart';
 import 'data/repositories/game_repository_impl.dart';
+import 'data/repositories/history_repository_impl.dart';
 import 'domain/repositories/color_repository.dart';
 import 'domain/repositories/game_repository.dart';
+import 'domain/repositories/history_repository.dart';
 import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
 import 'domain/usecases/delete_player.dart';
 import 'domain/usecases/end_game_sooner.dart';
 import 'domain/usecases/reset_player.dart';
+import 'domain/usecases/save_game_into_history.dart';
 import 'domain/usecases/update_game.dart';
 import 'presentation/bloc/color/bloc/color_bloc.dart';
 import 'presentation/bloc/game/game_bloc.dart';
@@ -48,6 +52,8 @@ Future<void> init() async {
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
+  sl.registerFactory(
+      () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
@@ -56,12 +62,18 @@ Future<void> init() async {
   sl.registerLazySingleton<ColorRepository>(
       () => ColorRepositoryImpl(colorLocalDataSource: sl()));
 
+  sl.registerLazySingleton<HistoryRepository>(
+      () => HistoryRepositoryImpl(historyLocalDataSource: sl()));
+
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
       () => GameLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   sl.registerLazySingleton<ColorLocalDataSource>(
       () => ColorLocalDataSourceImpl(localPersistenceProvider: sl()));
+
+  sl.registerLazySingleton<HistoryLocalDataSource>(
+      () => HistoryLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   // Core
   sl.registerLazySingleton(() => InputConverter());
