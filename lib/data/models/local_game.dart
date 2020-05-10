@@ -2,13 +2,14 @@ import 'package:hive/hive.dart';
 
 import '../../domain/entities/game.dart';
 import '../../domain/entities/player.dart';
+import 'local_player.dart';
 
 part 'local_game.g.dart';
 
 @HiveType(typeId: 1)
 class LocalGame extends HiveObject {
   @HiveField(0)
-  final List<Player> players;
+  final List<LocalPlayer> players;
   @HiveField(1)
   final String name;
   @HiveField(2)
@@ -32,8 +33,19 @@ class LocalGame extends HiveObject {
 
 extension GameMapper on Game {
   LocalGame toLocal() {
+    List<LocalPlayer> mappedPlayers = [];
+    if (this.players.length > 0) {
+      mappedPlayers = this.players.map(
+            (item) => LocalPlayer(
+              name: item.name,
+              points: item.points,
+              bonusPoints: item.bonusPoints,
+            ),
+          ).toList();
+    }
+
     return LocalGame(
-        players: this.players,
+        players: mappedPlayers,
         name: this.name,
         pointsToWin: this.pointsToWin,
         bonusPoints: this.bonusPoints,
@@ -44,8 +56,19 @@ extension GameMapper on Game {
 
 extension LocalGamemapper on LocalGame {
   Game toGame() {
+    List<Player> mappedPlayers = [];
+    if(this.players.length > 0){
+      mappedPlayers = this.players.map(
+              (item) => Player(
+                name: item.name,
+                points: item.points,
+                bonusPoints: item.bonusPoints,
+              ),
+            ).toList();;
+    }
+
     return Game(
-        players: this.players,
+        players: mappedPlayers,
         name: this.name,
         pointsToWin: this.pointsToWin,
         bonusPoints: this.bonusPoints,

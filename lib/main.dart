@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'core/extensions/extensions.dart';
 import 'data/models/local_app_colors.dart';
 import 'data/models/local_game.dart';
+import 'data/models/local_player.dart';
 import 'di.dart' as di;
 import 'domain/entities/app_colors.dart';
 import 'presentation/bloc/color/bloc/color_bloc.dart';
@@ -17,6 +18,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<LocalAppColors>(LocalAppColorsAdapter());
   Hive.registerAdapter<LocalGame>(LocalGameAdapter());
+  Hive.registerAdapter<LocalPlayer>(LocalPlayerAdapter());
 
   await di.init();
   runApp(MyApp());

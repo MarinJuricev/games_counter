@@ -48,23 +48,23 @@ void main() {
       test(
           'should return testLocalGame when localPersistenceProvider.getFromPersistence result isnt null',
           () async {
-        when(mockLocalPersistenceProvider.getLatestFromPersistence(
-                boxToGetDataFrom: CURRENT_GAME_BOX))
+        when(mockLocalPersistenceProvider.getFromKeyValuePair(
+                boxToGetDatFrom: CURRENT_GAME_BOX))
             .thenAnswer((_) async => testLocalGame);
 
         final actualResult = await gameLocalDataSource.getGame();
         final expectedResult = testGame;
 
-        verify(mockLocalPersistenceProvider.getLatestFromPersistence(
-            boxToGetDataFrom: CURRENT_GAME_BOX));
+        verify(mockLocalPersistenceProvider.getFromKeyValuePair(
+            boxToGetDatFrom: CURRENT_GAME_BOX));
         expect(expectedResult, actualResult);
       });
 
       test(
         'should throw [CacheException] when localPersistenceProvider.getFromPersistence result is null',
         () async {
-          when(mockLocalPersistenceProvider.getLatestFromPersistence(
-                  boxToGetDataFrom: CURRENT_GAME_BOX))
+          when(mockLocalPersistenceProvider.getFromKeyValuePair(
+                  boxToGetDatFrom: CURRENT_GAME_BOX))
               .thenAnswer((_) async => null);
 
           final call = gameLocalDataSource.getGame;

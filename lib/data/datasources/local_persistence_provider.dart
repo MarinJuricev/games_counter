@@ -4,6 +4,7 @@ abstract class LocalPersistenceProvider {
   Future<int> saveIntoPersistence({dynamic valueToSave, String boxToSaveInto});
   Future<int> clearPersistence({String boxToClear});
   Future<void> saveKeyValuePair({dynamic valueToSave, String boxToSaveInto});
+  Future<dynamic> getFromKeyValuePair({String boxToGetDatFrom});
   Future<dynamic> getLatestFromPersistence({String boxToGetDataFrom});
 }
 
@@ -46,5 +47,14 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
     final box = await Hive.openBox(boxToSaveInto);
 
     return await box.put(boxToSaveInto, valueToSave);
+  }
+
+  // If you something into the databse using [saveKeyValuePair] YOU HAVE to use this method
+  // to retrive that data, the api [getLatestFromPersistence] will always return null!
+  @override
+  Future getFromKeyValuePair({String boxToGetDatFrom}) async {
+    final box = await Hive.openBox(boxToGetDatFrom);
+
+    return await box.get(boxToGetDatFrom);
   }
 }

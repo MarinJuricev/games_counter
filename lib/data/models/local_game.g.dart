@@ -17,7 +17,7 @@ class LocalGameAdapter extends TypeAdapter<LocalGame> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LocalGame(
-      players: (fields[0] as List)?.cast<Player>(),
+      players: (fields[0] as List)?.cast<LocalPlayer>(),
       name: fields[1] as String,
       pointsToWin: fields[2] as int,
       bonusPoints: fields[3] as int,

@@ -20,7 +20,7 @@ class GameLocalDataSourceImpl implements GameLocalDataSource {
   @override
   Future<Game> getGame() async {
     final LocalGame gameToReturn = await localPersistenceProvider
-        .getLatestFromPersistence(boxToGetDataFrom: CURRENT_GAME_BOX);
+        .getFromKeyValuePair(boxToGetDatFrom: CURRENT_GAME_BOX);
 
     if (gameToReturn != null)
       return Future.value(gameToReturn.toGame());
