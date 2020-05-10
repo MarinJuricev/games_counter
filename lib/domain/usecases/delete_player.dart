@@ -31,14 +31,11 @@ class DeletePlayer implements BaseUseCase<Game, DeletePlayerParams> {
         currentGameResult.players.removeAt(currentPlayerIndex);
         await repository.saveGame(currentGameResult);
 
-        print('test');
-
         return await Future<Either<Failure, Game>>.value(
             Right(currentGameResult));
       } else {
         return await Future<Either<Failure, Game>>.value(
             Left(NotImplementedFailure()));
-        //TODO 2.0 when we implement the backend for potential errors
       }
     } else {
       return await Future<Either<Failure, Game>>.value(

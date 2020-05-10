@@ -12,8 +12,8 @@ T _$identity<T>(T value) => value;
 class _$HistoryEventTearOff {
   const _$HistoryEventTearOff();
 
-  _OnScreenLoaded screenLoaded() {
-    return _OnScreenLoaded();
+  _OnQueryChanged queryChanged() {
+    return _OnQueryChanged();
   }
 
   _OnGameDeleted recentGameDeleted({Game gameToDelete}) {
@@ -33,26 +33,26 @@ const $HistoryEvent = _$HistoryEventTearOff();
 mixin _$HistoryEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result screenLoaded(),
+    @required Result queryChanged(),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result screenLoaded(),
+    Result queryChanged(),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result screenLoaded(_OnScreenLoaded value),
+    @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
     @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result screenLoaded(_OnScreenLoaded value),
+    Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
     Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
     @required Result orElse(),
@@ -73,34 +73,34 @@ class _$HistoryEventCopyWithImpl<$Res> implements $HistoryEventCopyWith<$Res> {
   final $Res Function(HistoryEvent) _then;
 }
 
-abstract class _$OnScreenLoadedCopyWith<$Res> {
-  factory _$OnScreenLoadedCopyWith(
-          _OnScreenLoaded value, $Res Function(_OnScreenLoaded) then) =
-      __$OnScreenLoadedCopyWithImpl<$Res>;
+abstract class _$OnQueryChangedCopyWith<$Res> {
+  factory _$OnQueryChangedCopyWith(
+          _OnQueryChanged value, $Res Function(_OnQueryChanged) then) =
+      __$OnQueryChangedCopyWithImpl<$Res>;
 }
 
-class __$OnScreenLoadedCopyWithImpl<$Res>
+class __$OnQueryChangedCopyWithImpl<$Res>
     extends _$HistoryEventCopyWithImpl<$Res>
-    implements _$OnScreenLoadedCopyWith<$Res> {
-  __$OnScreenLoadedCopyWithImpl(
-      _OnScreenLoaded _value, $Res Function(_OnScreenLoaded) _then)
-      : super(_value, (v) => _then(v as _OnScreenLoaded));
+    implements _$OnQueryChangedCopyWith<$Res> {
+  __$OnQueryChangedCopyWithImpl(
+      _OnQueryChanged _value, $Res Function(_OnQueryChanged) _then)
+      : super(_value, (v) => _then(v as _OnQueryChanged));
 
   @override
-  _OnScreenLoaded get _value => super._value as _OnScreenLoaded;
+  _OnQueryChanged get _value => super._value as _OnQueryChanged;
 }
 
-class _$_OnScreenLoaded implements _OnScreenLoaded {
-  _$_OnScreenLoaded();
+class _$_OnQueryChanged implements _OnQueryChanged {
+  _$_OnQueryChanged();
 
   @override
   String toString() {
-    return 'HistoryEvent.screenLoaded()';
+    return 'HistoryEvent.queryChanged()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnScreenLoaded);
+    return identical(this, other) || (other is _OnQueryChanged);
   }
 
   @override
@@ -109,27 +109,27 @@ class _$_OnScreenLoaded implements _OnScreenLoaded {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result screenLoaded(),
+    @required Result queryChanged(),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
-    return screenLoaded();
+    return queryChanged();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result screenLoaded(),
+    Result queryChanged(),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (screenLoaded != null) {
-      return screenLoaded();
+    if (queryChanged != null) {
+      return queryChanged();
     }
     return orElse();
   }
@@ -137,34 +137,34 @@ class _$_OnScreenLoaded implements _OnScreenLoaded {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result screenLoaded(_OnScreenLoaded value),
+    @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
     @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
-    return screenLoaded(this);
+    return queryChanged(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result screenLoaded(_OnScreenLoaded value),
+    Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
     Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (screenLoaded != null) {
-      return screenLoaded(this);
+    if (queryChanged != null) {
+      return queryChanged(this);
     }
     return orElse();
   }
 }
 
-abstract class _OnScreenLoaded implements HistoryEvent {
-  factory _OnScreenLoaded() = _$_OnScreenLoaded;
+abstract class _OnQueryChanged implements HistoryEvent {
+  factory _OnQueryChanged() = _$_OnQueryChanged;
 }
 
 abstract class _$OnGameDeletedCopyWith<$Res> {
@@ -238,11 +238,11 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result screenLoaded(),
+    @required Result queryChanged(),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
     return recentGameDeleted(gameToDelete);
@@ -251,7 +251,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result screenLoaded(),
+    Result queryChanged(),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
@@ -266,11 +266,11 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result screenLoaded(_OnScreenLoaded value),
+    @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
     @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
     return recentGameDeleted(this);
@@ -279,7 +279,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result screenLoaded(_OnScreenLoaded value),
+    Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
     Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
     @required Result orElse(),
@@ -336,11 +336,11 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result screenLoaded(),
+    @required Result queryChanged(),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
     return allRecentGamesDeleted();
@@ -349,7 +349,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result screenLoaded(),
+    Result queryChanged(),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
@@ -364,11 +364,11 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result map<Result extends Object>({
-    @required Result screenLoaded(_OnScreenLoaded value),
+    @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
     @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
   }) {
-    assert(screenLoaded != null);
+    assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
     return allRecentGamesDeleted(this);
@@ -377,7 +377,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
-    Result screenLoaded(_OnScreenLoaded value),
+    Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
     Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
     @required Result orElse(),

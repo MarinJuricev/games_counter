@@ -1,11 +1,14 @@
+import 'package:dartz/dartz_unsafe.dart';
+import 'package:game_counter/data/models/local_game.dart';
 import 'package:hive/hive.dart';
 
 abstract class LocalPersistenceProvider {
   Future<int> saveIntoPersistence({dynamic valueToSave, String boxToSaveInto});
   Future<int> clearPersistence({String boxToClear});
   Future<void> saveKeyValuePair({dynamic valueToSave, String boxToSaveInto});
-  Future<dynamic> getFromKeyValuePair({String boxToGetDatFrom});
+  Future<dynamic> getFromKeyValuePair({String boxToGetDataFrom});
   Future<dynamic> getLatestFromPersistence({String boxToGetDataFrom});
+  Future<dynamic> getAllFromPersistence({String boxToGetDataFrom});
 }
 
 class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
@@ -33,6 +36,19 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
     return await box.get(box.length - 1);
   }
 
+  // Get's all the entries from a box
+  @override
+  Future getAllFromPersistence({String boxToGetDataFrom}) async {
+    final box = await Hive.openBox(boxToGetDataFrom);
+    List<dynamic> listToReturn = [];
+
+    for (int i = 0; i <= box.length - 1; i++) {
+      final valueToSave = await box.getAt(i);
+      listToReturn.add(valueToSave);
+    }
+    return listToReturn;
+  }
+
   // Clears the content of box
   @override
   Future<int> clearPersistence({String boxToClear}) async {
@@ -52,9 +68,9 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
   // If you something into the databse using [saveKeyValuePair] YOU HAVE to use this method
   // to retrive that data, the api [getLatestFromPersistence] will always return null!
   @override
-  Future getFromKeyValuePair({String boxToGetDatFrom}) async {
-    final box = await Hive.openBox(boxToGetDatFrom);
+  Future getFromKeyValuePair({String boxToGetDataFrom}) async {
+    final box = await Hive.openBox(boxToGetDataFrom);
 
-    return await box.get(boxToGetDatFrom);
+    return await box.get(boxToGetDataFrom);
   }
 }

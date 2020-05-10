@@ -18,7 +18,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     HistoryEvent event,
   ) async* {
     yield* event.map(
-      screenLoaded: null,
+      queryChanged: null,
       recentGameDeleted: null,
       allRecentGamesDeleted: null,
     );

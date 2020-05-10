@@ -15,6 +15,7 @@ import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
 import 'domain/usecases/delete_player.dart';
 import 'domain/usecases/end_game_sooner.dart';
+import 'domain/usecases/get_games_from_query.dart';
 import 'domain/usecases/reset_player.dart';
 import 'domain/usecases/save_game_into_history.dart';
 import 'domain/usecases/update_game.dart';
@@ -53,6 +54,8 @@ Future<void> init() async {
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
+  sl.registerFactory(() => GetGamesFromQuery(
+      localPersistenceProvider: sl<LocalPersistenceProvider>()));
   sl.registerFactory(
       () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
 
