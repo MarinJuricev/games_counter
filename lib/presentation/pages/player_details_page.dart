@@ -55,7 +55,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
   }
 
   Widget _buildDetailPage(PlayerDetailState state, BuildContext context) {
-    final TextStyle style = Theme.of(context).accentTextTheme.title.copyWith(
+    final TextStyle style = Theme.of(context).accentTextTheme.bodyText1.copyWith(
           fontSize: 20,
           fontWeight: FontWeight.normal,
         );
@@ -100,7 +100,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
             margin: EdgeInsets.all(24),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: Theme.of(context).textTheme.title.color,
+                color: Theme.of(context).textTheme.bodyText1.color,
                 boxShadow: [
                   BoxShadow(
                       blurRadius: 8,

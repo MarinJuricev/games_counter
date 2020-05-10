@@ -40,7 +40,7 @@ class _PointPickerState extends State<PointPicker> {
         child: Theme(
           data: ThemeData(
             accentColor: widget.color,
-            textTheme: TextTheme(body1: TextStyle(color: Colors.grey)),
+            textTheme: TextTheme(bodyText1: TextStyle(color: Colors.grey)),
           ),
           child: NumberPicker.integer(
             initialValue: 0,

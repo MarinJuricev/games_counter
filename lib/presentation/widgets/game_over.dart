@@ -19,7 +19,7 @@ class GameOver extends StatelessWidget {
         margin: EdgeInsets.all(24),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          color: Theme.of(context).textTheme.title.color,
+          color: Theme.of(context).textTheme.bodyText1.color,
           boxShadow: [
             BoxShadow(
                 blurRadius: 8, color: Colors.black26, offset: Offset(0, 2)),
@@ -32,7 +32,7 @@ class GameOver extends StatelessWidget {
             children: <Widget>[
               Text(
                 'Game Winner: ${winner.name}',
-                style: Theme.of(context).accentTextTheme.title.copyWith(
+                style: Theme.of(context).accentTextTheme.bodyText1.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.normal,
                     ),

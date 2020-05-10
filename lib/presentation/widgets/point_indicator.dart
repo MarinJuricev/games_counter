@@ -22,7 +22,7 @@ class PointIndicator extends StatelessWidget {
         SizedBox(width: 16.0),
         Text(
           pointText,
-          style: Theme.of(context).accentTextTheme.title.copyWith(
+          style: Theme.of(context).accentTextTheme.bodyText1.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
               ),

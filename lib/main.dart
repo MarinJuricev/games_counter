@@ -65,9 +65,9 @@ class MyApp extends StatelessWidget {
         primaryColor: HexColor.fromHex(appColors.primaryColor),
         accentColor: HexColor.fromHex(appColors.accentColor),
         errorColor: HexColor.fromHex(appColors.errorColor),
-        primaryTextTheme: Typography(platform: TargetPlatform.iOS).white,
-        textTheme: Typography(platform: TargetPlatform.iOS).white,
-        accentTextTheme: Typography(platform: TargetPlatform.iOS).black,
+        primaryTextTheme: Typography.material2018(platform: TargetPlatform.iOS).white,
+        textTheme: Typography.material2018(platform: TargetPlatform.iOS).white,
+        accentTextTheme: Typography.material2018(platform: TargetPlatform.iOS).black,
       ),
       home: BlocProvider(
         create: (BuildContext context) => di.sl<GameBloc>(),

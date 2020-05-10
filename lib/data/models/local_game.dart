@@ -35,13 +35,7 @@ extension GameMapper on Game {
   LocalGame toLocal() {
     List<LocalPlayer> mappedPlayers = [];
     if (this.players.length > 0) {
-      mappedPlayers = this.players.map(
-            (item) => LocalPlayer(
-              name: item.name,
-              points: item.points,
-              bonusPoints: item.bonusPoints,
-            ),
-          ).toList();
+      mappedPlayers = this.players.map((item) => item.toLocal()).toList();
     }
 
     return LocalGame(
@@ -57,14 +51,8 @@ extension GameMapper on Game {
 extension LocalGamemapper on LocalGame {
   Game toGame() {
     List<Player> mappedPlayers = [];
-    if(this.players.length > 0){
-      mappedPlayers = this.players.map(
-              (item) => Player(
-                name: item.name,
-                points: item.points,
-                bonusPoints: item.bonusPoints,
-              ),
-            ).toList();;
+    if (this.players.length > 0) {
+      mappedPlayers = this.players.map((item) => item.toPlayer()).toList();
     }
 
     return Game(

@@ -47,11 +47,6 @@ void main() {
   group(
     'createPlayer',
     () {
-      void _setupRepositorySuccessCase() {
-        when(mockGameRepository.getGame())
-            .thenAnswer((_) async => Right(testGame));
-      }
-
       test(
         'should add a new player to the already existing game',
         () async {

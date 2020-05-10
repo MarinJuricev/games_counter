@@ -33,7 +33,7 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle style = Theme.of(context).accentTextTheme.title.copyWith(
+    final TextStyle style = Theme.of(context).accentTextTheme.bodyText1.copyWith(
           fontSize: 20,
           fontWeight: FontWeight.normal,
         );
