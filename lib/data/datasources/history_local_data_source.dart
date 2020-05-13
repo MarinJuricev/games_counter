@@ -1,12 +1,13 @@
-import 'package:game_counter/core/error/exceptions.dart';
-import 'package:game_counter/data/models/local_game.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/error/exceptions.dart';
 import '../../domain/entities/game.dart';
+import '../models/local_game.dart';
 import 'local_persistence_provider.dart';
 
 abstract class HistoryLocalDataSource {
   Future<List<Game>> getRecentSearches();
+  Future<List<Game>> getMatchesByQuery(String query);
   Future<void> deleteRecentGame();
   Future<void> saveGame(LocalGame gameToSave);
 }
@@ -39,5 +40,23 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
       return Future<void>.value();
     else
       throw CacheException();
+  }
+
+  @override
+  Future<List<Game>> getMatchesByQuery(String query) async {
+    final allGames = await localPersistenceProvider.getAllFromPersistence(
+        boxToGetDataFrom: HISTORY_BOX) as List<LocalGame>;
+
+    if (allGames != null) {
+      final filteredGames =
+          allGames.where((element) => element.name.startsWith(query)).toList();
+
+      final mappedGames =
+          filteredGames.map((localGame) => localGame.toGame()).toList();
+
+      return Future.value(mappedGames);
+    } else {
+      throw CacheException();
+    }
   }
 }

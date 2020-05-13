@@ -25,6 +25,11 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
+  Future<Either<Failure, List<Game>>> getMatchesByQuery(String gameName) async{
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Either<Failure, void>> saveGameIntoHistory(Game gameToSave) async {
     try {
       final localResult =
