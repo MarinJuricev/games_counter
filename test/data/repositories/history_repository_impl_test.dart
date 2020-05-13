@@ -21,6 +21,7 @@ void main() {
   final gameName = 'Treseta';
   final pointsToWin = 41;
   final numberOfPlayers = 2;
+  final query = 'Tr';
 
   setUp(
     () {
@@ -67,6 +68,58 @@ void main() {
               .thenThrow(CacheException());
 
           final actualResult = await repository.saveGameIntoHistory(testGame);
+          final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+
+          expect(expectedResult, actualResult);
+        },
+      );
+    },
+  );
+
+  group(
+    'getMatchesByQuery',
+    () {
+      test(
+        'should return Right<List<Game> when local persistence returns a success',
+        () async {
+          final localResult = [testGame, testGame];
+
+          when(mockHistoryLocalDataSource.getMatchesByQuery(query))
+              .thenAnswer((_) async => Future.value(localResult));
+
+          final actualResult = await repository.getMatchesByQuery(query);
+          final expectedResult = Right(localResult);
+
+          expect(expectedResult, actualResult);
+
+          verify(mockHistoryLocalDataSource.getMatchesByQuery(query));
+        },
+      );
+
+      test(
+        'should return Right empty game list when local persistence returns a empty list',
+        () async {
+          final List<Game> localResult = [];
+
+          when(mockHistoryLocalDataSource.getMatchesByQuery(query))
+              .thenAnswer((_) async => Future.value(localResult));
+
+          final actualResult = await repository.getMatchesByQuery(query);
+          final expectedResult = Right(localResult);
+
+          expect(expectedResult, actualResult);
+
+          verify(mockHistoryLocalDataSource.getMatchesByQuery(query));
+        },
+      );
+
+      test(
+        'should return Left<CacheFailure> when local persistence throws [CacheException]',
+        () async {
+          when(mockHistoryLocalDataSource.getMatchesByQuery(query))
+              .thenThrow(CacheException());
+
+          final actualResult = await repository.getMatchesByQuery(query);
           final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
           expect(expectedResult, actualResult);

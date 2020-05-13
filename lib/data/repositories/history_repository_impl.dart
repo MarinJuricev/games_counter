@@ -25,8 +25,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<Game>>> getMatchesByQuery(String gameName) async{
-    throw UnimplementedError();
+  Future<Either<Failure, List<Game>>> getMatchesByQuery(String gameName) async {
+    try {
+      final localResult =
+          await historyLocalDataSource.getMatchesByQuery(gameName);
+
+      return Right(localResult);
+    } on CacheException {
+      return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+    }
   }
 
   @override
