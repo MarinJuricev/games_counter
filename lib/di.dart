@@ -1,3 +1,4 @@
+import 'package:game_counter/presentation/bloc/history/history_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -46,6 +47,8 @@ Future<void> init() async {
       ));
 
   sl.registerFactory(() => ColorBloc(colorRepository: sl<ColorRepository>()));
+  sl.registerFactory(
+      () => HistoryBloc(getGamesFromQuery: sl<GetGamesFromQuery>()));
 
   // Use cases
   sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));
@@ -54,8 +57,8 @@ Future<void> init() async {
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
-  sl.registerFactory(() => GetGamesFromQuery(
-      localPersistenceProvider: sl<LocalPersistenceProvider>()));
+  sl.registerFactory(
+      () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
   sl.registerFactory(
       () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
 

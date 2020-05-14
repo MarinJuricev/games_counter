@@ -12,8 +12,10 @@ T _$identity<T>(T value) => value;
 class _$HistoryEventTearOff {
   const _$HistoryEventTearOff();
 
-  _OnQueryChanged queryChanged() {
-    return _OnQueryChanged();
+  _OnQueryChanged queryChanged({String query}) {
+    return _OnQueryChanged(
+      query: query,
+    );
   }
 
   _OnGameDeleted recentGameDeleted({Game gameToDelete}) {
@@ -33,13 +35,13 @@ const $HistoryEvent = _$HistoryEventTearOff();
 mixin _$HistoryEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result queryChanged(),
+    @required Result queryChanged(String query),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result queryChanged(),
+    Result queryChanged(String query),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
@@ -77,6 +79,7 @@ abstract class _$OnQueryChangedCopyWith<$Res> {
   factory _$OnQueryChangedCopyWith(
           _OnQueryChanged value, $Res Function(_OnQueryChanged) then) =
       __$OnQueryChangedCopyWithImpl<$Res>;
+  $Res call({String query});
 }
 
 class __$OnQueryChangedCopyWithImpl<$Res>
@@ -88,48 +91,68 @@ class __$OnQueryChangedCopyWithImpl<$Res>
 
   @override
   _OnQueryChanged get _value => super._value as _OnQueryChanged;
+
+  @override
+  $Res call({
+    Object query = freezed,
+  }) {
+    return _then(_OnQueryChanged(
+      query: query == freezed ? _value.query : query as String,
+    ));
+  }
 }
 
 class _$_OnQueryChanged implements _OnQueryChanged {
-  _$_OnQueryChanged();
+  _$_OnQueryChanged({this.query});
+
+  @override
+  final String query;
 
   @override
   String toString() {
-    return 'HistoryEvent.queryChanged()';
+    return 'HistoryEvent.queryChanged(query: $query)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnQueryChanged);
+    return identical(this, other) ||
+        (other is _OnQueryChanged &&
+            (identical(other.query, query) ||
+                const DeepCollectionEquality().equals(other.query, query)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(query);
+
+  @override
+  _$OnQueryChangedCopyWith<_OnQueryChanged> get copyWith =>
+      __$OnQueryChangedCopyWithImpl<_OnQueryChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result queryChanged(),
+    @required Result queryChanged(String query),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
     assert(queryChanged != null);
     assert(recentGameDeleted != null);
     assert(allRecentGamesDeleted != null);
-    return queryChanged();
+    return queryChanged(query);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result queryChanged(),
+    Result queryChanged(String query),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (queryChanged != null) {
-      return queryChanged();
+      return queryChanged(query);
     }
     return orElse();
   }
@@ -164,7 +187,10 @@ class _$_OnQueryChanged implements _OnQueryChanged {
 }
 
 abstract class _OnQueryChanged implements HistoryEvent {
-  factory _OnQueryChanged() = _$_OnQueryChanged;
+  factory _OnQueryChanged({String query}) = _$_OnQueryChanged;
+
+  String get query;
+  _$OnQueryChangedCopyWith<_OnQueryChanged> get copyWith;
 }
 
 abstract class _$OnGameDeletedCopyWith<$Res> {
@@ -238,7 +264,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result queryChanged(),
+    @required Result queryChanged(String query),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
@@ -251,7 +277,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result queryChanged(),
+    Result queryChanged(String query),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
@@ -336,7 +362,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result queryChanged(),
+    @required Result queryChanged(String query),
     @required Result recentGameDeleted(Game gameToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
@@ -349,7 +375,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result queryChanged(),
+    Result queryChanged(String query),
     Result recentGameDeleted(Game gameToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
