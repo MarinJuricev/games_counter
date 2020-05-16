@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../di.dart' as di;
+import '../bloc/history/history_bloc.dart';
+import '../widgets/error.dart';
 
 class HistorySearchDelegate extends SearchDelegate<String> {
   @override
@@ -8,7 +12,8 @@ class HistorySearchDelegate extends SearchDelegate<String> {
     assert(theme != null);
     return theme.copyWith(
         inputDecorationTheme: InputDecorationTheme(
-            hintStyle: TextStyle(color: theme.primaryTextTheme.headline6.color)),
+            hintStyle:
+                TextStyle(color: theme.primaryTextTheme.headline6.color)),
         primaryColor: theme.primaryColor,
         primaryIconTheme: theme.primaryIconTheme,
         primaryColorBrightness: theme.primaryColorBrightness,
@@ -55,12 +60,17 @@ class HistorySearchDelegate extends SearchDelegate<String> {
         ],
       );
     }
-
-    //TODO Publish to bloc the query and search the local peristence for that query
-    return Center(
-      child: Text(
-        query,
-        style: TextStyle(color: Colors.red),
+    return BlocProvider(
+      create: (BuildContext context) => di.sl<HistoryBloc>(),
+      child: BlocBuilder<HistoryBloc, HistoryState>(
+        builder: (BuildContext context, HistoryState state) {
+          return state.map(
+            initialState: (params) => Center(child: Text('initialState?')),
+            updatedState: (params) => Text(params.games.toString()),
+            errorState: (params) =>
+                ErrorContainer(erorrMessage: params.errorMessage),
+          );
+        },
       ),
     );
   }
@@ -69,9 +79,6 @@ class HistorySearchDelegate extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     // This method is called everytime the search term changes.
     // If you want to add search suggestions as the user enters their search term, this is the place to do that.
-    return Text(
-      'test?',
-      style: TextStyle(color: Colors.red),
-    );
+    return SizedBox();
   }
 }

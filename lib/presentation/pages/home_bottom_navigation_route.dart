@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/pages/history_page.dart';
-import 'package:game_counter/presentation/pages/home_page.dart';
-import 'package:game_counter/presentation/pages/settings_page.dart';
+
+import 'history_recent_page.dart';
+import 'home_page.dart';
+import 'settings_page.dart';
 
 class HomeBottomNavRoute extends StatefulWidget {
   HomeBottomNavRoute({Key key}) : super(key: key);
@@ -35,7 +36,7 @@ class _HomeBottomNavRouteState extends State<HomeBottomNavRoute> {
           },
           children: <Widget>[
             HomePage(),
-            HistoryPage(),
+            HistoryRecentPage(),
             SettingsPage(),
           ],
         ),

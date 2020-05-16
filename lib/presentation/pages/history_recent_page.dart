@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../widgets/info_container.dart';
 import 'history_search_page.dart';
 
-class HistoryPage extends StatefulWidget {
-  HistoryPage({Key key}) : super(key: key);
+class HistoryRecentPage extends StatefulWidget {
+  HistoryRecentPage({Key key}) : super(key: key);
 
   @override
-  _HistoryPageState createState() => _HistoryPageState();
+  _HistoryRecentPageState createState() => _HistoryRecentPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _HistoryRecentPageState extends State<HistoryRecentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     showSearch(
                         context: context, delegate: HistorySearchDelegate());
                   },
-                )
+                ),
               ],
             ),
           ];
