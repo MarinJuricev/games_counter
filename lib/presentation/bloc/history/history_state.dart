@@ -1,6 +1,8 @@
 part of 'history_bloc.dart';
 
-@immutable
-abstract class HistoryState {}
-
-class HistoryInitial extends HistoryState {}
+@freezed
+abstract class HistoryState with _$HistoryState {
+  factory HistoryState.initialState() = _OnHistoryInitialState;
+  factory HistoryState.updatedState({List<Game> games}) = _OnHistoryUpdatedState;
+  factory HistoryState.errorState({String errorMessage}) = _OnHistoryErrorState;
+}
