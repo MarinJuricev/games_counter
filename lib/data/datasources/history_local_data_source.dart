@@ -46,9 +46,9 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   Future<List<Game>> getMatchesByQuery(String query) async {
     final allGames = await localPersistenceProvider.getAllFromPersistence(
         boxToGetDataFrom: HISTORY_BOX);
-    final List<LocalGame> convertedList = List<LocalGame>.from(allGames);
 
-    if (convertedList != null) {
+    if (allGames != null) {
+      final List<LocalGame> convertedList = List<LocalGame>.from(allGames);
       final List<LocalGame> filteredGames = convertedList
           .where((LocalGame element) => element.name.startsWith(query))
           .toList();
