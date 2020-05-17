@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 import '../../domain/entities/game.dart';
 import '../../domain/entities/player.dart';
@@ -20,15 +22,17 @@ class LocalGame extends HiveObject {
   final int numberOfPlayers;
   @HiveField(5)
   final String winner;
+  @HiveField(6)
+  final String playedAt;
 
-  LocalGame({
-    this.players,
-    this.name,
-    this.pointsToWin,
-    this.bonusPoints,
-    this.numberOfPlayers,
-    this.winner,
-  });
+  LocalGame(
+      {@required this.players,
+      @required this.name,
+      @required this.pointsToWin,
+      @required this.bonusPoints,
+      @required this.numberOfPlayers,
+      @required this.winner,
+      @required this.playedAt});
 }
 
 extension GameMapper on Game {
@@ -38,13 +42,17 @@ extension GameMapper on Game {
       mappedPlayers = this.players.map((item) => item.toLocal()).toList();
     }
 
+    final now = new DateTime.now();
+    String formattedDateTime = DateFormat('yMd').format(now);
+
     return LocalGame(
         players: mappedPlayers,
         name: this.name,
         pointsToWin: this.pointsToWin,
         bonusPoints: this.bonusPoints,
         numberOfPlayers: this.numberOfPlayers,
-        winner: this.winner);
+        winner: this.winner,
+        playedAt: formattedDateTime);
   }
 }
 

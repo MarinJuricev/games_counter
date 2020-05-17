@@ -30,6 +30,8 @@ dependencies:
   # Annotations for freezed
   freezed_annotation: ^0.7.1
   flutter_material_color_picker: ^1.0.5
+  # Date time format
+  intl: ^0.16.1
   # Remote API
   # data_connection_checker: ^0.3.4
   # http: ^0.12.0+4
