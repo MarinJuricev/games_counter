@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../di.dart' as di;
 import '../bloc/history/history_bloc.dart';
 import '../widgets/error.dart';
+import '../widgets/history_list_view.dart';
 
 class HistorySearchDelegate extends SearchDelegate<String> {
   @override
@@ -60,13 +62,18 @@ class HistorySearchDelegate extends SearchDelegate<String> {
         ],
       );
     }
+
     return BlocProvider(
       create: (BuildContext context) => di.sl<HistoryBloc>(),
       child: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (BuildContext context, HistoryState state) {
+          BlocProvider.of<HistoryBloc>(context)
+            ..add(HistoryEvent.queryChanged(query: query));
+
           return state.map(
-            initialState: (params) => Center(child: Text('initialState?')),
-            updatedState: (params) => Text(params.games.toString()),
+            initialState: (params) =>
+                Center(child: CircularProgressIndicator()),
+            updatedState: (params) => HistoryListView(games: params.games),
             errorState: (params) =>
                 ErrorContainer(erorrMessage: params.errorMessage),
           );
