@@ -13,12 +13,13 @@ class _$GameTearOff {
   const _$GameTearOff();
 
   _Game call(
-      {List<Player> players,
-      String name,
-      int pointsToWin,
-      int bonusPoints,
-      int numberOfPlayers,
-      String winner}) {
+      {@required List<Player> players,
+      @required String name,
+      @required int pointsToWin,
+      @required int bonusPoints,
+      @required int numberOfPlayers,
+      @required String winner,
+      @required String createdAt}) {
     return _Game(
       players: players,
       name: name,
@@ -26,6 +27,7 @@ class _$GameTearOff {
       bonusPoints: bonusPoints,
       numberOfPlayers: numberOfPlayers,
       winner: winner,
+      createdAt: createdAt,
     );
   }
 }
@@ -40,6 +42,7 @@ mixin _$Game {
   int get bonusPoints;
   int get numberOfPlayers;
   String get winner;
+  String get createdAt;
 
   $GameCopyWith<Game> get copyWith;
 }
@@ -53,7 +56,8 @@ abstract class $GameCopyWith<$Res> {
       int pointsToWin,
       int bonusPoints,
       int numberOfPlayers,
-      String winner});
+      String winner,
+      String createdAt});
 }
 
 class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
@@ -71,6 +75,7 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
     Object bonusPoints = freezed,
     Object numberOfPlayers = freezed,
     Object winner = freezed,
+    Object createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       players: players == freezed ? _value.players : players as List<Player>,
@@ -83,6 +88,7 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
           ? _value.numberOfPlayers
           : numberOfPlayers as int,
       winner: winner == freezed ? _value.winner : winner as String,
+      createdAt: createdAt == freezed ? _value.createdAt : createdAt as String,
     ));
   }
 }
@@ -97,7 +103,8 @@ abstract class _$GameCopyWith<$Res> implements $GameCopyWith<$Res> {
       int pointsToWin,
       int bonusPoints,
       int numberOfPlayers,
-      String winner});
+      String winner,
+      String createdAt});
 }
 
 class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
@@ -116,6 +123,7 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
     Object bonusPoints = freezed,
     Object numberOfPlayers = freezed,
     Object winner = freezed,
+    Object createdAt = freezed,
   }) {
     return _then(_Game(
       players: players == freezed ? _value.players : players as List<Player>,
@@ -128,18 +136,27 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
           ? _value.numberOfPlayers
           : numberOfPlayers as int,
       winner: winner == freezed ? _value.winner : winner as String,
+      createdAt: createdAt == freezed ? _value.createdAt : createdAt as String,
     ));
   }
 }
 
 class _$_Game with DiagnosticableTreeMixin implements _Game {
   _$_Game(
-      {this.players,
-      this.name,
-      this.pointsToWin,
-      this.bonusPoints,
-      this.numberOfPlayers,
-      this.winner});
+      {@required this.players,
+      @required this.name,
+      @required this.pointsToWin,
+      @required this.bonusPoints,
+      @required this.numberOfPlayers,
+      @required this.winner,
+      @required this.createdAt})
+      : assert(players != null),
+        assert(name != null),
+        assert(pointsToWin != null),
+        assert(bonusPoints != null),
+        assert(numberOfPlayers != null),
+        assert(winner != null),
+        assert(createdAt != null);
 
   @override
   final List<Player> players;
@@ -153,10 +170,12 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
   final int numberOfPlayers;
   @override
   final String winner;
+  @override
+  final String createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Game(players: $players, name: $name, pointsToWin: $pointsToWin, bonusPoints: $bonusPoints, numberOfPlayers: $numberOfPlayers, winner: $winner)';
+    return 'Game(players: $players, name: $name, pointsToWin: $pointsToWin, bonusPoints: $bonusPoints, numberOfPlayers: $numberOfPlayers, winner: $winner, createdAt: $createdAt)';
   }
 
   @override
@@ -169,7 +188,8 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
       ..add(DiagnosticsProperty('pointsToWin', pointsToWin))
       ..add(DiagnosticsProperty('bonusPoints', bonusPoints))
       ..add(DiagnosticsProperty('numberOfPlayers', numberOfPlayers))
-      ..add(DiagnosticsProperty('winner', winner));
+      ..add(DiagnosticsProperty('winner', winner))
+      ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
   @override
@@ -191,7 +211,10 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
                 const DeepCollectionEquality()
                     .equals(other.numberOfPlayers, numberOfPlayers)) &&
             (identical(other.winner, winner) ||
-                const DeepCollectionEquality().equals(other.winner, winner)));
+                const DeepCollectionEquality().equals(other.winner, winner)) &&
+            (identical(other.createdAt, createdAt) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdAt, createdAt)));
   }
 
   @override
@@ -202,7 +225,8 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
       const DeepCollectionEquality().hash(pointsToWin) ^
       const DeepCollectionEquality().hash(bonusPoints) ^
       const DeepCollectionEquality().hash(numberOfPlayers) ^
-      const DeepCollectionEquality().hash(winner);
+      const DeepCollectionEquality().hash(winner) ^
+      const DeepCollectionEquality().hash(createdAt);
 
   @override
   _$GameCopyWith<_Game> get copyWith =>
@@ -211,12 +235,13 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
 
 abstract class _Game implements Game {
   factory _Game(
-      {List<Player> players,
-      String name,
-      int pointsToWin,
-      int bonusPoints,
-      int numberOfPlayers,
-      String winner}) = _$_Game;
+      {@required List<Player> players,
+      @required String name,
+      @required int pointsToWin,
+      @required int bonusPoints,
+      @required int numberOfPlayers,
+      @required String winner,
+      @required String createdAt}) = _$_Game;
 
   @override
   List<Player> get players;
@@ -230,6 +255,8 @@ abstract class _Game implements Game {
   int get numberOfPlayers;
   @override
   String get winner;
+  @override
+  String get createdAt;
   @override
   _$GameCopyWith<_Game> get copyWith;
 }

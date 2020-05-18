@@ -23,13 +23,14 @@ class LocalGameAdapter extends TypeAdapter<LocalGame> {
       bonusPoints: fields[3] as int,
       numberOfPlayers: fields[4] as int,
       winner: fields[5] as String,
+      createdAt: fields[6] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, LocalGame obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.players)
       ..writeByte(1)
@@ -41,6 +42,8 @@ class LocalGameAdapter extends TypeAdapter<LocalGame> {
       ..writeByte(4)
       ..write(obj.numberOfPlayers)
       ..writeByte(5)
-      ..write(obj.winner);
+      ..write(obj.winner)
+      ..writeByte(6)
+      ..write(obj.createdAt);
   }
 }

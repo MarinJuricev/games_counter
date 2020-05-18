@@ -25,12 +25,13 @@ class HistoryListView extends StatelessWidget {
             borderOnForeground: true,
             elevation: 4.0,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: ListTile(
-              title: Text(
-                games[index].name,
-              ),
-              subtitle: Text(
-                games[index].winner,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[Text('Date')],
+                  )
+                ],
               ),
             ),
           ),

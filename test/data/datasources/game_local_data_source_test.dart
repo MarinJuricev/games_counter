@@ -3,9 +3,10 @@ import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/game_local_data_source.dart';
 import 'package:game_counter/data/datasources/local_persistence_provider.dart';
 import 'package:game_counter/data/models/local_game.dart';
-import 'package:game_counter/domain/entities/game.dart';
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../test_data/test_data.dart';
 
 class MockLocalPersistenceProvider extends Mock
     implements LocalPersistenceProvider {}
@@ -14,31 +15,12 @@ void main() {
   GameLocalDataSource gameLocalDataSource;
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
 
-  Game testGame;
-  LocalGame testLocalGame;
-  final gameName = 'Treseta';
-  final pointsToWinParsed = 41;
-  final numberOfPlayersParsed = 4;
-
   setUp(
     () {
       mockLocalPersistenceProvider = MockLocalPersistenceProvider();
       gameLocalDataSource = GameLocalDataSourceImpl(
           localPersistenceProvider: mockLocalPersistenceProvider);
 
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWinParsed,
-        numberOfPlayers: numberOfPlayersParsed,
-        players: [],
-      );
-
-      testLocalGame = LocalGame(
-        name: gameName,
-        pointsToWin: pointsToWinParsed,
-        numberOfPlayers: numberOfPlayersParsed,
-        players: [],
-      );
     },
   );
 

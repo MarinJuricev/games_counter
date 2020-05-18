@@ -8,11 +8,12 @@ part 'game.freezed.dart';
 @freezed
 abstract class Game with _$Game {
   factory Game({
-    List<Player> players,
-    String name,
-    int pointsToWin,
-    int bonusPoints,
-    int numberOfPlayers,
-    String winner,
+    @required List<Player> players,
+    @required String name,
+    @required int pointsToWin,
+    @required int bonusPoints,
+    @required int numberOfPlayers,
+    @required String winner,
+    @required String createdAt,
   }) = _Game;
 }
