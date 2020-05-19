@@ -5,23 +5,25 @@ import 'package:game_counter/domain/entities/player.dart';
 
 // Player
 const TEST_PLAYER_1_NAME = 'TEST_PLAYER_1';
-const TEST_PLAYER_1_POINTS = 0;
-const TEST_PLAYER_1_BONUS_POINTS = 0;
+const TEST_PLAYER_1_POINTS = '0';
+const TEST_PLAYER_1_BONUS_POINTS = '0';
+const TEST_PLAYER_1_POINTS_PARSED = 0;
+const TEST_PLAYER_1_BONUS_POINTS_PARSED = 0;
 
 final testPlayer1 = Player(
   name: TEST_PLAYER_1_NAME,
-  points: TEST_PLAYER_1_POINTS,
-  bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
+  points: TEST_PLAYER_1_POINTS_PARSED,
+  bonusPoints: TEST_PLAYER_1_BONUS_POINTS_PARSED,
 );
 
 final testLocalPlayer1 = LocalPlayer(
   name: TEST_PLAYER_1_NAME,
-  points: TEST_PLAYER_1_POINTS,
-  bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
+  points: TEST_PLAYER_1_POINTS_PARSED,
+  bonusPoints: TEST_PLAYER_1_BONUS_POINTS_PARSED,
 );
 
 const TEST_PLAYER_2_NAME = 'TEST_PLAYER_2';
-const TEST_PLAYER_2_POINTS = 0;
+const TEST_PLAYER_2_POINTS = 15;
 const TEST_PLAYER_2_BONUS_POINTS = 0;
 
 final testPlayer2 = Player(
@@ -45,7 +47,6 @@ const TEST_POINTS_TO_WIN_PARSED_1 = 41;
 const TEST_NUMBER_OF_PLAYERS_PARSED_1 = 4;
 const TEST_BONUS_POINTS_PARSED_1 = 0;
 const TEST_CREATED_AT_1 = '15/12/2020';
-const TEST_GAME_WINNER_1 = 'GameWinner';
 
 const TEST_GAME_NAME_2 = 'MauMau';
 const TEST_POINTS_TO_WIN_2 = '41';
@@ -55,7 +56,6 @@ const TEST_POINTS_TO_WIN_PARSED_2 = 41;
 const TEST_NUMBER_OF_PLAYERS_PARSED_2 = 4;
 const TEST_BONUS_POINTS_PARSED_2 = 0;
 const TEST_CREATED_AT_2 = '15/12/2020';
-const TEST_GAME_WINNER_2 = 'GameWinner';
 
 final testGame = Game(
   name: TEST_GAME_NAME_1,
@@ -63,7 +63,7 @@ final testGame = Game(
   createdAt: TEST_CREATED_AT_1,
   numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
   pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
-  winner: TEST_GAME_WINNER_1,
+  winner: TEST_PLAYER_1_NAME,
   players: [testPlayer1, testPlayer2],
 );
 
@@ -73,7 +73,7 @@ final testLocalGame = LocalGame(
   createdAt: TEST_CREATED_AT_1,
   numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
   pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
-  winner: TEST_GAME_WINNER_1,
+  winner: TEST_PLAYER_1_NAME,
   players: [testLocalPlayer1, testLocalPlayer2],
 );
 
@@ -83,7 +83,7 @@ final testGame2 = Game(
   createdAt: TEST_CREATED_AT_2,
   numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_2,
   pointsToWin: TEST_POINTS_TO_WIN_PARSED_2,
-  winner: TEST_GAME_WINNER_2,
+  winner: TEST_PLAYER_2_NAME,
   players: [testPlayer1, testPlayer2],
 );
 
@@ -93,6 +93,6 @@ final testLocalGame2 = LocalGame(
   createdAt: TEST_CREATED_AT_2,
   numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_2,
   pointsToWin: TEST_POINTS_TO_WIN_PARSED_2,
-  winner: TEST_GAME_WINNER_2,
+  winner: TEST_PLAYER_2_NAME,
   players: [testLocalPlayer1, testLocalPlayer2],
 );

@@ -7,6 +7,8 @@ import 'package:game_counter/domain/repositories/history_repository.dart';
 import 'package:game_counter/domain/usecases/get_games_from_query.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../test_data/test_data.dart';
+
 class MockHistoryRepository extends Mock implements HistoryRepository {}
 
 void main() {
@@ -14,12 +16,7 @@ void main() {
   GetGamesFromQuery getGamesFromQuery;
   String query = "newQuery";
   List<Game> testGamesResult;
-  Game testGame = Game(
-    name: 'Treseta',
-    pointsToWin: 41,
-    numberOfPlayers: 4,
-    players: [],
-  );
+
 
   setUp(
     () {
@@ -40,7 +37,6 @@ void main() {
       final actualResult =
           await getGamesFromQuery(GetGamesFromQueryParams(query: query));
 
-      List<Game> expectedList = [];
       final expectedResult = Right(testGamesResult);
 
       expect(expectedResult, actualResult);

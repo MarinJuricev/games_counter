@@ -91,7 +91,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> _handleGameUpdatedEvent(Game newGame) async* {
     final updatedGame = newGame;
 
-    if (updatedGame.winner == null) {
+    if (updatedGame.winner == null || updatedGame.winner.isEmpty) {
       yield GameUpdatedState(game: newGame);
     } else {
       Player winner = updatedGame.players

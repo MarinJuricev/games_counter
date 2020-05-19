@@ -5,23 +5,15 @@ import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/data/datasources/game_local_data_source.dart';
 import 'package:game_counter/data/repositories/game_repository_impl.dart';
-import 'package:game_counter/domain/entities/game.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../test_data/test_data.dart';
 
 class MockLocalDataSource extends Mock implements GameLocalDataSource {}
 
 void main() {
   GameRepositoryImpl repository;
   MockLocalDataSource mockLocalDataSource;
-
-  final testGame = Game(
-    name: 'gameName',
-    pointsToWin: 41,
-    numberOfPlayers: 4,
-    bonusPoints: 0,
-    players: [],
-    winner: 'noWinner',
-  );
 
   setUp(
     () {

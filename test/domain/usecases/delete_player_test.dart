@@ -8,48 +8,18 @@ import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/delete_player.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../test_data/test_data.dart';
+
 class MockGameRepository extends Mock implements GameRepository {}
 
 void main() {
   MockGameRepository mockGameRepository;
   DeletePlayer deletePlayer;
 
-  final playerName = 'validPlayerName';
-  final playerPoints = 0;
-  final playerBonusPoints = 0;
-  final gameName = 'Treseta';
-  final pointsToWin = 41;
-  final numberOfPlayers = 2;
-  Game testGame;
-  Player testPlayer;
-  Player testPlayer2;
-
-  setUp(
-    () {
-      mockGameRepository = MockGameRepository();
-
-      deletePlayer = DeletePlayer(repository: mockGameRepository);
-
-      testPlayer = Player(
-        name: playerName,
-        points: playerPoints,
-        bonusPoints: playerBonusPoints,
-      );
-
-      testPlayer2 = Player(
-        name: 'RandomName',
-        points: 12,
-        bonusPoints: 12,
-      );
-
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [testPlayer],
-      );
-    },
-  );
+  setUp(() {
+    mockGameRepository = MockGameRepository();
+    deletePlayer = DeletePlayer(repository: mockGameRepository);
+  });
 
   group(
     'deletePlayer',
@@ -61,13 +31,16 @@ void main() {
               .thenAnswer((_) async => Right(testGame));
 
           final actualResult = await deletePlayer(
-              DeletePlayerParams(playerToDelete: testPlayer));
+              DeletePlayerParams(playerToDelete: testPlayer1));
 
           final expectedGame = Game(
-            name: gameName,
-            pointsToWin: pointsToWin,
-            numberOfPlayers: numberOfPlayers,
-            players: [],
+            name: TEST_GAME_NAME_1,
+            bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+            createdAt: TEST_CREATED_AT_1,
+            numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+            pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+            winner: TEST_PLAYER_1_NAME,
+            players: [testPlayer2],
           );
 
           final expectedResult = Right(expectedGame);
@@ -80,11 +53,14 @@ void main() {
       test(
         'should return [NotImplementedFailure] when the playerToRemove isn\t present in the game object',
         () async {
+          final nonExistentPlayer =
+              Player(name: 'player123', points: 0, bonusPoints: 0);
+
           when(mockGameRepository.getGame())
               .thenAnswer((_) async => Right(testGame));
 
           final actualResult = await deletePlayer(
-              DeletePlayerParams(playerToDelete: testPlayer2));
+              DeletePlayerParams(playerToDelete: nonExistentPlayer));
           final expectedResult = Left(NotImplementedFailure());
 
           expect(actualResult, expectedResult);

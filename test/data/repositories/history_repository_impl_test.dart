@@ -4,10 +4,11 @@ import 'package:game_counter/core/constants/budget_constants.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/data/datasources/history_local_data_source.dart';
-import 'package:game_counter/data/models/local_game.dart';
 import 'package:game_counter/data/repositories/history_repository_impl.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../test_data/test_data.dart';
 
 class MockHistoryLocalDataSource extends Mock
     implements HistoryLocalDataSource {}
@@ -16,11 +17,6 @@ void main() {
   MockHistoryLocalDataSource mockHistoryLocalDataSource;
   HistoryRepositoryImpl repository;
 
-  Game testGame;
-  LocalGame testLocalGame;
-  final gameName = 'Treseta';
-  final pointsToWin = 41;
-  final numberOfPlayers = 2;
   final query = 'Tr';
 
   setUp(
@@ -28,20 +24,6 @@ void main() {
       mockHistoryLocalDataSource = MockHistoryLocalDataSource();
       repository = HistoryRepositoryImpl(
           historyLocalDataSource: mockHistoryLocalDataSource);
-
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [],
-      );
-
-      testLocalGame = LocalGame(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [],
-      );
     },
   );
 

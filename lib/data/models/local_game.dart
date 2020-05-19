@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 import '../../domain/entities/game.dart';
 import '../../domain/entities/player.dart';
@@ -43,9 +42,6 @@ extension GameMapper on Game {
       mappedPlayers = this.players.map((item) => item.toLocal()).toList();
     }
 
-    final now = new DateTime.now();
-    String formattedDateTime = DateFormat('yMd').format(now);
-
     return LocalGame(
         players: mappedPlayers,
         name: this.name,
@@ -53,7 +49,7 @@ extension GameMapper on Game {
         bonusPoints: this.bonusPoints,
         numberOfPlayers: this.numberOfPlayers,
         winner: this.winner,
-        createdAt: formattedDateTime);
+        createdAt: this.createdAt);
   }
 }
 

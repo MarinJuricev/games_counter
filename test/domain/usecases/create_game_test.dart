@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/create_game.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../test_data/test_data.dart';
 
 class MockGameRepository extends Mock implements GameRepository {}
 
@@ -21,16 +22,6 @@ void main() {
   group(
     'createGame',
     () {
-      final validGameName = 'validGameName';
-      final validPointsToWin = 0;
-      final validNumberOfPlayers = 4;
-
-      final testGame = Game(
-        name: validGameName,
-        numberOfPlayers: validNumberOfPlayers,
-        pointsToWin: validPointsToWin,
-        players: [],
-      );
 
       test(
         'should return a valid game instance with valid parametars',
@@ -40,9 +31,9 @@ void main() {
 
           final actualResult = await createGame(
             CreateGameParams(
-              gameTitle: validGameName,
-              numberOfPlayers: validNumberOfPlayers,
-              winningPoints: validPointsToWin,
+              gameTitle: TEST_GAME_NAME_1,
+              numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+              winningPoints: TEST_POINTS_TO_WIN_PARSED_1,
             ),
           );
 

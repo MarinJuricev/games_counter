@@ -6,72 +6,54 @@ import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 
+import '../../test_data/test_data.dart';
+
 class MockGameRepository extends Mock implements GameRepository {}
 
 void main() {
   MockGameRepository mockGameRepository;
   ResetPlayer resetPlayer;
 
-  final playerName = 'validPlayerName';
-  final playerPoints = 0;
-  final playerBonusPoints = 0;
-  final gameName = 'Treseta';
-  final pointsToWin = 41;
-  final numberOfPlayers = 2;
-  Game testGame;
-  Player testPlayer;
-
   setUp(
     () {
       mockGameRepository = MockGameRepository();
       resetPlayer = ResetPlayer(repository: mockGameRepository);
-
-      testPlayer = Player(
-        name: playerName,
-        points: playerPoints,
-        bonusPoints: playerBonusPoints,
-      );
-
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [testPlayer],
-      );
     },
   );
 
-  group(
-    'resetPlayer',
-    () {
-      test(
-        'should update mainPoints and bonusPoints with 0',
-        () async {
-          final actualResult = await resetPlayer(
-            ResetPlayerParams(
-              currentGame: testGame,
-              currentPlayer: testPlayer,
-            ),
-          );
-
-          final actualPlayer = Player(
-            name: playerName,
-            points: 0,
-            bonusPoints: 0,
-          );
-
-          final expectedGame = Game(
-            name: gameName,
-            pointsToWin: pointsToWin,
-            numberOfPlayers: numberOfPlayers,
-            players: [actualPlayer],
-          );
-          final expectedResult = Right(expectedGame);
-
-          verify(mockGameRepository.saveGame(expectedGame)).called(1);
-          expect(actualResult, expectedResult);
-        },
+  test(
+    'should update mainPoints and bonusPoints with 0',
+    () async {
+      final expectedPlayer = Player(
+        name: TEST_PLAYER_1_NAME,
+        points: 0,
+        bonusPoints: 0,
       );
+
+      final expectedGame = Game(
+        name: TEST_GAME_NAME_1,
+        bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+        createdAt: TEST_CREATED_AT_1,
+        numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+        pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+        winner: TEST_PLAYER_1_NAME,
+        players: [expectedPlayer, testPlayer2],
+      );
+
+      when(mockGameRepository.saveGame(expectedGame))
+          .thenAnswer((_) async => Future.value());
+
+      final actualResult = await resetPlayer(
+        ResetPlayerParams(
+          currentGame: testGame,
+          currentPlayer: testPlayer1,
+        ),
+      );
+
+      final expectedResult = Right(expectedGame);
+
+      verify(mockGameRepository.saveGame(expectedGame)).called(1);
+      expect(actualResult, expectedResult);
     },
   );
 }

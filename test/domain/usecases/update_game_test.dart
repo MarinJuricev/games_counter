@@ -6,42 +6,31 @@ import 'package:game_counter/domain/repositories/game_repository.dart';
 import 'package:game_counter/domain/usecases/update_game.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../test_data/test_data.dart';
+
 class MockGameRepository extends Mock implements GameRepository {}
 
 void main() {
   MockGameRepository mockGameRepository;
   UpdateGame updateGame;
 
-  final playerName = 'validPlayerName';
+  // final playerName = 'validPlayerName';
   final playerPoints = 0;
-  final playerBonusPoints = 0;
+  // final playerBonusPoints = 0;
   final newPlayerBonusPointsThatExceed = 45;
   final newPlayerPoints = 14;
   final newPlayerPointsThatExceed = 45;
   final newPlayerBonusPoints = 3;
-  final gameName = 'Treseta';
-  final pointsToWin = 41;
-  final numberOfPlayers = 2;
-  Game testGame;
-  Player testPlayer;
+  // final gameName = 'Treseta';
+  // final pointsToWin = 41;
+  // final numberOfPlayers = 2;
+  // Game testGame;
+  // Player testPlayer;
 
   setUp(
     () {
       mockGameRepository = MockGameRepository();
       updateGame = UpdateGame(repository: mockGameRepository);
-
-      testPlayer = Player(
-        name: playerName,
-        points: playerPoints,
-        bonusPoints: playerBonusPoints,
-      );
-
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [testPlayer],
-      );
     },
   );
 
@@ -54,22 +43,25 @@ void main() {
           final actualResult = await updateGame(
             UpdateGameParams(
                 currentGame: testGame,
-                currentPlayer: testPlayer,
+                currentPlayer: testPlayer1,
                 newPoints: newPlayerPoints,
                 newBonusPoints: newPlayerBonusPoints),
           );
 
           final actualPlayer = Player(
-            name: playerName,
+            name: TEST_PLAYER_1_NAME,
             points: newPlayerPoints,
             bonusPoints: newPlayerBonusPoints,
           );
 
           final expectedGame = Game(
-            name: gameName,
-            pointsToWin: pointsToWin,
-            numberOfPlayers: numberOfPlayers,
-            players: [actualPlayer],
+            name: TEST_GAME_NAME_1,
+            bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+            createdAt: TEST_CREATED_AT_1,
+            numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+            pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+            winner: TEST_PLAYER_1_NAME,
+            players: [actualPlayer, testPlayer2],
           );
           final expectedResult = Right(expectedGame);
 
@@ -84,23 +76,26 @@ void main() {
           final actualResult = await updateGame(
             UpdateGameParams(
                 currentGame: testGame,
-                currentPlayer: testPlayer,
+                currentPlayer: testPlayer1,
                 newPoints: newPlayerPointsThatExceed,
                 newBonusPoints: newPlayerBonusPoints),
           );
 
           final actualPlayer = Player(
-            name: playerName,
+            name: TEST_PLAYER_1_NAME,
             points: newPlayerPointsThatExceed,
             bonusPoints: newPlayerBonusPoints,
           );
 
           final expectedGame = Game(
-              name: gameName,
-              pointsToWin: pointsToWin,
-              numberOfPlayers: numberOfPlayers,
-              players: [actualPlayer],
-              winner: playerName);
+              name: TEST_GAME_NAME_1,
+              bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+              createdAt: TEST_CREATED_AT_1,
+              numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+              pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+              winner: TEST_PLAYER_1_NAME,
+              players: [actualPlayer, testPlayer2]);
+
           final expectedResult = Right(expectedGame);
 
           verify(mockGameRepository.saveGame(expectedGame)).called(1);
@@ -114,23 +109,26 @@ void main() {
           final actualResult = await updateGame(
             UpdateGameParams(
                 currentGame: testGame,
-                currentPlayer: testPlayer,
+                currentPlayer: testPlayer1,
                 newPoints: playerPoints,
                 newBonusPoints: newPlayerBonusPointsThatExceed),
           );
 
           final actualPlayer = Player(
-            name: playerName,
+            name: TEST_PLAYER_1_NAME,
             points: playerPoints,
             bonusPoints: newPlayerBonusPointsThatExceed,
           );
 
           final expectedGame = Game(
-              name: gameName,
-              pointsToWin: pointsToWin,
-              numberOfPlayers: numberOfPlayers,
-              players: [actualPlayer],
-              winner: playerName);
+              name: TEST_GAME_NAME_1,
+              bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+              createdAt: TEST_CREATED_AT_1,
+              numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
+              pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+              winner: TEST_PLAYER_1_NAME,
+              players: [actualPlayer, testPlayer2]);
+
           final expectedResult = Right(expectedGame);
 
           verify(mockGameRepository.saveGame(expectedGame)).called(1);

@@ -2,8 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/history_local_data_source.dart';
 import 'package:game_counter/data/datasources/local_persistence_provider.dart';
-import 'package:game_counter/data/models/local_game.dart';
-import 'package:game_counter/domain/entities/game.dart';
 import 'package:mockito/mockito.dart';
 import 'package:matcher/matcher.dart';
 

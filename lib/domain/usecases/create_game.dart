@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 import '../../core/error/failure.dart';
@@ -18,10 +19,17 @@ class CreateGame implements BaseUseCase<Game, CreateGameParams> {
     final winningPoints = params.winningPoints;
     final numberOfPlayers = params.numberOfPlayers;
 
+    //TODO WRAP THIS
+    final now = new DateTime.now();
+    String formattedDateTime = DateFormat('yMd').format(now);
+
     final game = Game(
         name: gameTitle,
         pointsToWin: winningPoints,
         numberOfPlayers: numberOfPlayers,
+        bonusPoints: 0,
+        winner: '',
+        createdAt: formattedDateTime,
         players: []);
 
     await repository.saveGame(game);
