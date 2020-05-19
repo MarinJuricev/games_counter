@@ -996,6 +996,8 @@ abstract class _$OnDeletePlayerCopyWith<$Res> {
           _OnDeletePlayer value, $Res Function(_OnDeletePlayer) then) =
       __$OnDeletePlayerCopyWithImpl<$Res>;
   $Res call({Player playerToDelete});
+
+  $PlayerCopyWith<$Res> get playerToDelete;
 }
 
 class __$OnDeletePlayerCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
@@ -1016,6 +1018,16 @@ class __$OnDeletePlayerCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
           ? _value.playerToDelete
           : playerToDelete as Player,
     ));
+  }
+
+  @override
+  $PlayerCopyWith<$Res> get playerToDelete {
+    if (_value.playerToDelete == null) {
+      return null;
+    }
+    return $PlayerCopyWith<$Res>(_value.playerToDelete, (value) {
+      return _then(_value.copyWith(playerToDelete: value));
+    });
   }
 }
 
