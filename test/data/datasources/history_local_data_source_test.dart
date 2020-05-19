@@ -7,6 +7,8 @@ import 'package:game_counter/domain/entities/game.dart';
 import 'package:mockito/mockito.dart';
 import 'package:matcher/matcher.dart';
 
+import '../../test_data/test_data.dart';
+
 class MockLocalPersistenceProvider extends Mock
     implements LocalPersistenceProvider {}
 
@@ -14,49 +16,11 @@ void main() {
   HistoryLocalDataSource dataSource;
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
 
-  LocalGame testLocalGame;
-  LocalGame testLocalGame2;
-  Game testGame;
-  Game testGame2;
-  final gameName = 'Treseta';
-  final pointsToWin = 41;
-  final numberOfPlayers = 2;
-
   setUp(
     () {
       mockLocalPersistenceProvider = MockLocalPersistenceProvider();
       dataSource = HistoryLocalDataSourceImpl(
           localPersistenceProvider: mockLocalPersistenceProvider);
-
-      testGame = Game(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [],
-      );
-
-      testGame2 = Game(
-          name: 'SomeOtherName',
-          bonusPoints: 0,
-          winner: '',
-          numberOfPlayers: 4,
-          players: [],
-          pointsToWin: 0);
-
-      testLocalGame = LocalGame(
-        name: gameName,
-        pointsToWin: pointsToWin,
-        numberOfPlayers: numberOfPlayers,
-        players: [],
-      );
-
-      testLocalGame2 = LocalGame(
-          name: 'SomeOtherName',
-          bonusPoints: 0,
-          winner: '',
-          numberOfPlayers: 4,
-          players: [],
-          pointsToWin: 0);
     },
   );
 
@@ -128,7 +92,7 @@ void main() {
             testLocalGame2,
             testLocalGame,
           ];
-          final query = 'Some';
+          final query = TEST_GAME_NAME_2;
 
           when(mockLocalPersistenceProvider.getAllFromPersistence(
                   boxToGetDataFrom: HISTORY_BOX))

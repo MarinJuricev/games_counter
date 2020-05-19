@@ -70,6 +70,7 @@ extension LocalGamemapper on LocalGame {
         pointsToWin: this.pointsToWin,
         bonusPoints: this.bonusPoints,
         numberOfPlayers: this.numberOfPlayers,
-        winner: this.winner);
+        winner: this.winner,
+        createdAt: this.createdAt);
   }
 }
