@@ -32,7 +32,7 @@ class UpdateGame implements BaseUseCase<Game, UpdateGameParams> {
 
       currentGame.players[currentPlayerPosition] = updatedPlayer;
 
-      if (updatedPlayer.sumOfAllPoints() >= currentGame.pointsToWin) {
+      if (updatedPlayer.sumOfAllPoints >= currentGame.pointsToWin) {
         updatedGame = currentGame.copyWith(winner: updatedPlayer.name);
       } else {
         updatedGame = currentGame;

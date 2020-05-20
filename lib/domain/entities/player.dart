@@ -15,7 +15,7 @@ abstract class Player implements _$Player {
     @required int bonusPoints,
   }) = _Player;
 
-  int sumOfAllPoints() {
+  int get sumOfAllPoints {
     return points + bonusPoints;
   }
 }

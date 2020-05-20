@@ -26,8 +26,8 @@ class EndGameSooner implements BaseUseCase<Player, EndGameSoonerParams> {
 
       for (var i = 0; i < currentGameResult.players.length; i++) {
         final player = currentGameResult.players[i];
-        if (player.sumOfAllPoints() > currentMaximumPoints) {
-          currentMaximumPoints = player.sumOfAllPoints();
+        if (player.sumOfAllPoints > currentMaximumPoints) {
+          currentMaximumPoints = player.sumOfAllPoints;
           gameWinner = player;
         }
       }
