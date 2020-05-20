@@ -7,28 +7,14 @@ import 'package:game_counter/domain/usecases/get_games_from_query.dart';
 import 'package:game_counter/presentation/bloc/history/history_bloc.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../test_data/test_data.dart';
+
 class MockGetGamesFromQuery extends Mock implements GetGamesFromQuery {}
 
 void main() {
   MockGetGamesFromQuery mockGetGamesFromQuery;
   String query = "test";
   String errorMessage = "errorMessage";
-
-  Game testGame = Game(
-    name: 'test',
-    bonusPoints: 0,
-    pointsToWin: 0,
-    numberOfPlayers: 4,
-    players: [],
-  );
-
-  Game testGame2 = Game(
-    name: 'test2',
-    bonusPoints: 0,
-    winner: '',
-    numberOfPlayers: 4,
-    players: [],
-  );
 
   List<Game> testList = [testGame, testGame2];
 

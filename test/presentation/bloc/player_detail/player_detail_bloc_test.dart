@@ -6,12 +6,13 @@ import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/domain/repositories/game_repository.dart';
-import 'package:game_counter/domain/usecases/reset_player.dart'
-    as resetPlayerUseCase;
+import 'package:game_counter/domain/usecases/reset_player.dart';
 import 'package:game_counter/domain/usecases/update_game.dart';
 import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 import 'package:game_counter/presentation/bloc/player_detail/player_detail_bloc.dart';
 import 'package:mockito/mockito.dart';
+
+import '../../../test_data/test_data.dart';
 
 class MockGameRepository extends Mock implements GameRepository {}
 
@@ -19,7 +20,7 @@ class MockGameBloc extends MockBloc<GameEvent, GameState> implements GameBloc {}
 
 class MockUpdateGame extends Mock implements UpdateGame {}
 
-class MockResetPlayer extends Mock implements resetPlayerUseCase.ResetPlayer {}
+class MockResetPlayer extends Mock implements ResetPlayer {}
 
 void main() {
   MockGameRepository mockGameRepository;
@@ -43,18 +44,15 @@ void main() {
   final gameName = 'Treseta';
   final pointsToWinParsed = 41;
   final numberOfPlayersParsed = 4;
-  final testGame = Game(
-    name: gameName,
-    pointsToWin: pointsToWinParsed,
-    numberOfPlayers: numberOfPlayersParsed,
-    players: [updatedPlayer],
-  );
 
   final testGameWithPlayer0Points = Game(
     name: gameName,
     pointsToWin: pointsToWinParsed,
     numberOfPlayers: numberOfPlayersParsed,
     players: [currentPlayer],
+    bonusPoints: TEST_BONUS_POINTS_PARSED_1,
+    createdAt: TEST_CREATED_AT_1,
+    winner: TEST_PLAYER_1_NAME
   );
 
   setUp(
@@ -170,7 +168,7 @@ void main() {
         },
         act: (playerDetailBloc) =>
             playerDetailBloc.add(PlayerDetailSaveClickedEvent(
-          currentPlayer: currentPlayer,
+          currentPlayer: testPlayer1,
           newMainPoints: newMainPoints,
           newBonusPoints: newBonusPoints,
         )),
@@ -219,7 +217,7 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.ResetPlayerParams(
+          mockResetPlayer(ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
         expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
@@ -242,7 +240,7 @@ void main() {
             .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
-          mockResetPlayer(resetPlayerUseCase.ResetPlayerParams(
+          mockResetPlayer(ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
         expect: [PlayerDetailUpdatedState(player: currentPlayer)],

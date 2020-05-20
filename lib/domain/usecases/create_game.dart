@@ -1,17 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
+import '../../core/constants/budget_constants.dart';
 import '../../core/error/failure.dart';
 import '../../core/usecase/base_usecase.dart';
 import '../entities/game.dart';
 import '../repositories/game_repository.dart';
+import '../service/time_provider.dart';
 
 class CreateGame implements BaseUseCase<Game, CreateGameParams> {
   final GameRepository repository;
+  final TimeProvider timeProvider;
 
-  CreateGame({@required this.repository});
+  CreateGame({@required this.repository, @required this.timeProvider});
 
   @override
   Future<Either<Failure, Game>> call(CreateGameParams params) async {
@@ -19,17 +21,13 @@ class CreateGame implements BaseUseCase<Game, CreateGameParams> {
     final winningPoints = params.winningPoints;
     final numberOfPlayers = params.numberOfPlayers;
 
-    //TODO WRAP THIS
-    final now = new DateTime.now();
-    String formattedDateTime = DateFormat('yMd').format(now);
-
     final game = Game(
         name: gameTitle,
         pointsToWin: winningPoints,
         numberOfPlayers: numberOfPlayers,
         bonusPoints: 0,
         winner: '',
-        createdAt: formattedDateTime,
+        createdAt: timeProvider.provideCurrentTime(GAME_TIME_FORMAT),
         players: []);
 
     await repository.saveGame(game);

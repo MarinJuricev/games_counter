@@ -1,3 +1,5 @@
+import 'package:game_counter/data/service/time_provider_impl.dart';
+import 'package:game_counter/domain/service/time_provider.dart';
 import 'package:game_counter/presentation/bloc/history/history_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -51,7 +53,8 @@ Future<void> init() async {
       () => HistoryBloc(getGamesFromQuery: sl<GetGamesFromQuery>()));
 
   // Use cases
-  sl.registerFactory(() => CreateGame(repository: sl<GameRepository>()));
+  sl.registerFactory(() => CreateGame(
+      repository: sl<GameRepository>(), timeProvider: sl<TimeProvider>()));
   sl.registerFactory(() => CreatePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
@@ -88,4 +91,5 @@ Future<void> init() async {
   // External
   sl.registerLazySingleton<LocalPersistenceProvider>(
       () => LocalPersistenceProviderImpl());
+  sl.registerLazySingleton<TimeProvider>(() => TimeProviderImpl());
 }

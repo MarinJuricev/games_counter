@@ -93,12 +93,13 @@ class __$PlayerCopyWithImpl<$Res> extends _$PlayerCopyWithImpl<$Res>
   }
 }
 
-class _$_Player with DiagnosticableTreeMixin implements _Player {
+class _$_Player extends _Player with DiagnosticableTreeMixin {
   _$_Player(
       {@required this.name, @required this.points, @required this.bonusPoints})
       : assert(name != null),
         assert(points != null),
-        assert(bonusPoints != null);
+        assert(bonusPoints != null),
+        super._();
 
   @override
   final String name;
@@ -147,7 +148,8 @@ class _$_Player with DiagnosticableTreeMixin implements _Player {
       __$PlayerCopyWithImpl<_Player>(this, _$identity);
 }
 
-abstract class _Player implements Player {
+abstract class _Player extends Player {
+  _Player._() : super._();
   factory _Player(
       {@required String name,
       @required int points,
