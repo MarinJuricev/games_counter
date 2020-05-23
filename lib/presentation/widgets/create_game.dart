@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/game/game_bloc.dart';
+import '../feature/core/game_bloc.dart';
 import 'out_lined_button.dart';
 
 class CreateGame extends StatefulWidget {

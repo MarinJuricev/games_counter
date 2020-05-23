@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
-import '../widgets/create_player.dart';
+import '../../widgets/create_player.dart';
+import '../core/game_bloc.dart';
+
 
 class AddPlayerPage extends StatelessWidget {
   final GameBloc gameBloc;

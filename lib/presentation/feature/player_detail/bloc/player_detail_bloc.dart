@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:game_counter/domain/entities/player.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/constants/budget_constants.dart';
-import '../../../core/error/failure.dart';
-import '../../../core/extensions/extensions.dart';
-import '../../../domain/entities/game.dart';
-import '../../../domain/entities/player.dart';
-import '../../../domain/repositories/game_repository.dart';
-import '../../../domain/usecases/reset_player.dart';
-import '../../../domain/usecases/update_game.dart';
-import '../game/game_bloc.dart';
+import '../../../../core/constants/budget_constants.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../domain/entities/game.dart';
+import '../../../../domain/repositories/game_repository.dart';
+import '../../../../domain/usecases/reset_player.dart';
+import '../../../../domain/usecases/update_game.dart';
+import '../../core/game_bloc.dart';
 
 part 'player_detail_event.dart';
 part 'player_detail_state.dart';

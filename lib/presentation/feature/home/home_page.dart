@@ -3,13 +3,14 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/game/game_bloc.dart';
-import '../widgets/create_game.dart';
-import '../widgets/error.dart';
-import '../widgets/game_over.dart';
-import '../widgets/game_title.dart';
-import '../widgets/player_grid.dart';
-import 'add_player_page.dart';
+import '../../widgets/create_game.dart';
+import '../../widgets/error.dart';
+import '../../widgets/game_over.dart';
+import '../../widgets/game_title.dart';
+import '../../widgets/player_grid.dart';
+import '../add_player/add_player_page.dart';
+import '../core/game_bloc.dart';
+
 
 const double _fabDimension = 56.0;
 

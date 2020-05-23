@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
 
 import '../../domain/entities/player.dart';
+import '../feature/core/game_bloc.dart';
 import 'out_lined_button.dart';
 import 'player_progress.dart';
 import 'point_indicator.dart';

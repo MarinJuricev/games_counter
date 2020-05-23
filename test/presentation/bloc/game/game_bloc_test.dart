@@ -9,7 +9,7 @@ import 'package:game_counter/domain/usecases/create_player.dart';
 import 'package:game_counter/domain/usecases/delete_player.dart';
 import 'package:game_counter/domain/usecases/end_game_sooner.dart';
 import 'package:game_counter/domain/usecases/save_game_into_history.dart';
-import 'package:game_counter/presentation/bloc/game/game_bloc.dart';
+import 'package:game_counter/presentation/feature/core/game_bloc.dart';
 import 'package:mockito/mockito.dart';
 import '../../../test_data/test_data.dart';
 
@@ -47,35 +47,6 @@ void main() {
   group(
     'GameBlocEvents',
     () {
-      // final gameName = 'Treseta';
-      // final pointsToWin = '41';
-      // final numberOfPlayers = '4';
-      // final pointsToWinParsed = 41;
-      // final numberOfPlayersParsed = 4;
-      // final testGame = Game(
-      //     name: gameName,
-      //     pointsToWin: pointsToWinParsed,
-      //     numberOfPlayers: numberOfPlayersParsed,
-      //     players: []);
-
-      // final playerName = 'validName';
-      // final playerPoints = '0';
-      // final playerBonusPoints = '0';
-      // final playerPointsParsed = 0;
-      // final playerBonusPointsParsed = 0;
-
-      // final testPlayer = Player(
-      //     name: playerName,
-      //     points: playerPointsParsed,
-      //     bonusPoints: playerBonusPointsParsed);
-
-      // final testGameOverGame = Game(
-      //     name: gameName,
-      //     pointsToWin: pointsToWinParsed,
-      //     numberOfPlayers: numberOfPlayersParsed,
-      //     winner: playerName,
-      //     players: [testPlayer]);
-
       void _setupMockInputConverterSuccess() {
         when(mockInputConverter.stringToUnsignedInteger(TEST_POINTS_TO_WIN_1))
             .thenReturn(Right(TEST_POINTS_TO_WIN_PARSED_1));

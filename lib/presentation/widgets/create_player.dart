@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../bloc/game/game_bloc.dart';
+import '../feature/core/game_bloc.dart';
 import 'out_lined_button.dart';
 
 class CreatePlayer extends StatefulWidget {

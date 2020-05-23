@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/domain/entities/app_colors.dart';
 import 'package:game_counter/domain/repositories/color_repository.dart';
-import 'package:game_counter/presentation/bloc/color/bloc/color_bloc.dart';
+import 'package:game_counter/presentation/feature/settings/color/color_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 class MockColorRepository extends Mock implements ColorRepository {}

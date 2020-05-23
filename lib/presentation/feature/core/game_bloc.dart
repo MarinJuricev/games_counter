@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:game_counter/domain/usecases/save_game_into_history.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/error/failure.dart';
@@ -17,6 +16,7 @@ import '../../../domain/usecases/create_game.dart';
 import '../../../domain/usecases/create_player.dart';
 import '../../../domain/usecases/delete_player.dart';
 import '../../../domain/usecases/end_game_sooner.dart';
+import '../../../domain/usecases/save_game_into_history.dart';
 
 part 'game_bloc.freezed.dart';
 part 'game_event.dart';

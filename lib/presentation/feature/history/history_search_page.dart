@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../di.dart' as di;
-import '../bloc/history/history_bloc.dart';
-import '../widgets/error.dart';
-import '../widgets/history_list_view.dart';
+import '../../../di.dart' as di;
+import '../../widgets/error.dart';
+import '../../widgets/history_list_view.dart';
+import 'bloc/history_bloc.dart';
+
 
 class HistorySearchDelegate extends SearchDelegate<String> {
   @override

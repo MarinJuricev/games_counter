@@ -1,6 +1,3 @@
-import 'package:game_counter/data/service/time_provider_impl.dart';
-import 'package:game_counter/domain/service/time_provider.dart';
-import 'package:game_counter/presentation/bloc/history/history_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -11,9 +8,11 @@ import 'data/datasources/local_persistence_provider.dart';
 import 'data/repositories/color_repository_impl.dart';
 import 'data/repositories/game_repository_impl.dart';
 import 'data/repositories/history_repository_impl.dart';
+import 'data/service/time_provider_impl.dart';
 import 'domain/repositories/color_repository.dart';
 import 'domain/repositories/game_repository.dart';
 import 'domain/repositories/history_repository.dart';
+import 'domain/service/time_provider.dart';
 import 'domain/usecases/create_game.dart';
 import 'domain/usecases/create_player.dart';
 import 'domain/usecases/delete_player.dart';
@@ -22,9 +21,10 @@ import 'domain/usecases/get_games_from_query.dart';
 import 'domain/usecases/reset_player.dart';
 import 'domain/usecases/save_game_into_history.dart';
 import 'domain/usecases/update_game.dart';
-import 'presentation/bloc/color/bloc/color_bloc.dart';
-import 'presentation/bloc/game/game_bloc.dart';
-import 'presentation/bloc/player_detail/player_detail_bloc.dart';
+import 'presentation/feature/core/game_bloc.dart';
+import 'presentation/feature/history/bloc/history_bloc.dart';
+import 'presentation/feature/player_detail/bloc/player_detail_bloc.dart';
+import 'presentation/feature/settings/color/color_bloc.dart';
 
 // sl for service locator, because of the constant sl invocation
 final sl = GetIt.instance;

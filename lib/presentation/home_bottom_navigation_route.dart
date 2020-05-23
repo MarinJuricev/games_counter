@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'history_recent_page.dart';
-import 'home_page.dart';
-import 'settings_page.dart';
+import 'feature/history/history_recent_page.dart';
+import 'feature/home/home_page.dart';
+import 'feature/settings/settings_page.dart';
+
 
 class HomeBottomNavRoute extends StatefulWidget {
   HomeBottomNavRoute({Key key}) : super(key: key);

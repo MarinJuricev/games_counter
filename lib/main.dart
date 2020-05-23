@@ -9,9 +9,9 @@ import 'data/models/local_game.dart';
 import 'data/models/local_player.dart';
 import 'di.dart' as di;
 import 'domain/entities/app_colors.dart';
-import 'presentation/bloc/color/bloc/color_bloc.dart';
-import 'presentation/bloc/game/game_bloc.dart';
-import 'presentation/pages/home_bottom_navigation_route.dart';
+import 'presentation/feature/core/game_bloc.dart';
+import 'presentation/feature/settings/color/color_bloc.dart';
+import 'presentation/home_bottom_navigation_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

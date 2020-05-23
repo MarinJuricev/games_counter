@@ -4,16 +4,17 @@ import 'package:meta/meta.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../core/error/failure.dart';
+import '../../core/extensions/extensions.dart';
 import '../../core/usecase/base_usecase.dart';
+import '../../presentation/feature/core/game_bloc.dart';
 import '../entities/game.dart';
 import '../entities/player.dart';
 import '../repositories/game_repository.dart';
-import '../../core/extensions/extensions.dart';
 
 class CreatePlayer implements BaseUseCase<Game, CreatePlayerParams> {
   final GameRepository repository;
 
-  CreatePlayer({@required this.repository});
+  CreatePlayer({@required this.repository, GameBloc gameBloc});
 
   @override
   Future<Either<Failure, Game>> call(CreatePlayerParams params) async {

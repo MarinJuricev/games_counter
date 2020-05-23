@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/constants/budget_constants.dart';
 import '../../domain/entities/player.dart';
-import '../bloc/game/game_bloc.dart';
-import '../pages/player_details_page.dart';
+import '../feature/core/game_bloc.dart';
+import '../feature/player_detail/player_details_page.dart';
 import 'player_progress.dart';
 
 class PlayerCard extends StatelessWidget {

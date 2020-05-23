@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:game_counter/presentation/feature/core/game_bloc.dart';
+import 'package:game_counter/presentation/feature/settings/color/color_bloc.dart';
 
-import '../../domain/entities/game.dart';
-import '../bloc/color/bloc/color_bloc.dart';
-import '../bloc/game/game_bloc.dart';
+import '../../../domain/entities/game.dart';
+
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key}) : super(key: key);

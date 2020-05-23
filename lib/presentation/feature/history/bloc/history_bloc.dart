@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/error/failure.dart';
-import '../../../core/extensions/extensions.dart';
-import '../../../domain/entities/game.dart';
-import '../../../domain/usecases/get_games_from_query.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../domain/entities/game.dart';
+import '../../../../domain/usecases/get_games_from_query.dart';
 
 part 'history_bloc.freezed.dart';
 part 'history_event.dart';
