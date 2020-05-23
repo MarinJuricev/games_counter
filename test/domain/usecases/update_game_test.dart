@@ -29,7 +29,6 @@ void main() {
 
       gameToTest = Game(
         name: TEST_GAME_NAME_1,
-        bonusPoints: TEST_BONUS_POINTS_PARSED_1,
         createdAt: TEST_CREATED_AT_1,
         numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
         pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
@@ -58,7 +57,6 @@ void main() {
 
       final expectedGame = Game(
         name: TEST_GAME_NAME_1,
-        bonusPoints: TEST_BONUS_POINTS_PARSED_1,
         createdAt: TEST_CREATED_AT_1,
         numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
         pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
@@ -91,7 +89,6 @@ void main() {
 
       final expectedGame = Game(
         name: TEST_GAME_NAME_1,
-        bonusPoints: TEST_BONUS_POINTS_PARSED_1,
         createdAt: TEST_CREATED_AT_1,
         numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
         pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
@@ -125,7 +122,6 @@ void main() {
 
       final expectedGame = Game(
           name: TEST_GAME_NAME_1,
-          bonusPoints: TEST_BONUS_POINTS_PARSED_1,
           createdAt: TEST_CREATED_AT_1,
           numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
           pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,

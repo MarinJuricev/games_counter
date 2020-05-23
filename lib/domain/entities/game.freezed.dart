@@ -16,7 +16,6 @@ class _$GameTearOff {
       {@required List<Player> players,
       @required String name,
       @required int pointsToWin,
-      @required int bonusPoints,
       @required int numberOfPlayers,
       @required String winner,
       @required String createdAt}) {
@@ -24,7 +23,6 @@ class _$GameTearOff {
       players: players,
       name: name,
       pointsToWin: pointsToWin,
-      bonusPoints: bonusPoints,
       numberOfPlayers: numberOfPlayers,
       winner: winner,
       createdAt: createdAt,
@@ -39,7 +37,6 @@ mixin _$Game {
   List<Player> get players;
   String get name;
   int get pointsToWin;
-  int get bonusPoints;
   int get numberOfPlayers;
   String get winner;
   String get createdAt;
@@ -54,7 +51,6 @@ abstract class $GameCopyWith<$Res> {
       {List<Player> players,
       String name,
       int pointsToWin,
-      int bonusPoints,
       int numberOfPlayers,
       String winner,
       String createdAt});
@@ -72,7 +68,6 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
     Object players = freezed,
     Object name = freezed,
     Object pointsToWin = freezed,
-    Object bonusPoints = freezed,
     Object numberOfPlayers = freezed,
     Object winner = freezed,
     Object createdAt = freezed,
@@ -82,8 +77,6 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
       name: name == freezed ? _value.name : name as String,
       pointsToWin:
           pointsToWin == freezed ? _value.pointsToWin : pointsToWin as int,
-      bonusPoints:
-          bonusPoints == freezed ? _value.bonusPoints : bonusPoints as int,
       numberOfPlayers: numberOfPlayers == freezed
           ? _value.numberOfPlayers
           : numberOfPlayers as int,
@@ -101,7 +94,6 @@ abstract class _$GameCopyWith<$Res> implements $GameCopyWith<$Res> {
       {List<Player> players,
       String name,
       int pointsToWin,
-      int bonusPoints,
       int numberOfPlayers,
       String winner,
       String createdAt});
@@ -120,7 +112,6 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
     Object players = freezed,
     Object name = freezed,
     Object pointsToWin = freezed,
-    Object bonusPoints = freezed,
     Object numberOfPlayers = freezed,
     Object winner = freezed,
     Object createdAt = freezed,
@@ -130,8 +121,6 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
       name: name == freezed ? _value.name : name as String,
       pointsToWin:
           pointsToWin == freezed ? _value.pointsToWin : pointsToWin as int,
-      bonusPoints:
-          bonusPoints == freezed ? _value.bonusPoints : bonusPoints as int,
       numberOfPlayers: numberOfPlayers == freezed
           ? _value.numberOfPlayers
           : numberOfPlayers as int,
@@ -146,14 +135,12 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
       {@required this.players,
       @required this.name,
       @required this.pointsToWin,
-      @required this.bonusPoints,
       @required this.numberOfPlayers,
       @required this.winner,
       @required this.createdAt})
       : assert(players != null),
         assert(name != null),
         assert(pointsToWin != null),
-        assert(bonusPoints != null),
         assert(numberOfPlayers != null),
         assert(winner != null),
         assert(createdAt != null);
@@ -165,8 +152,6 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
   @override
   final int pointsToWin;
   @override
-  final int bonusPoints;
-  @override
   final int numberOfPlayers;
   @override
   final String winner;
@@ -175,7 +160,7 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Game(players: $players, name: $name, pointsToWin: $pointsToWin, bonusPoints: $bonusPoints, numberOfPlayers: $numberOfPlayers, winner: $winner, createdAt: $createdAt)';
+    return 'Game(players: $players, name: $name, pointsToWin: $pointsToWin, numberOfPlayers: $numberOfPlayers, winner: $winner, createdAt: $createdAt)';
   }
 
   @override
@@ -186,7 +171,6 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
       ..add(DiagnosticsProperty('players', players))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('pointsToWin', pointsToWin))
-      ..add(DiagnosticsProperty('bonusPoints', bonusPoints))
       ..add(DiagnosticsProperty('numberOfPlayers', numberOfPlayers))
       ..add(DiagnosticsProperty('winner', winner))
       ..add(DiagnosticsProperty('createdAt', createdAt));
@@ -204,9 +188,6 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
             (identical(other.pointsToWin, pointsToWin) ||
                 const DeepCollectionEquality()
                     .equals(other.pointsToWin, pointsToWin)) &&
-            (identical(other.bonusPoints, bonusPoints) ||
-                const DeepCollectionEquality()
-                    .equals(other.bonusPoints, bonusPoints)) &&
             (identical(other.numberOfPlayers, numberOfPlayers) ||
                 const DeepCollectionEquality()
                     .equals(other.numberOfPlayers, numberOfPlayers)) &&
@@ -223,7 +204,6 @@ class _$_Game with DiagnosticableTreeMixin implements _Game {
       const DeepCollectionEquality().hash(players) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(pointsToWin) ^
-      const DeepCollectionEquality().hash(bonusPoints) ^
       const DeepCollectionEquality().hash(numberOfPlayers) ^
       const DeepCollectionEquality().hash(winner) ^
       const DeepCollectionEquality().hash(createdAt);
@@ -238,7 +218,6 @@ abstract class _Game implements Game {
       {@required List<Player> players,
       @required String name,
       @required int pointsToWin,
-      @required int bonusPoints,
       @required int numberOfPlayers,
       @required String winner,
       @required String createdAt}) = _$_Game;
@@ -249,8 +228,6 @@ abstract class _Game implements Game {
   String get name;
   @override
   int get pointsToWin;
-  @override
-  int get bonusPoints;
   @override
   int get numberOfPlayers;
   @override

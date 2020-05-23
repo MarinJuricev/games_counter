@@ -50,7 +50,6 @@ void main() {
     pointsToWin: pointsToWinParsed,
     numberOfPlayers: numberOfPlayersParsed,
     players: [currentPlayer],
-    bonusPoints: TEST_BONUS_POINTS_PARSED_1,
     createdAt: TEST_CREATED_AT_1,
     winner: TEST_PLAYER_1_NAME
   );

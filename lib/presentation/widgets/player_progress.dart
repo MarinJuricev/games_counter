@@ -57,14 +57,15 @@ class PlayerProgress extends StatelessWidget {
               height: 75,
               width: 75,
               child: CustomPaint(
-                  painter: GradientArcPainter(
-                progress:
-                    currentPlayer.bonusPoints / currentPlayer.sumOfAllPoints,
-                startColor: Colors.orange,
-                endColor: Colors.white,
-                width: 4.0,
-                startClockWise: false,
-              )),
+                painter: GradientArcPainter(
+                  progress:
+                      currentPlayer.bonusPoints / currentPlayer.sumOfAllPoints,
+                  startColor: Colors.orange,
+                  endColor: Colors.white,
+                  width: 4.0,
+                  startClockWise: false,
+                ),
+              ),
             ),
           ),
           Center(

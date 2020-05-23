@@ -25,7 +25,6 @@ class CreateGame implements BaseUseCase<Game, CreateGameParams> {
         name: gameTitle,
         pointsToWin: winningPoints,
         numberOfPlayers: numberOfPlayers,
-        bonusPoints: 0,
         winner: '',
         createdAt: timeProvider.provideCurrentTime(GAME_TIME_FORMAT),
         players: []);

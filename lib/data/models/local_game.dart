@@ -16,19 +16,16 @@ class LocalGame extends HiveObject {
   @HiveField(2)
   final int pointsToWin;
   @HiveField(3)
-  final int bonusPoints;
-  @HiveField(4)
   final int numberOfPlayers;
-  @HiveField(5)
+  @HiveField(4)
   final String winner;
-  @HiveField(6)
+  @HiveField(5)
   final String createdAt;
 
   LocalGame({
     @required this.players,
     @required this.name,
     @required this.pointsToWin,
-    @required this.bonusPoints,
     @required this.numberOfPlayers,
     @required this.winner,
     @required this.createdAt,
@@ -46,7 +43,6 @@ extension GameMapper on Game {
         players: mappedPlayers,
         name: this.name,
         pointsToWin: this.pointsToWin,
-        bonusPoints: this.bonusPoints,
         numberOfPlayers: this.numberOfPlayers,
         winner: this.winner,
         createdAt: this.createdAt);
@@ -64,7 +60,6 @@ extension LocalGamemapper on LocalGame {
         players: mappedPlayers,
         name: this.name,
         pointsToWin: this.pointsToWin,
-        bonusPoints: this.bonusPoints,
         numberOfPlayers: this.numberOfPlayers,
         winner: this.winner,
         createdAt: this.createdAt);

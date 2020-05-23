@@ -11,7 +11,6 @@ abstract class Game with _$Game {
     @required List<Player> players,
     @required String name,
     @required int pointsToWin,
-    @required int bonusPoints,
     @required int numberOfPlayers,
     @required String winner,
     @required String createdAt,

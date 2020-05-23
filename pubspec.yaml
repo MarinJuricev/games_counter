@@ -32,6 +32,8 @@ dependencies:
   flutter_material_color_picker: ^1.0.5
   # Date time format
   intl: ^0.16.1
+  # dartx: ^0.2.0
+  # quiver: ^2.0.3
   # Remote API
   # data_connection_checker: ^0.3.4
   # http: ^0.12.0+4
@@ -42,10 +44,10 @@ dev_dependencies:
   mockito: ^4.1.1
   lint: ^1.1.1
   hive_generator: ^0.7.0+2
-  build_runner: ^1.8.0
+  build_runner: ^1.10.0
   bloc_test: ^5.0.0
   # Class code gen and Kotlin like when statement
-  freezed: ^0.10.6
+  freezed: ^0.10.9
 
 
 flutter:
