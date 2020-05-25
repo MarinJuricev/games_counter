@@ -2,6 +2,7 @@ import 'package:game_counter/data/models/local_game.dart';
 import 'package:game_counter/data/models/local_player.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
+import 'package:game_counter/presentation/feature/history/model/history_item.dart';
 
 // Player
 const TEST_PLAYER_1_NAME = 'TEST_PLAYER_1';
@@ -88,3 +89,14 @@ final testLocalGame2 = LocalGame(
   winner: TEST_PLAYER_2_NAME,
   players: [testLocalPlayer1, testLocalPlayer2],
 );
+
+// History Item
+final testHistoryItem = HistoryItem(
+  isExpanded: false,
+  createdAt: testGame.createdAt,
+  gameTitle: testGame.name,
+  gameWinner: testGame.winner,
+  playersSortedByPoints: testGame.players,
+);
+
+final testHistoryList = [testHistoryItem];

@@ -49,7 +49,7 @@ extension GameMapper on Game {
   }
 }
 
-extension LocalGamemapper on LocalGame {
+extension LocalGameMapper on LocalGame {
   Game toGame() {
     List<Player> mappedPlayers = [];
     if (this.players.length > 0) {

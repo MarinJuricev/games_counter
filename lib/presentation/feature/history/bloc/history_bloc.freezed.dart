@@ -427,9 +427,9 @@ class _$HistoryStateTearOff {
     return _OnHistoryInitialState();
   }
 
-  _OnHistoryUpdatedState updatedState({List<Game> games}) {
+  _OnHistoryUpdatedState updatedState({List<HistoryItem> historyItems}) {
     return _OnHistoryUpdatedState(
-      games: games,
+      historyItems: historyItems,
     );
   }
 
@@ -447,13 +447,13 @@ mixin _$HistoryState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result updatedState(List<Game> games),
+    @required Result updatedState(List<HistoryItem> historyItems),
     @required Result errorState(String errorMessage),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result updatedState(List<Game> games),
+    Result updatedState(List<HistoryItem> historyItems),
     Result errorState(String errorMessage),
     @required Result orElse(),
   });
@@ -523,7 +523,7 @@ class _$_OnHistoryInitialState implements _OnHistoryInitialState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result updatedState(List<Game> games),
+    @required Result updatedState(List<HistoryItem> historyItems),
     @required Result errorState(String errorMessage),
   }) {
     assert(initialState != null);
@@ -536,7 +536,7 @@ class _$_OnHistoryInitialState implements _OnHistoryInitialState {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result updatedState(List<Game> games),
+    Result updatedState(List<HistoryItem> historyItems),
     Result errorState(String errorMessage),
     @required Result orElse(),
   }) {
@@ -584,7 +584,7 @@ abstract class _$OnHistoryUpdatedStateCopyWith<$Res> {
   factory _$OnHistoryUpdatedStateCopyWith(_OnHistoryUpdatedState value,
           $Res Function(_OnHistoryUpdatedState) then) =
       __$OnHistoryUpdatedStateCopyWithImpl<$Res>;
-  $Res call({List<Game> games});
+  $Res call({List<HistoryItem> historyItems});
 }
 
 class __$OnHistoryUpdatedStateCopyWithImpl<$Res>
@@ -599,36 +599,39 @@ class __$OnHistoryUpdatedStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object games = freezed,
+    Object historyItems = freezed,
   }) {
     return _then(_OnHistoryUpdatedState(
-      games: games == freezed ? _value.games : games as List<Game>,
+      historyItems: historyItems == freezed
+          ? _value.historyItems
+          : historyItems as List<HistoryItem>,
     ));
   }
 }
 
 class _$_OnHistoryUpdatedState implements _OnHistoryUpdatedState {
-  _$_OnHistoryUpdatedState({this.games});
+  _$_OnHistoryUpdatedState({this.historyItems});
 
   @override
-  final List<Game> games;
+  final List<HistoryItem> historyItems;
 
   @override
   String toString() {
-    return 'HistoryState.updatedState(games: $games)';
+    return 'HistoryState.updatedState(historyItems: $historyItems)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _OnHistoryUpdatedState &&
-            (identical(other.games, games) ||
-                const DeepCollectionEquality().equals(other.games, games)));
+            (identical(other.historyItems, historyItems) ||
+                const DeepCollectionEquality()
+                    .equals(other.historyItems, historyItems)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(games);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(historyItems);
 
   @override
   _$OnHistoryUpdatedStateCopyWith<_OnHistoryUpdatedState> get copyWith =>
@@ -639,26 +642,26 @@ class _$_OnHistoryUpdatedState implements _OnHistoryUpdatedState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result updatedState(List<Game> games),
+    @required Result updatedState(List<HistoryItem> historyItems),
     @required Result errorState(String errorMessage),
   }) {
     assert(initialState != null);
     assert(updatedState != null);
     assert(errorState != null);
-    return updatedState(games);
+    return updatedState(historyItems);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result updatedState(List<Game> games),
+    Result updatedState(List<HistoryItem> historyItems),
     Result errorState(String errorMessage),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (updatedState != null) {
-      return updatedState(games);
+      return updatedState(historyItems);
     }
     return orElse();
   }
@@ -693,9 +696,10 @@ class _$_OnHistoryUpdatedState implements _OnHistoryUpdatedState {
 }
 
 abstract class _OnHistoryUpdatedState implements HistoryState {
-  factory _OnHistoryUpdatedState({List<Game> games}) = _$_OnHistoryUpdatedState;
+  factory _OnHistoryUpdatedState({List<HistoryItem> historyItems}) =
+      _$_OnHistoryUpdatedState;
 
-  List<Game> get games;
+  List<HistoryItem> get historyItems;
   _$OnHistoryUpdatedStateCopyWith<_OnHistoryUpdatedState> get copyWith;
 }
 
@@ -761,7 +765,7 @@ class _$_OnHistoryErrorState implements _OnHistoryErrorState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result updatedState(List<Game> games),
+    @required Result updatedState(List<HistoryItem> historyItems),
     @required Result errorState(String errorMessage),
   }) {
     assert(initialState != null);
@@ -774,7 +778,7 @@ class _$_OnHistoryErrorState implements _OnHistoryErrorState {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result updatedState(List<Game> games),
+    Result updatedState(List<HistoryItem> historyItems),
     Result errorState(String errorMessage),
     @required Result orElse(),
   }) {

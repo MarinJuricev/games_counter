@@ -74,7 +74,7 @@ class HistorySearchDelegate extends SearchDelegate<String> {
           return state.map(
             initialState: (params) =>
                 Center(child: CircularProgressIndicator()),
-            updatedState: (params) => HistoryListView(games: params.games),
+            updatedState: (params) => HistoryListView(historyItems: params.historyItems),
             errorState: (params) =>
                 ErrorContainer(erorrMessage: params.errorMessage),
           );
