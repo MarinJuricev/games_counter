@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:game_counter/presentation/feature/history/widget/history_player_item.dart';
 
-import '../feature/history/model/history_item.dart';
+import '../model/history_item.dart';
 
 class HistoryListView extends StatefulWidget {
   final List<HistoryItem> historyItems;
@@ -68,7 +69,6 @@ class _HistoryListViewState extends State<HistoryListView> {
                         ),
                       );
                     },
-                    //TODO Extract into indepndent widget
                     body: Column(
                       children: <Widget>[
                         Padding(
@@ -76,10 +76,10 @@ class _HistoryListViewState extends State<HistoryListView> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              Text('PlayerName'),
-                              Text('Sum'),
-                              Text('Points'),
-                              Text('Bonus Points'),
+                              HistoryPlayerItem(playerData: 'Player Name'),
+                              HistoryPlayerItem(playerData: 'Sum'),
+                              HistoryPlayerItem(playerData: 'Points'),
+                              HistoryPlayerItem(playerData: 'Bonus Points'),
                             ],
                           ),
                         ),
@@ -104,10 +104,12 @@ class _HistoryListViewState extends State<HistoryListView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Text(playerItem.name),
-                  Text(playerItem.sumOfAllPoints.toString()),
-                  Text(playerItem.points.toString()),
-                  Text(playerItem.bonusPoints.toString()),
+                  HistoryPlayerItem(playerData: playerItem.name),
+                  HistoryPlayerItem(
+                      playerData: playerItem.sumOfAllPoints.toString()),
+                  HistoryPlayerItem(playerData: playerItem.points.toString()),
+                  HistoryPlayerItem(
+                      playerData: playerItem.bonusPoints.toString()),
                 ],
               ),
             ))

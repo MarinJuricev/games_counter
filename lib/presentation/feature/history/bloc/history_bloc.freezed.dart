@@ -24,8 +24,8 @@ class _$HistoryEventTearOff {
     );
   }
 
-  _onAllRecentGamesDeleted allRecentGamesDeleted() {
-    return _onAllRecentGamesDeleted();
+  _OnAllRecentGamesDeleted allRecentGamesDeleted() {
+    return _OnAllRecentGamesDeleted();
   }
 }
 
@@ -50,13 +50,13 @@ mixin _$HistoryEvent {
   Result map<Result extends Object>({
     @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
     @required Result orElse(),
   });
 }
@@ -162,7 +162,7 @@ class _$_OnQueryChanged implements _OnQueryChanged {
   Result map<Result extends Object>({
     @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
   }) {
     assert(queryChanged != null);
     assert(recentGameDeleted != null);
@@ -175,7 +175,7 @@ class _$_OnQueryChanged implements _OnQueryChanged {
   Result maybeMap<Result extends Object>({
     Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -294,7 +294,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   Result map<Result extends Object>({
     @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
   }) {
     assert(queryChanged != null);
     assert(recentGameDeleted != null);
@@ -307,7 +307,7 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   Result maybeMap<Result extends Object>({
     Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -325,26 +325,26 @@ abstract class _OnGameDeleted implements HistoryEvent {
   _$OnGameDeletedCopyWith<_OnGameDeleted> get copyWith;
 }
 
-abstract class _$onAllRecentGamesDeletedCopyWith<$Res> {
-  factory _$onAllRecentGamesDeletedCopyWith(_onAllRecentGamesDeleted value,
-          $Res Function(_onAllRecentGamesDeleted) then) =
-      __$onAllRecentGamesDeletedCopyWithImpl<$Res>;
+abstract class _$OnAllRecentGamesDeletedCopyWith<$Res> {
+  factory _$OnAllRecentGamesDeletedCopyWith(_OnAllRecentGamesDeleted value,
+          $Res Function(_OnAllRecentGamesDeleted) then) =
+      __$OnAllRecentGamesDeletedCopyWithImpl<$Res>;
 }
 
-class __$onAllRecentGamesDeletedCopyWithImpl<$Res>
+class __$OnAllRecentGamesDeletedCopyWithImpl<$Res>
     extends _$HistoryEventCopyWithImpl<$Res>
-    implements _$onAllRecentGamesDeletedCopyWith<$Res> {
-  __$onAllRecentGamesDeletedCopyWithImpl(_onAllRecentGamesDeleted _value,
-      $Res Function(_onAllRecentGamesDeleted) _then)
-      : super(_value, (v) => _then(v as _onAllRecentGamesDeleted));
+    implements _$OnAllRecentGamesDeletedCopyWith<$Res> {
+  __$OnAllRecentGamesDeletedCopyWithImpl(_OnAllRecentGamesDeleted _value,
+      $Res Function(_OnAllRecentGamesDeleted) _then)
+      : super(_value, (v) => _then(v as _OnAllRecentGamesDeleted));
 
   @override
-  _onAllRecentGamesDeleted get _value =>
-      super._value as _onAllRecentGamesDeleted;
+  _OnAllRecentGamesDeleted get _value =>
+      super._value as _OnAllRecentGamesDeleted;
 }
 
-class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
-  _$_onAllRecentGamesDeleted();
+class _$_OnAllRecentGamesDeleted implements _OnAllRecentGamesDeleted {
+  _$_OnAllRecentGamesDeleted();
 
   @override
   String toString() {
@@ -353,7 +353,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _onAllRecentGamesDeleted);
+    return identical(this, other) || (other is _OnAllRecentGamesDeleted);
   }
 
   @override
@@ -392,7 +392,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   Result map<Result extends Object>({
     @required Result queryChanged(_OnQueryChanged value),
     @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
   }) {
     assert(queryChanged != null);
     assert(recentGameDeleted != null);
@@ -405,7 +405,7 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   Result maybeMap<Result extends Object>({
     Result queryChanged(_OnQueryChanged value),
     Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_onAllRecentGamesDeleted value),
+    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -416,8 +416,8 @@ class _$_onAllRecentGamesDeleted implements _onAllRecentGamesDeleted {
   }
 }
 
-abstract class _onAllRecentGamesDeleted implements HistoryEvent {
-  factory _onAllRecentGamesDeleted() = _$_onAllRecentGamesDeleted;
+abstract class _OnAllRecentGamesDeleted implements HistoryEvent {
+  factory _OnAllRecentGamesDeleted() = _$_OnAllRecentGamesDeleted;
 }
 
 class _$HistoryStateTearOff {

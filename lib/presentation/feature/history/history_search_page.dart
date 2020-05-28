@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../di.dart' as di;
 import '../../widgets/error.dart';
-import '../../widgets/history_list_view.dart';
 import 'bloc/history_bloc.dart';
+import 'widget/history_list_view.dart';
 
 
 class HistorySearchDelegate extends SearchDelegate<String> {
