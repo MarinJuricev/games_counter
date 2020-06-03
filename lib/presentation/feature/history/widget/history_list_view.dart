@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/presentation/feature/history/widget/history_player_item.dart';
 
 import '../model/history_item.dart';
@@ -18,28 +19,27 @@ class HistoryListView extends StatefulWidget {
 class _HistoryListViewState extends State<HistoryListView> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.historyItems.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(84.0),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 8,
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              )
-            ],
-          ),
-          child: Theme(
-            data: Theme.of(context)
-                .copyWith(cardColor: Theme.of(context).accentColor),
-            child: ExpansionPanelList(
-              expansionCallback: (int index, bool isExpanded) =>
-                  addHistoryToggleEvent(widget.historyItems, index, isExpanded),
-              children: [
-                ExpansionPanel(
+    return SingleChildScrollView(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(84.0),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 8,
+              color: Colors.black26,
+              offset: Offset(0, 2),
+            )
+          ],
+        ),
+        child: Theme(
+          data: Theme.of(context)
+              .copyWith(cardColor: Theme.of(context).accentColor),
+          child: ExpansionPanelList(
+            expansionCallback: (int index, bool isExpanded) =>
+                addHistoryToggleEvent(widget.historyItems, index, isExpanded),
+            children: widget.historyItems.map<ExpansionPanel>(
+              (HistoryItem historyItem) {
+                return ExpansionPanel(
                     canTapOnHeader: true,
                     headerBuilder: (BuildContext context, bool isExpanded) {
                       return Padding(
@@ -53,16 +53,14 @@ class _HistoryListViewState extends State<HistoryListView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(
-                                    'Date: ${widget.historyItems[index].createdAt}'),
+                                Text('Date: ${historyItem.createdAt}'),
                                 SizedBox(height: 8.0),
                                 Text(
-                                  'Game Title: ${widget.historyItems[index].gameTitle}',
+                                  'Game Title: ${historyItem.gameTitle}',
                                   style: TextStyle(fontSize: 16.0),
                                 ),
                                 SizedBox(height: 8.0),
-                                Text(
-                                    'Winner: ${widget.historyItems[index].gameWinner}'),
+                                Text('Winner: ${historyItem.gameWinner}'),
                               ],
                             ),
                           ),
@@ -84,21 +82,23 @@ class _HistoryListViewState extends State<HistoryListView> {
                           ),
                         ),
                         Column(
-                          children: buildPlayerListTile(index),
+                          children: buildPlayerListTile(
+                            historyItem.playersSortedByPoints,
+                          ),
                         ),
                       ],
                     ),
-                    isExpanded: widget.historyItems[index].isExpanded)
-              ],
-            ),
+                    isExpanded: historyItem.isExpanded);
+              },
+            ).toList(),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
-  List<Widget> buildPlayerListTile(int index) {
-    return widget.historyItems[index].playersSortedByPoints
+  List<Widget> buildPlayerListTile(List<Player> playerList) {
+    return playerList
         .map((playerItem) => Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -118,8 +118,9 @@ class _HistoryListViewState extends State<HistoryListView> {
 
   void addHistoryToggleEvent(
       List<HistoryItem> historyItems, int index, bool isExpanded) {
-    historyItems[index] = historyItems[index].copyWith(isExpanded: !isExpanded);
-
-    setState(() {});
+    setState(() {
+      historyItems[index] =
+          historyItems[index].copyWith(isExpanded: !isExpanded);
+    });
   }
 }
