@@ -58,7 +58,8 @@ class HistorySearchDelegate extends SearchDelegate<String> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: Text('Search term must be longer than two characters'),
+            child: InfoContainer(
+                description: 'Search term must be longer than two characters'),
           )
         ],
       );
