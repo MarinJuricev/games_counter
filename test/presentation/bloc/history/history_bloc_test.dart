@@ -14,7 +14,7 @@ class MockGetGamesFromQuery extends Mock implements GetGamesFromQuery {}
 
 void main() {
   MockGetGamesFromQuery mockGetGamesFromQuery;
-  String query = "test";
+  String query = "Mau";
   String errorMessage = "errorMessage";
 
   List<Game> testList = [testGame, testGame2];
@@ -23,6 +23,8 @@ void main() {
       isExpanded: false,
       createdAt: testGame.createdAt,
       gameTitle: testGame.name,
+      highlightedGameTitle: '',
+      nonHighlightedGameTitle: '',
       gameWinner: testGame.winner,
       playersSortedByPoints: testGame.players,
     ),
@@ -30,6 +32,8 @@ void main() {
       isExpanded: false,
       createdAt: testGame2.createdAt,
       gameTitle: testGame2.name,
+      highlightedGameTitle: 'Mau',
+      nonHighlightedGameTitle: 'Mau',
       gameWinner: testGame2.winner,
       playersSortedByPoints: testGame2.players,
     )

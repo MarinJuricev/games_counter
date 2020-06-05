@@ -107,6 +107,30 @@ void main() {
       );
 
       test(
+        'should return filtered games when the localPersitenceProvider result isnt null with different query and lower case',
+        () async {
+          final listOfGames = [
+            testLocalGame,
+            testLocalGame2,
+            testLocalGame,
+          ];
+          final query = TEST_GAME_NAME_2.toLowerCase();
+
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_BOX))
+              .thenAnswer((_) async => listOfGames);
+
+          final actualResult = await dataSource.getMatchesByQuery(query);
+          final expectedResult = [testGame2];
+
+          verify(mockLocalPersistenceProvider.getAllFromPersistence(
+              boxToGetDataFrom: HISTORY_BOX));
+
+          expect(expectedResult, actualResult);
+        },
+      );
+
+      test(
         'should return empty games list when the localPersitenceProvider result but query doesnt match',
         () async {
           final listOfGames = [

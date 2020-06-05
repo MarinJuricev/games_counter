@@ -39,11 +39,11 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     yield gamesFromQueryResult.fold(
       (error) => HistoryState.errorState(errorMessage: error.message),
       (result) => HistoryState.updatedState(
-        historyItems: result.map((item) => item.toHistoryItem()).toList(),
+        historyItems:
+            result.map((item) => item.toHistoryItem(newQuery)).toList(),
       ),
     );
   }
-
 
   // Freezed won't compile if a state returns null, so we have this cheap workaround for
   // now so that queryChanged unit tests pass.

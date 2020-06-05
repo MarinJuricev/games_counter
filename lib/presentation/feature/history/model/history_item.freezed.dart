@@ -17,12 +17,16 @@ class _$HistoryItemTearOff {
       @required String createdAt,
       @required String gameTitle,
       @required String gameWinner,
+      @required String highlightedGameTitle,
+      @required String nonHighlightedGameTitle,
       @required List<Player> playersSortedByPoints}) {
     return _HistoryItem(
       isExpanded: isExpanded,
       createdAt: createdAt,
       gameTitle: gameTitle,
       gameWinner: gameWinner,
+      highlightedGameTitle: highlightedGameTitle,
+      nonHighlightedGameTitle: nonHighlightedGameTitle,
       playersSortedByPoints: playersSortedByPoints,
     );
   }
@@ -36,6 +40,8 @@ mixin _$HistoryItem {
   String get createdAt;
   String get gameTitle;
   String get gameWinner;
+  String get highlightedGameTitle;
+  String get nonHighlightedGameTitle;
   List<Player> get playersSortedByPoints;
 
   $HistoryItemCopyWith<HistoryItem> get copyWith;
@@ -50,6 +56,8 @@ abstract class $HistoryItemCopyWith<$Res> {
       String createdAt,
       String gameTitle,
       String gameWinner,
+      String highlightedGameTitle,
+      String nonHighlightedGameTitle,
       List<Player> playersSortedByPoints});
 }
 
@@ -66,6 +74,8 @@ class _$HistoryItemCopyWithImpl<$Res> implements $HistoryItemCopyWith<$Res> {
     Object createdAt = freezed,
     Object gameTitle = freezed,
     Object gameWinner = freezed,
+    Object highlightedGameTitle = freezed,
+    Object nonHighlightedGameTitle = freezed,
     Object playersSortedByPoints = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,6 +85,12 @@ class _$HistoryItemCopyWithImpl<$Res> implements $HistoryItemCopyWith<$Res> {
       gameTitle: gameTitle == freezed ? _value.gameTitle : gameTitle as String,
       gameWinner:
           gameWinner == freezed ? _value.gameWinner : gameWinner as String,
+      highlightedGameTitle: highlightedGameTitle == freezed
+          ? _value.highlightedGameTitle
+          : highlightedGameTitle as String,
+      nonHighlightedGameTitle: nonHighlightedGameTitle == freezed
+          ? _value.nonHighlightedGameTitle
+          : nonHighlightedGameTitle as String,
       playersSortedByPoints: playersSortedByPoints == freezed
           ? _value.playersSortedByPoints
           : playersSortedByPoints as List<Player>,
@@ -93,6 +109,8 @@ abstract class _$HistoryItemCopyWith<$Res>
       String createdAt,
       String gameTitle,
       String gameWinner,
+      String highlightedGameTitle,
+      String nonHighlightedGameTitle,
       List<Player> playersSortedByPoints});
 }
 
@@ -111,6 +129,8 @@ class __$HistoryItemCopyWithImpl<$Res> extends _$HistoryItemCopyWithImpl<$Res>
     Object createdAt = freezed,
     Object gameTitle = freezed,
     Object gameWinner = freezed,
+    Object highlightedGameTitle = freezed,
+    Object nonHighlightedGameTitle = freezed,
     Object playersSortedByPoints = freezed,
   }) {
     return _then(_HistoryItem(
@@ -120,6 +140,12 @@ class __$HistoryItemCopyWithImpl<$Res> extends _$HistoryItemCopyWithImpl<$Res>
       gameTitle: gameTitle == freezed ? _value.gameTitle : gameTitle as String,
       gameWinner:
           gameWinner == freezed ? _value.gameWinner : gameWinner as String,
+      highlightedGameTitle: highlightedGameTitle == freezed
+          ? _value.highlightedGameTitle
+          : highlightedGameTitle as String,
+      nonHighlightedGameTitle: nonHighlightedGameTitle == freezed
+          ? _value.nonHighlightedGameTitle
+          : nonHighlightedGameTitle as String,
       playersSortedByPoints: playersSortedByPoints == freezed
           ? _value.playersSortedByPoints
           : playersSortedByPoints as List<Player>,
@@ -133,11 +159,15 @@ class _$_HistoryItem with DiagnosticableTreeMixin implements _HistoryItem {
       @required this.createdAt,
       @required this.gameTitle,
       @required this.gameWinner,
+      @required this.highlightedGameTitle,
+      @required this.nonHighlightedGameTitle,
       @required this.playersSortedByPoints})
       : assert(isExpanded != null),
         assert(createdAt != null),
         assert(gameTitle != null),
         assert(gameWinner != null),
+        assert(highlightedGameTitle != null),
+        assert(nonHighlightedGameTitle != null),
         assert(playersSortedByPoints != null);
 
   @override
@@ -149,11 +179,15 @@ class _$_HistoryItem with DiagnosticableTreeMixin implements _HistoryItem {
   @override
   final String gameWinner;
   @override
+  final String highlightedGameTitle;
+  @override
+  final String nonHighlightedGameTitle;
+  @override
   final List<Player> playersSortedByPoints;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HistoryItem(isExpanded: $isExpanded, createdAt: $createdAt, gameTitle: $gameTitle, gameWinner: $gameWinner, playersSortedByPoints: $playersSortedByPoints)';
+    return 'HistoryItem(isExpanded: $isExpanded, createdAt: $createdAt, gameTitle: $gameTitle, gameWinner: $gameWinner, highlightedGameTitle: $highlightedGameTitle, nonHighlightedGameTitle: $nonHighlightedGameTitle, playersSortedByPoints: $playersSortedByPoints)';
   }
 
   @override
@@ -165,6 +199,9 @@ class _$_HistoryItem with DiagnosticableTreeMixin implements _HistoryItem {
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('gameTitle', gameTitle))
       ..add(DiagnosticsProperty('gameWinner', gameWinner))
+      ..add(DiagnosticsProperty('highlightedGameTitle', highlightedGameTitle))
+      ..add(DiagnosticsProperty(
+          'nonHighlightedGameTitle', nonHighlightedGameTitle))
       ..add(
           DiagnosticsProperty('playersSortedByPoints', playersSortedByPoints));
   }
@@ -185,6 +222,13 @@ class _$_HistoryItem with DiagnosticableTreeMixin implements _HistoryItem {
             (identical(other.gameWinner, gameWinner) ||
                 const DeepCollectionEquality()
                     .equals(other.gameWinner, gameWinner)) &&
+            (identical(other.highlightedGameTitle, highlightedGameTitle) ||
+                const DeepCollectionEquality().equals(
+                    other.highlightedGameTitle, highlightedGameTitle)) &&
+            (identical(
+                    other.nonHighlightedGameTitle, nonHighlightedGameTitle) ||
+                const DeepCollectionEquality().equals(
+                    other.nonHighlightedGameTitle, nonHighlightedGameTitle)) &&
             (identical(other.playersSortedByPoints, playersSortedByPoints) ||
                 const DeepCollectionEquality().equals(
                     other.playersSortedByPoints, playersSortedByPoints)));
@@ -197,6 +241,8 @@ class _$_HistoryItem with DiagnosticableTreeMixin implements _HistoryItem {
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(gameTitle) ^
       const DeepCollectionEquality().hash(gameWinner) ^
+      const DeepCollectionEquality().hash(highlightedGameTitle) ^
+      const DeepCollectionEquality().hash(nonHighlightedGameTitle) ^
       const DeepCollectionEquality().hash(playersSortedByPoints);
 
   @override
@@ -210,6 +256,8 @@ abstract class _HistoryItem implements HistoryItem {
       @required String createdAt,
       @required String gameTitle,
       @required String gameWinner,
+      @required String highlightedGameTitle,
+      @required String nonHighlightedGameTitle,
       @required List<Player> playersSortedByPoints}) = _$_HistoryItem;
 
   @override
@@ -220,6 +268,10 @@ abstract class _HistoryItem implements HistoryItem {
   String get gameTitle;
   @override
   String get gameWinner;
+  @override
+  String get highlightedGameTitle;
+  @override
+  String get nonHighlightedGameTitle;
   @override
   List<Player> get playersSortedByPoints;
   @override

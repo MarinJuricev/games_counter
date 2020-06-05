@@ -60,6 +60,33 @@ class _HistoryListViewState extends State<HistoryListView> {
                                   style: TextStyle(fontSize: 16.0),
                                 ),
                                 SizedBox(height: 8.0),
+                                RichText(
+                                  text: TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Game Title: ',
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: historyItem.highlightedGameTitle,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).errorColor,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            historyItem.nonHighlightedGameTitle,
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Text('Winner: ${historyItem.gameWinner}'),
                               ],
                             ),

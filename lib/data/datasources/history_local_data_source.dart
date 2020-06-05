@@ -50,7 +50,8 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
     if (allGames != null) {
       final List<LocalGame> convertedList = List<LocalGame>.from(allGames);
       final List<LocalGame> filteredGames = convertedList
-          .where((LocalGame element) => element.name.startsWith(query))
+          .where((LocalGame element) =>
+              element.name.toLowerCase().startsWith(query.toLowerCase()))
           .toList();
 
       final List<Game> mappedGames = filteredGames

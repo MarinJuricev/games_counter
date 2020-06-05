@@ -95,6 +95,8 @@ final testHistoryItem = HistoryItem(
   isExpanded: false,
   createdAt: testGame.createdAt,
   gameTitle: testGame.name,
+  highlightedGameTitle: '',
+  nonHighlightedGameTitle: '',
   gameWinner: testGame.winner,
   playersSortedByPoints: testGame.players,
 );
