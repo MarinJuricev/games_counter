@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/presentation/feature/history/widget/history_player_item.dart';
+import 'package:game_counter/presentation/widgets/error.dart';
 
 import '../model/history_item.dart';
 
@@ -63,7 +64,7 @@ class _HistoryListViewState extends State<HistoryListView> {
                                 RichText(
                                   text: TextSpan(
                                     children: <TextSpan>[
-                                      TextSpan(
+                                      const TextSpan(
                                         text: 'Game Title: ',
                                         style: TextStyle(
                                           fontSize: 16.0,

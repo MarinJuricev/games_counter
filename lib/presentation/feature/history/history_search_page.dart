@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/widgets/info_container.dart';
 
 import '../../../di.dart' as di;
 import '../../widgets/error.dart';
 import 'bloc/history_bloc.dart';
 import 'widget/history_list_view.dart';
-
 
 class HistorySearchDelegate extends SearchDelegate<String> {
   @override
@@ -74,7 +74,11 @@ class HistorySearchDelegate extends SearchDelegate<String> {
           return state.map(
             initialState: (params) =>
                 Center(child: CircularProgressIndicator()),
-            updatedState: (params) => HistoryListView(historyItems: params.historyItems),
+            updatedState: (params) => params.historyItems.isEmpty
+                ? InfoContainer(
+                    description: 'No games for that query!',
+                  )
+                : HistoryListView(historyItems: params.historyItems),
             errorState: (params) =>
                 ErrorContainer(erorrMessage: params.errorMessage),
           );
