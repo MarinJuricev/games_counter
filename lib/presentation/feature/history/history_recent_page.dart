@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/info_container.dart';
-import 'history_search_page.dart';
-
-
+import 'search/history_search_page.dart';
 
 class HistoryRecentPage extends StatefulWidget {
   HistoryRecentPage({Key key}) : super(key: key);

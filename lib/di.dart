@@ -22,7 +22,7 @@ import 'domain/usecases/reset_player.dart';
 import 'domain/usecases/save_game_into_history.dart';
 import 'domain/usecases/update_game.dart';
 import 'presentation/feature/core/game_bloc.dart';
-import 'presentation/feature/history/bloc/history_bloc.dart';
+import 'presentation/feature/history/search/bloc/history_bloc.dart';
 import 'presentation/feature/player_detail/bloc/player_detail_bloc.dart';
 import 'presentation/feature/settings/color/color_bloc.dart';
 

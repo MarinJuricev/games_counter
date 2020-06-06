@@ -17,54 +17,22 @@ class _$HistoryEventTearOff {
       query: query,
     );
   }
-
-  _OnGameDeleted recentGameDeleted({Game gameToDelete}) {
-    return _OnGameDeleted(
-      gameToDelete: gameToDelete,
-    );
-  }
-
-  _OnAllRecentGamesDeleted allRecentGamesDeleted() {
-    return _OnAllRecentGamesDeleted();
-  }
 }
 
 // ignore: unused_element
 const $HistoryEvent = _$HistoryEventTearOff();
 
 mixin _$HistoryEvent {
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result queryChanged(String query),
-    @required Result recentGameDeleted(Game gameToDelete),
-    @required Result allRecentGamesDeleted(),
-  });
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result queryChanged(String query),
-    Result recentGameDeleted(Game gameToDelete),
-    Result allRecentGamesDeleted(),
-    @required Result orElse(),
-  });
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result queryChanged(_OnQueryChanged value),
-    @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-  });
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result queryChanged(_OnQueryChanged value),
-    Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-    @required Result orElse(),
-  });
+  String get query;
+
+  $HistoryEventCopyWith<HistoryEvent> get copyWith;
 }
 
 abstract class $HistoryEventCopyWith<$Res> {
   factory $HistoryEventCopyWith(
           HistoryEvent value, $Res Function(HistoryEvent) then) =
       _$HistoryEventCopyWithImpl<$Res>;
+  $Res call({String query});
 }
 
 class _$HistoryEventCopyWithImpl<$Res> implements $HistoryEventCopyWith<$Res> {
@@ -73,12 +41,23 @@ class _$HistoryEventCopyWithImpl<$Res> implements $HistoryEventCopyWith<$Res> {
   final HistoryEvent _value;
   // ignore: unused_field
   final $Res Function(HistoryEvent) _then;
+
+  @override
+  $Res call({
+    Object query = freezed,
+  }) {
+    return _then(_value.copyWith(
+      query: query == freezed ? _value.query : query as String,
+    ));
+  }
 }
 
-abstract class _$OnQueryChangedCopyWith<$Res> {
+abstract class _$OnQueryChangedCopyWith<$Res>
+    implements $HistoryEventCopyWith<$Res> {
   factory _$OnQueryChangedCopyWith(
           _OnQueryChanged value, $Res Function(_OnQueryChanged) then) =
       __$OnQueryChangedCopyWithImpl<$Res>;
+  @override
   $Res call({String query});
 }
 
@@ -128,296 +107,15 @@ class _$_OnQueryChanged implements _OnQueryChanged {
   @override
   _$OnQueryChangedCopyWith<_OnQueryChanged> get copyWith =>
       __$OnQueryChangedCopyWithImpl<_OnQueryChanged>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result queryChanged(String query),
-    @required Result recentGameDeleted(Game gameToDelete),
-    @required Result allRecentGamesDeleted(),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return queryChanged(query);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result queryChanged(String query),
-    Result recentGameDeleted(Game gameToDelete),
-    Result allRecentGamesDeleted(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (queryChanged != null) {
-      return queryChanged(query);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result queryChanged(_OnQueryChanged value),
-    @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return queryChanged(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result queryChanged(_OnQueryChanged value),
-    Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (queryChanged != null) {
-      return queryChanged(this);
-    }
-    return orElse();
-  }
 }
 
 abstract class _OnQueryChanged implements HistoryEvent {
   factory _OnQueryChanged({String query}) = _$_OnQueryChanged;
 
+  @override
   String get query;
+  @override
   _$OnQueryChangedCopyWith<_OnQueryChanged> get copyWith;
-}
-
-abstract class _$OnGameDeletedCopyWith<$Res> {
-  factory _$OnGameDeletedCopyWith(
-          _OnGameDeleted value, $Res Function(_OnGameDeleted) then) =
-      __$OnGameDeletedCopyWithImpl<$Res>;
-  $Res call({Game gameToDelete});
-
-  $GameCopyWith<$Res> get gameToDelete;
-}
-
-class __$OnGameDeletedCopyWithImpl<$Res>
-    extends _$HistoryEventCopyWithImpl<$Res>
-    implements _$OnGameDeletedCopyWith<$Res> {
-  __$OnGameDeletedCopyWithImpl(
-      _OnGameDeleted _value, $Res Function(_OnGameDeleted) _then)
-      : super(_value, (v) => _then(v as _OnGameDeleted));
-
-  @override
-  _OnGameDeleted get _value => super._value as _OnGameDeleted;
-
-  @override
-  $Res call({
-    Object gameToDelete = freezed,
-  }) {
-    return _then(_OnGameDeleted(
-      gameToDelete:
-          gameToDelete == freezed ? _value.gameToDelete : gameToDelete as Game,
-    ));
-  }
-
-  @override
-  $GameCopyWith<$Res> get gameToDelete {
-    if (_value.gameToDelete == null) {
-      return null;
-    }
-    return $GameCopyWith<$Res>(_value.gameToDelete, (value) {
-      return _then(_value.copyWith(gameToDelete: value));
-    });
-  }
-}
-
-class _$_OnGameDeleted implements _OnGameDeleted {
-  _$_OnGameDeleted({this.gameToDelete});
-
-  @override
-  final Game gameToDelete;
-
-  @override
-  String toString() {
-    return 'HistoryEvent.recentGameDeleted(gameToDelete: $gameToDelete)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _OnGameDeleted &&
-            (identical(other.gameToDelete, gameToDelete) ||
-                const DeepCollectionEquality()
-                    .equals(other.gameToDelete, gameToDelete)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(gameToDelete);
-
-  @override
-  _$OnGameDeletedCopyWith<_OnGameDeleted> get copyWith =>
-      __$OnGameDeletedCopyWithImpl<_OnGameDeleted>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result queryChanged(String query),
-    @required Result recentGameDeleted(Game gameToDelete),
-    @required Result allRecentGamesDeleted(),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return recentGameDeleted(gameToDelete);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result queryChanged(String query),
-    Result recentGameDeleted(Game gameToDelete),
-    Result allRecentGamesDeleted(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (recentGameDeleted != null) {
-      return recentGameDeleted(gameToDelete);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result queryChanged(_OnQueryChanged value),
-    @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return recentGameDeleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result queryChanged(_OnQueryChanged value),
-    Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (recentGameDeleted != null) {
-      return recentGameDeleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _OnGameDeleted implements HistoryEvent {
-  factory _OnGameDeleted({Game gameToDelete}) = _$_OnGameDeleted;
-
-  Game get gameToDelete;
-  _$OnGameDeletedCopyWith<_OnGameDeleted> get copyWith;
-}
-
-abstract class _$OnAllRecentGamesDeletedCopyWith<$Res> {
-  factory _$OnAllRecentGamesDeletedCopyWith(_OnAllRecentGamesDeleted value,
-          $Res Function(_OnAllRecentGamesDeleted) then) =
-      __$OnAllRecentGamesDeletedCopyWithImpl<$Res>;
-}
-
-class __$OnAllRecentGamesDeletedCopyWithImpl<$Res>
-    extends _$HistoryEventCopyWithImpl<$Res>
-    implements _$OnAllRecentGamesDeletedCopyWith<$Res> {
-  __$OnAllRecentGamesDeletedCopyWithImpl(_OnAllRecentGamesDeleted _value,
-      $Res Function(_OnAllRecentGamesDeleted) _then)
-      : super(_value, (v) => _then(v as _OnAllRecentGamesDeleted));
-
-  @override
-  _OnAllRecentGamesDeleted get _value =>
-      super._value as _OnAllRecentGamesDeleted;
-}
-
-class _$_OnAllRecentGamesDeleted implements _OnAllRecentGamesDeleted {
-  _$_OnAllRecentGamesDeleted();
-
-  @override
-  String toString() {
-    return 'HistoryEvent.allRecentGamesDeleted()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _OnAllRecentGamesDeleted);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result queryChanged(String query),
-    @required Result recentGameDeleted(Game gameToDelete),
-    @required Result allRecentGamesDeleted(),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return allRecentGamesDeleted();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result queryChanged(String query),
-    Result recentGameDeleted(Game gameToDelete),
-    Result allRecentGamesDeleted(),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (allRecentGamesDeleted != null) {
-      return allRecentGamesDeleted();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result queryChanged(_OnQueryChanged value),
-    @required Result recentGameDeleted(_OnGameDeleted value),
-    @required Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-  }) {
-    assert(queryChanged != null);
-    assert(recentGameDeleted != null);
-    assert(allRecentGamesDeleted != null);
-    return allRecentGamesDeleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result queryChanged(_OnQueryChanged value),
-    Result recentGameDeleted(_OnGameDeleted value),
-    Result allRecentGamesDeleted(_OnAllRecentGamesDeleted value),
-    @required Result orElse(),
-  }) {
-    assert(orElse != null);
-    if (allRecentGamesDeleted != null) {
-      return allRecentGamesDeleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _OnAllRecentGamesDeleted implements HistoryEvent {
-  factory _OnAllRecentGamesDeleted() = _$_OnAllRecentGamesDeleted;
 }
 
 class _$HistoryStateTearOff {

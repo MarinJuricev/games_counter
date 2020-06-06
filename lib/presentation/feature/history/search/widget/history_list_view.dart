@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:game_counter/domain/entities/player.dart';
-import 'package:game_counter/presentation/feature/history/widget/history_player_item.dart';
-import 'package:game_counter/presentation/widgets/error.dart';
 
+import '../../../../../domain/entities/player.dart';
 import '../model/history_item.dart';
+import 'history_player_item.dart';
 
 class HistoryListView extends StatefulWidget {
   final List<HistoryItem> historyItems;

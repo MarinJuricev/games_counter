@@ -109,4 +109,35 @@ void main() {
       );
     },
   );
+
+  group(
+    'saveQuery',
+    () {
+      test(
+        'should return Right<void> when local persistence returns a success',
+        () async {
+          when(mockHistoryLocalDataSource.saveQuery(query))
+              .thenAnswer((_) async => Future<void>.value());
+
+          final actualResult = await repository.saveQuery(query);
+          final expectedResult = Right(null);
+
+          expect(expectedResult, actualResult);
+        },
+      );
+
+      test(
+        'should return Left<CacheFailure> when local persistence throws [CacheException]',
+        () async {
+          when(mockHistoryLocalDataSource.saveQuery(query))
+              .thenThrow(CacheException());
+
+          final actualResult = await repository.saveQuery(query);
+          final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+
+          expect(expectedResult, actualResult);
+        },
+      );
+    },
+  );
 }

@@ -47,4 +47,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
       return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> saveQuery(String query) async {
+    try {
+      final localResult = await historyLocalDataSource.saveQuery(query);
+
+      return Right(localResult);
+    } on CacheException {
+      return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+    }
+  }
 }

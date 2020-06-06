@@ -2,7 +2,7 @@ import 'package:game_counter/data/models/local_game.dart';
 import 'package:game_counter/data/models/local_player.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
-import 'package:game_counter/presentation/feature/history/model/history_item.dart';
+import 'package:game_counter/presentation/feature/history/search/model/history_item.dart';
 
 // Player
 const TEST_PLAYER_1_NAME = 'TEST_PLAYER_1';

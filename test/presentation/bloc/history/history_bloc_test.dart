@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/usecases/get_games_from_query.dart';
-import 'package:game_counter/presentation/feature/history/bloc/history_bloc.dart';
-import 'package:game_counter/presentation/feature/history/model/history_item.dart';
+import 'package:game_counter/presentation/feature/history/search/bloc/history_bloc.dart';
+import 'package:game_counter/presentation/feature/history/search/model/history_item.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../test_data/test_data.dart';

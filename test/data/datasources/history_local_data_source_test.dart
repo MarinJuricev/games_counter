@@ -13,6 +13,7 @@ class MockLocalPersistenceProvider extends Mock
 void main() {
   HistoryLocalDataSource dataSource;
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
+  final String query = 'query';
 
   setUp(
     () {
@@ -166,6 +167,39 @@ void main() {
 
           verify(mockLocalPersistenceProvider.getAllFromPersistence(
               boxToGetDataFrom: HISTORY_BOX));
+        },
+      );
+    },
+  );
+
+  group(
+    'saveQuery',
+    () {
+      test(
+        'should return Future<void> when the index inside the box is greater than 0',
+        () async {
+          when(mockLocalPersistenceProvider.saveIntoPersistence(
+                  boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query))
+              .thenAnswer((_) async => 1);
+          await dataSource.saveQuery(query);
+
+          verify(mockLocalPersistenceProvider.saveIntoPersistence(
+              boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
+        },
+      );
+
+      test(
+        'should throw [CacheException] when the index is lower then 0',
+        () async {
+          when(mockLocalPersistenceProvider.saveIntoPersistence(
+                  boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query))
+              .thenAnswer((_) async => -1);
+
+          expect(() => dataSource.saveQuery(query),
+              throwsA(TypeMatcher<CacheException>()));
+
+          verify(mockLocalPersistenceProvider.saveIntoPersistence(
+              boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
         },
       );
     },

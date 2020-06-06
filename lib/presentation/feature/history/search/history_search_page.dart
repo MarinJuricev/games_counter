@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/widgets/info_container.dart';
 
-import '../../../di.dart' as di;
-import '../../widgets/error.dart';
+import '../../../../di.dart' as di;
+import '../../../widgets/error.dart';
+import '../../../widgets/info_container.dart';
 import 'bloc/history_bloc.dart';
 import 'widget/history_list_view.dart';
 
