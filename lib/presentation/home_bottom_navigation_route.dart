@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'feature/history/history_recent_page.dart';
+import 'feature/history/recent_query/history_recent_page.dart';
 import 'feature/home/home_page.dart';
 import 'feature/settings/settings_page.dart';
 
