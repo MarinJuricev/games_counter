@@ -8,7 +8,8 @@ import 'package:game_counter/presentation/feature/history/search/bloc/history_bl
 import 'package:game_counter/presentation/feature/history/search/model/history_item.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../test_data/test_data.dart';
+import '../../../../test_data/test_data.dart';
+
 
 class MockGetGamesFromQuery extends Mock implements GetGamesFromQuery {}
 

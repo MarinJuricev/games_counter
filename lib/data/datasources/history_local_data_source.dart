@@ -6,7 +6,7 @@ import '../models/local_game.dart';
 import 'local_persistence_provider.dart';
 
 abstract class HistoryLocalDataSource {
-  Future<List<Game>> getRecentSearches();
+  Future<List<String>> getRecentQueries();
   Future<List<Game>> getMatchesByQuery(String query);
   Future<void> deleteRecentGame();
   Future<void> saveGame(LocalGame gameToSave);
@@ -27,8 +27,15 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   }
 
   @override
-  Future<List<Game>> getRecentSearches() {
-    return null;
+  Future<List<String>> getRecentQueries() async {
+    final allQueries = await localPersistenceProvider.getAllFromPersistence(
+        boxToGetDataFrom: HISTORY_QUERY_BOX);
+
+    if (allQueries != null) {
+      return Future.value(allQueries);
+    } else {
+      throw CacheException();
+    }
   }
 
   @override

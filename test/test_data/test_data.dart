@@ -4,6 +4,9 @@ import 'package:game_counter/domain/entities/game.dart';
 import 'package:game_counter/domain/entities/player.dart';
 import 'package:game_counter/presentation/feature/history/search/model/history_item.dart';
 
+
+const TEST_ERROR_MESSAGE = 'TEST_ERROR_MESSAGE';
+
 // Player
 const TEST_PLAYER_1_NAME = 'TEST_PLAYER_1';
 const TEST_PLAYER_1_POINTS = '0';
@@ -102,3 +105,10 @@ final testHistoryItem = HistoryItem(
 );
 
 final testHistoryList = [testHistoryItem];
+
+// Recent Query
+final testQueries = [
+  'Mau Mau',
+  'Treseta',
+  'Monopoly',
+];

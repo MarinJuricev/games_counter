@@ -394,3 +394,419 @@ class _$_OnAllRecentGamesDeleted implements _OnAllRecentGamesDeleted {
 abstract class _OnAllRecentGamesDeleted implements HistoryRecentQueryEvent {
   factory _OnAllRecentGamesDeleted() = _$_OnAllRecentGamesDeleted;
 }
+
+class _$HistoryRecentQueryStateTearOff {
+  const _$HistoryRecentQueryStateTearOff();
+
+  _OnHistoryRecentInitialState initialState() {
+    return _OnHistoryRecentInitialState();
+  }
+
+  _OnHistoryRecentUpdatedState updatedState({List<String> recentQueries}) {
+    return _OnHistoryRecentUpdatedState(
+      recentQueries: recentQueries,
+    );
+  }
+
+  _OnHistoryRecentErrorState errorState({String errorMessage}) {
+    return _OnHistoryRecentErrorState(
+      errorMessage: errorMessage,
+    );
+  }
+}
+
+// ignore: unused_element
+const $HistoryRecentQueryState = _$HistoryRecentQueryStateTearOff();
+
+mixin _$HistoryRecentQueryState {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(List<String> recentQueries),
+    @required Result errorState(String errorMessage),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(List<String> recentQueries),
+    Result errorState(String errorMessage),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnHistoryRecentInitialState value),
+    @required Result updatedState(_OnHistoryRecentUpdatedState value),
+    @required Result errorState(_OnHistoryRecentErrorState value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnHistoryRecentInitialState value),
+    Result updatedState(_OnHistoryRecentUpdatedState value),
+    Result errorState(_OnHistoryRecentErrorState value),
+    @required Result orElse(),
+  });
+}
+
+abstract class $HistoryRecentQueryStateCopyWith<$Res> {
+  factory $HistoryRecentQueryStateCopyWith(HistoryRecentQueryState value,
+          $Res Function(HistoryRecentQueryState) then) =
+      _$HistoryRecentQueryStateCopyWithImpl<$Res>;
+}
+
+class _$HistoryRecentQueryStateCopyWithImpl<$Res>
+    implements $HistoryRecentQueryStateCopyWith<$Res> {
+  _$HistoryRecentQueryStateCopyWithImpl(this._value, this._then);
+
+  final HistoryRecentQueryState _value;
+  // ignore: unused_field
+  final $Res Function(HistoryRecentQueryState) _then;
+}
+
+abstract class _$OnHistoryRecentInitialStateCopyWith<$Res> {
+  factory _$OnHistoryRecentInitialStateCopyWith(
+          _OnHistoryRecentInitialState value,
+          $Res Function(_OnHistoryRecentInitialState) then) =
+      __$OnHistoryRecentInitialStateCopyWithImpl<$Res>;
+}
+
+class __$OnHistoryRecentInitialStateCopyWithImpl<$Res>
+    extends _$HistoryRecentQueryStateCopyWithImpl<$Res>
+    implements _$OnHistoryRecentInitialStateCopyWith<$Res> {
+  __$OnHistoryRecentInitialStateCopyWithImpl(
+      _OnHistoryRecentInitialState _value,
+      $Res Function(_OnHistoryRecentInitialState) _then)
+      : super(_value, (v) => _then(v as _OnHistoryRecentInitialState));
+
+  @override
+  _OnHistoryRecentInitialState get _value =>
+      super._value as _OnHistoryRecentInitialState;
+}
+
+class _$_OnHistoryRecentInitialState implements _OnHistoryRecentInitialState {
+  _$_OnHistoryRecentInitialState();
+
+  @override
+  String toString() {
+    return 'HistoryRecentQueryState.initialState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnHistoryRecentInitialState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(List<String> recentQueries),
+    @required Result errorState(String errorMessage),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return initialState();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(List<String> recentQueries),
+    Result errorState(String errorMessage),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnHistoryRecentInitialState value),
+    @required Result updatedState(_OnHistoryRecentUpdatedState value),
+    @required Result errorState(_OnHistoryRecentErrorState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return initialState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnHistoryRecentInitialState value),
+    Result updatedState(_OnHistoryRecentUpdatedState value),
+    Result errorState(_OnHistoryRecentErrorState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnHistoryRecentInitialState implements HistoryRecentQueryState {
+  factory _OnHistoryRecentInitialState() = _$_OnHistoryRecentInitialState;
+}
+
+abstract class _$OnHistoryRecentUpdatedStateCopyWith<$Res> {
+  factory _$OnHistoryRecentUpdatedStateCopyWith(
+          _OnHistoryRecentUpdatedState value,
+          $Res Function(_OnHistoryRecentUpdatedState) then) =
+      __$OnHistoryRecentUpdatedStateCopyWithImpl<$Res>;
+  $Res call({List<String> recentQueries});
+}
+
+class __$OnHistoryRecentUpdatedStateCopyWithImpl<$Res>
+    extends _$HistoryRecentQueryStateCopyWithImpl<$Res>
+    implements _$OnHistoryRecentUpdatedStateCopyWith<$Res> {
+  __$OnHistoryRecentUpdatedStateCopyWithImpl(
+      _OnHistoryRecentUpdatedState _value,
+      $Res Function(_OnHistoryRecentUpdatedState) _then)
+      : super(_value, (v) => _then(v as _OnHistoryRecentUpdatedState));
+
+  @override
+  _OnHistoryRecentUpdatedState get _value =>
+      super._value as _OnHistoryRecentUpdatedState;
+
+  @override
+  $Res call({
+    Object recentQueries = freezed,
+  }) {
+    return _then(_OnHistoryRecentUpdatedState(
+      recentQueries: recentQueries == freezed
+          ? _value.recentQueries
+          : recentQueries as List<String>,
+    ));
+  }
+}
+
+class _$_OnHistoryRecentUpdatedState implements _OnHistoryRecentUpdatedState {
+  _$_OnHistoryRecentUpdatedState({this.recentQueries});
+
+  @override
+  final List<String> recentQueries;
+
+  @override
+  String toString() {
+    return 'HistoryRecentQueryState.updatedState(recentQueries: $recentQueries)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnHistoryRecentUpdatedState &&
+            (identical(other.recentQueries, recentQueries) ||
+                const DeepCollectionEquality()
+                    .equals(other.recentQueries, recentQueries)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(recentQueries);
+
+  @override
+  _$OnHistoryRecentUpdatedStateCopyWith<_OnHistoryRecentUpdatedState>
+      get copyWith => __$OnHistoryRecentUpdatedStateCopyWithImpl<
+          _OnHistoryRecentUpdatedState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(List<String> recentQueries),
+    @required Result errorState(String errorMessage),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return updatedState(recentQueries);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(List<String> recentQueries),
+    Result errorState(String errorMessage),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(recentQueries);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnHistoryRecentInitialState value),
+    @required Result updatedState(_OnHistoryRecentUpdatedState value),
+    @required Result errorState(_OnHistoryRecentErrorState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return updatedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnHistoryRecentInitialState value),
+    Result updatedState(_OnHistoryRecentUpdatedState value),
+    Result errorState(_OnHistoryRecentErrorState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnHistoryRecentUpdatedState implements HistoryRecentQueryState {
+  factory _OnHistoryRecentUpdatedState({List<String> recentQueries}) =
+      _$_OnHistoryRecentUpdatedState;
+
+  List<String> get recentQueries;
+  _$OnHistoryRecentUpdatedStateCopyWith<_OnHistoryRecentUpdatedState>
+      get copyWith;
+}
+
+abstract class _$OnHistoryRecentErrorStateCopyWith<$Res> {
+  factory _$OnHistoryRecentErrorStateCopyWith(_OnHistoryRecentErrorState value,
+          $Res Function(_OnHistoryRecentErrorState) then) =
+      __$OnHistoryRecentErrorStateCopyWithImpl<$Res>;
+  $Res call({String errorMessage});
+}
+
+class __$OnHistoryRecentErrorStateCopyWithImpl<$Res>
+    extends _$HistoryRecentQueryStateCopyWithImpl<$Res>
+    implements _$OnHistoryRecentErrorStateCopyWith<$Res> {
+  __$OnHistoryRecentErrorStateCopyWithImpl(_OnHistoryRecentErrorState _value,
+      $Res Function(_OnHistoryRecentErrorState) _then)
+      : super(_value, (v) => _then(v as _OnHistoryRecentErrorState));
+
+  @override
+  _OnHistoryRecentErrorState get _value =>
+      super._value as _OnHistoryRecentErrorState;
+
+  @override
+  $Res call({
+    Object errorMessage = freezed,
+  }) {
+    return _then(_OnHistoryRecentErrorState(
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
+    ));
+  }
+}
+
+class _$_OnHistoryRecentErrorState implements _OnHistoryRecentErrorState {
+  _$_OnHistoryRecentErrorState({this.errorMessage});
+
+  @override
+  final String errorMessage;
+
+  @override
+  String toString() {
+    return 'HistoryRecentQueryState.errorState(errorMessage: $errorMessage)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnHistoryRecentErrorState &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(errorMessage);
+
+  @override
+  _$OnHistoryRecentErrorStateCopyWith<_OnHistoryRecentErrorState>
+      get copyWith =>
+          __$OnHistoryRecentErrorStateCopyWithImpl<_OnHistoryRecentErrorState>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(List<String> recentQueries),
+    @required Result errorState(String errorMessage),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return errorState(errorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(List<String> recentQueries),
+    Result errorState(String errorMessage),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorState != null) {
+      return errorState(errorMessage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnHistoryRecentInitialState value),
+    @required Result updatedState(_OnHistoryRecentUpdatedState value),
+    @required Result errorState(_OnHistoryRecentErrorState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    return errorState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnHistoryRecentInitialState value),
+    Result updatedState(_OnHistoryRecentUpdatedState value),
+    Result errorState(_OnHistoryRecentErrorState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorState != null) {
+      return errorState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnHistoryRecentErrorState implements HistoryRecentQueryState {
+  factory _OnHistoryRecentErrorState({String errorMessage}) =
+      _$_OnHistoryRecentErrorState;
+
+  String get errorMessage;
+  _$OnHistoryRecentErrorStateCopyWith<_OnHistoryRecentErrorState> get copyWith;
+}

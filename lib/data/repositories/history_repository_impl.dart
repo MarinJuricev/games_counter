@@ -20,8 +20,14 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<Game>>> getRecentSearches() {
-    return null;
+  Future<Either<Failure, List<String>>> getRecentQueries() async {
+    try {
+      final localResult = await historyLocalDataSource.getRecentQueries();
+
+      return Right(localResult);
+    } on CacheException {
+      return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+    }
   }
 
   @override

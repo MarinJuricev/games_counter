@@ -1,3 +1,5 @@
+import 'package:game_counter/domain/usecases/get_recent_queries.dart';
+import 'package:game_counter/presentation/feature/history/recent_query/bloc/history_recent_query_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -52,6 +54,9 @@ Future<void> init() async {
   sl.registerFactory(
       () => HistoryBloc(getGamesFromQuery: sl<GetGamesFromQuery>()));
 
+  sl.registerFactory(
+      () => HistoryRecentQueryBloc(getRecentQueries: sl<GetRecentQueries>()));
+
   // Use cases
   sl.registerFactory(() => CreateGame(
       repository: sl<GameRepository>(), timeProvider: sl<TimeProvider>()));
@@ -64,6 +69,8 @@ Future<void> init() async {
       () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
   sl.registerFactory(
       () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
+  sl.registerFactory(
+      () => GetRecentQueries(historyRepository: sl<HistoryRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(

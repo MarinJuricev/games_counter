@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/history_local_data_source.dart';
+import 'package:game_counter/data/datasources/history_local_data_source.dart';
 import 'package:game_counter/data/datasources/local_persistence_provider.dart';
 import 'package:mockito/mockito.dart';
 import 'package:matcher/matcher.dart';
@@ -200,6 +201,43 @@ void main() {
 
           verify(mockLocalPersistenceProvider.saveIntoPersistence(
               boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
+        },
+      );
+    },
+  );
+
+  group(
+    'getRecentQueries',
+    () {
+      test(
+        'should return recent queries when the localPersitenceProvider result isnt null',
+        () async {
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .thenAnswer((_) async => testQueries);
+
+          final actualResult = await dataSource.getRecentQueries();
+          final expectedResult = testQueries;
+
+          verify(mockLocalPersistenceProvider.getAllFromPersistence(
+              boxToGetDataFrom: HISTORY_QUERY_BOX)).called(1);
+
+          expect(expectedResult, actualResult);
+        },
+      );
+
+      test(
+        'should throw [CacheException] when localPersistenceProvider result is null',
+        () async {
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .thenAnswer((_) async => null);
+
+          expect(() => dataSource.getRecentQueries(),
+              throwsA(TypeMatcher<CacheException>()));
+
+          verify(mockLocalPersistenceProvider.getAllFromPersistence(
+              boxToGetDataFrom: HISTORY_QUERY_BOX));
         },
       );
     },
