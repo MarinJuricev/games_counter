@@ -22,6 +22,7 @@ import 'domain/usecases/end_game_sooner.dart';
 import 'domain/usecases/get_games_from_query.dart';
 import 'domain/usecases/reset_player.dart';
 import 'domain/usecases/save_game_into_history.dart';
+import 'domain/usecases/save_query.dart';
 import 'domain/usecases/update_game.dart';
 import 'presentation/feature/core/game_bloc.dart';
 import 'presentation/feature/history/search/bloc/history_bloc.dart';
@@ -51,8 +52,10 @@ Future<void> init() async {
       ));
 
   sl.registerFactory(() => ColorBloc(colorRepository: sl<ColorRepository>()));
-  sl.registerFactory(
-      () => HistoryBloc(getGamesFromQuery: sl<GetGamesFromQuery>()));
+  sl.registerFactory(() => HistoryBloc(
+        getGamesFromQuery: sl<GetGamesFromQuery>(),
+        saveQuery: sl<SaveQuery>(),
+      ));
 
   sl.registerFactory(
       () => HistoryRecentQueryBloc(getRecentQueries: sl<GetRecentQueries>()));
@@ -65,6 +68,7 @@ Future<void> init() async {
   sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
+  sl.registerFactory(() => SaveQuery(repository: sl<HistoryRepository>()));
   sl.registerFactory(
       () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
   sl.registerFactory(

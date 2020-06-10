@@ -32,7 +32,8 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
         boxToGetDataFrom: HISTORY_QUERY_BOX);
 
     if (allQueries != null) {
-      return Future.value(allQueries);
+      final List<String> convertedList = List<String>.from(allQueries);
+      return Future.value(convertedList);
     } else {
       throw CacheException();
     }

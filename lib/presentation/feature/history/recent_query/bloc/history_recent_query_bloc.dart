@@ -29,13 +29,13 @@ class HistoryRecentQueryBloc
     HistoryRecentQueryEvent event,
   ) async* {
     yield* event.map(
-      getRecentQuries: _handleGetRecentQuries(),
-      recentGameDeleted: yieldTestResult(),
-      allRecentGamesDeleted: yieldTestResult(),
+      getRecentQuries: (params) => _handleGetRecentQuries(),
+      recentGameDeleted: (params) => yieldTestResult(),
+      allRecentGamesDeleted: (params) => yieldTestResult(),
     );
   }
 
-  _handleGetRecentQuries() async* {
+  Stream<HistoryRecentQueryState> _handleGetRecentQuries() async* {
     final getRecentQueriesResult = await getRecentQueries(NoParams());
 
     yield getRecentQueriesResult.fold(
