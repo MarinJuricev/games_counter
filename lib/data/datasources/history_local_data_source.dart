@@ -56,7 +56,11 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   Future<void> saveQuery(String query) async {
     // Avoid duplicate queries
     final previousQueries = await getRecentQueries();
-    if (previousQueries.contains(query)) {
+    final lowerCaseQuery = query.toLowerCase();
+    // It shouldn't be case sensitive
+    if (previousQueries
+        .map((item) => item.toLowerCase())
+        .contains(lowerCaseQuery)) {
       return Future<void>.value();
     }
 
