@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:game_counter/presentation/widgets/error.dart';
 
+import '../../../../di.dart' as di;
+import '../../../widgets/error.dart';
 import '../../../widgets/info_container.dart';
 import '../search/history_search_page.dart';
 import 'bloc/history_recent_query_bloc.dart';
-import '../../../../di.dart' as di;
+import 'widget/recent_query_list.dart';
 
 class HistoryRecentPage extends StatefulWidget {
   HistoryRecentPage({Key key}) : super(key: key);
@@ -54,16 +55,7 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
                   Center(child: CircularProgressIndicator()),
               updatedState: (params) => params.recentQueries.isEmpty
                   ? InfoContainer(description: 'No recent queries!')
-                  : ListView.separated(
-                      separatorBuilder: (context, index) => Divider(
-                        color: Colors.black,
-                      ),
-                      itemCount: params.recentQueries.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          ListTile(
-                        title: Text(params.recentQueries[index]),
-                      ),
-                    ),
+                  : RecentQueryList(recentQueries: params.recentQueries),
               errorState: (params) => ErrorContainer(
                 erorrMessage:
                     'No recent searches available, please use the search bar at the top!',

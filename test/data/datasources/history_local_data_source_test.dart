@@ -182,9 +182,28 @@ void main() {
           when(mockLocalPersistenceProvider.saveIntoPersistence(
                   boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query))
               .thenAnswer((_) async => 1);
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .thenAnswer((_) async => testQueries);
           await dataSource.saveQuery(query);
 
           verify(mockLocalPersistenceProvider.saveIntoPersistence(
+              boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
+        },
+      );
+
+      test(
+        'should return Future<void> when the query is already inside local Persistence',
+        () async {
+          when(mockLocalPersistenceProvider.saveIntoPersistence(
+                  boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: testQueries[0]))
+              .thenAnswer((_) async => 1);
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .thenAnswer((_) async => testQueries);
+          await dataSource.saveQuery(testQueries[0]);
+
+          verifyNever(mockLocalPersistenceProvider.saveIntoPersistence(
               boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
         },
       );
@@ -195,12 +214,12 @@ void main() {
           when(mockLocalPersistenceProvider.saveIntoPersistence(
                   boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query))
               .thenAnswer((_) async => -1);
+          when(mockLocalPersistenceProvider.getAllFromPersistence(
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .thenAnswer((_) async => testQueries);
 
           expect(() => dataSource.saveQuery(query),
               throwsA(TypeMatcher<CacheException>()));
-
-          verify(mockLocalPersistenceProvider.saveIntoPersistence(
-              boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: query));
         },
       );
     },
@@ -220,7 +239,8 @@ void main() {
           final expectedResult = testQueries;
 
           verify(mockLocalPersistenceProvider.getAllFromPersistence(
-              boxToGetDataFrom: HISTORY_QUERY_BOX)).called(1);
+                  boxToGetDataFrom: HISTORY_QUERY_BOX))
+              .called(1);
 
           expect(expectedResult, actualResult);
         },

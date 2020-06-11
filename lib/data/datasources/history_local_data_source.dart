@@ -54,6 +54,12 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
   @override
   Future<void> saveQuery(String query) async {
+    // Avoid duplicate queries
+    final previousQueries = await getRecentQueries();
+    if (previousQueries.contains(query)) {
+      return Future<void>.value();
+    }
+
     final positionInBox = await localPersistenceProvider.saveIntoPersistence(
       boxToSaveInto: HISTORY_QUERY_BOX,
       valueToSave: query,
