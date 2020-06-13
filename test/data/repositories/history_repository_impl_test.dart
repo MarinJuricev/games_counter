@@ -31,7 +31,7 @@ void main() {
     'saveGameIntoHistory',
     () {
       test(
-        'should return  Right<void> when local persistence returns a success',
+        'should return Right<void> when local persistence returns a success',
         () async {
           when(mockHistoryLocalDataSource.saveGame(testLocalGame))
               .thenAnswer((_) async => Future<void>.value());
@@ -166,6 +166,39 @@ void main() {
               .thenThrow(CacheException());
 
           final actualResult = await repository.getRecentQueries();
+          final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+
+          expect(expectedResult, actualResult);
+        },
+      );
+    },
+  );
+
+  group(
+    'deleteQuery',
+    () {
+      test(
+        'should return Right<void> when local persistence returns a success',
+        () async {
+          when(mockHistoryLocalDataSource.deleteQuery(testQueries[0]))
+              .thenAnswer((_) async => Future.value(null));
+
+          final actualResult = await repository.deleteQuery(testQueries[0]);
+          final expectedResult = Right(null);
+
+          expect(expectedResult, actualResult);
+
+          verify(mockHistoryLocalDataSource.deleteQuery(testQueries[0])).called(1);
+        },
+      );
+
+      test(
+        'should return Left<CacheFailure> when local persistence throws [CacheException]',
+        () async {
+          when(mockHistoryLocalDataSource.deleteQuery(testQueries[0]))
+              .thenThrow(CacheException());
+
+          final actualResult = await repository.deleteQuery(testQueries[0]);
           final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
           expect(expectedResult, actualResult);

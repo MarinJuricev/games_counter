@@ -6,7 +6,7 @@ import '../entities/game.dart';
 abstract class HistoryRepository {
   Future<Either<Failure, List<String>>> getRecentQueries();
   Future<Either<Failure, List<Game>>> getMatchesByQuery(String gameName);
-  Future<Either<Failure, List<Game>>> deleteRecentGame(Game gameToDelete);
   Future<Either<Failure, void>> saveGameIntoHistory(Game gameToSave);
   Future<Either<Failure, void>> saveQuery(String query);
+  Future<Either<Failure, void>> deleteQuery(String query);
 }

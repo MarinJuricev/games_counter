@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:game_counter/domain/usecases/delete_query.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../core/usecase/base_usecase.dart';
-import '../../../../../domain/entities/game.dart';
 import '../../../../../domain/usecases/get_recent_queries.dart';
 
 part 'history_recent_query_bloc.freezed.dart';
@@ -15,9 +15,11 @@ part 'history_recent_query_state.dart';
 class HistoryRecentQueryBloc
     extends Bloc<HistoryRecentQueryEvent, HistoryRecentQueryState> {
   final GetRecentQueries getRecentQueries;
+  final DeleteQuery deleteQuery;
 
   HistoryRecentQueryBloc({
     @required this.getRecentQueries,
+    @required this.deleteQuery,
   });
 
   @override
@@ -30,7 +32,7 @@ class HistoryRecentQueryBloc
   ) async* {
     yield* event.map(
       getRecentQuries: (params) => _handleGetRecentQuries(),
-      recentGameDeleted: (params) => yieldTestResult(),
+      recentQueryDeleted: (params) => yieldTestResult(),
       allRecentGamesDeleted: (params) => yieldTestResult(),
     );
   }

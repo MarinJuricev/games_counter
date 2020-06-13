@@ -1,3 +1,4 @@
+import 'package:game_counter/domain/usecases/delete_query.dart';
 import 'package:game_counter/domain/usecases/get_recent_queries.dart';
 import 'package:game_counter/presentation/feature/history/recent_query/bloc/history_recent_query_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -35,72 +36,144 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Bloc
   // TODO this really doesn't need to be a singleton
-  sl.registerLazySingleton(() => GameBloc(
-        createGame: sl<CreateGame>(),
-        createPlayer: sl<CreatePlayer>(),
-        deletePlayer: sl<DeletePlayer>(),
-        endGameSooner: sl<EndGameSooner>(),
-        inputConverter: sl<InputConverter>(),
-        saveGameIntoHistory: sl<SaveGameIntoHistory>(),
-      ));
-
-  sl.registerFactory(() => PlayerDetailBloc(
-        gameRepository: sl<GameRepository>(),
-        gameBloc: sl<GameBloc>(),
-        updateGame: sl<UpdateGame>(),
-        resetPlayer: sl<ResetPlayer>(),
-      ));
-
-  sl.registerFactory(() => ColorBloc(colorRepository: sl<ColorRepository>()));
-  sl.registerFactory(() => HistoryBloc(
-        getGamesFromQuery: sl<GetGamesFromQuery>(),
-        saveQuery: sl<SaveQuery>(),
-      ));
+  sl.registerLazySingleton(
+    () => GameBloc(
+      createGame: sl<CreateGame>(),
+      createPlayer: sl<CreatePlayer>(),
+      deletePlayer: sl<DeletePlayer>(),
+      endGameSooner: sl<EndGameSooner>(),
+      inputConverter: sl<InputConverter>(),
+      saveGameIntoHistory: sl<SaveGameIntoHistory>(),
+    ),
+  );
 
   sl.registerFactory(
-      () => HistoryRecentQueryBloc(getRecentQueries: sl<GetRecentQueries>()));
+    () => PlayerDetailBloc(
+      gameRepository: sl<GameRepository>(),
+      gameBloc: sl<GameBloc>(),
+      updateGame: sl<UpdateGame>(),
+      resetPlayer: sl<ResetPlayer>(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => ColorBloc(
+      colorRepository: sl<ColorRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => HistoryBloc(
+      getGamesFromQuery: sl<GetGamesFromQuery>(),
+      saveQuery: sl<SaveQuery>(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => HistoryRecentQueryBloc(
+      getRecentQueries: sl<GetRecentQueries>(),
+      deleteQuery: sl<DeleteQuery>(),
+    ),
+  );
 
   // Use cases
-  sl.registerFactory(() => CreateGame(
-      repository: sl<GameRepository>(), timeProvider: sl<TimeProvider>()));
-  sl.registerFactory(() => CreatePlayer(repository: sl<GameRepository>()));
-  sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
-  sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
-  sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
-  sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
-  sl.registerFactory(() => SaveQuery(repository: sl<HistoryRepository>()));
   sl.registerFactory(
-      () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
+    () => CreateGame(
+      repository: sl<GameRepository>(),
+      timeProvider: sl<TimeProvider>(),
+    ),
+  );
   sl.registerFactory(
-      () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
+    () => CreatePlayer(
+      repository: sl<GameRepository>(),
+    ),
+  );
   sl.registerFactory(
-      () => GetRecentQueries(historyRepository: sl<HistoryRepository>()));
+    () => UpdateGame(
+      repository: sl<GameRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => ResetPlayer(
+      repository: sl<GameRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => DeletePlayer(
+      repository: sl<GameRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => EndGameSooner(
+      repository: sl<GameRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => SaveQuery(
+      repository: sl<HistoryRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => DeleteQuery(
+      repository: sl<HistoryRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => GetGamesFromQuery(
+      historyRepository: sl<HistoryRepository>(),
+    ),
+  );
+  sl.registerFactory(
+    () => SaveGameIntoHistory(
+      repository: sl<HistoryRepository>(),
+    ),
+  );
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
-      () => GameRepositoryImpl(gameLocalDataSource: sl()));
+    () => GameRepositoryImpl(
+      gameLocalDataSource: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<ColorRepository>(
-      () => ColorRepositoryImpl(colorLocalDataSource: sl()));
+    () => ColorRepositoryImpl(
+      colorLocalDataSource: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<HistoryRepository>(
-      () => HistoryRepositoryImpl(historyLocalDataSource: sl()));
+    () => HistoryRepositoryImpl(
+      historyLocalDataSource: sl(),
+    ),
+  );
 
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
-      () => GameLocalDataSourceImpl(localPersistenceProvider: sl()));
+    () => GameLocalDataSourceImpl(
+      localPersistenceProvider: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<ColorLocalDataSource>(
-      () => ColorLocalDataSourceImpl(localPersistenceProvider: sl()));
+    () => ColorLocalDataSourceImpl(
+      localPersistenceProvider: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<HistoryLocalDataSource>(
-      () => HistoryLocalDataSourceImpl(localPersistenceProvider: sl()));
+    () => HistoryLocalDataSourceImpl(
+      localPersistenceProvider: sl(),
+    ),
+  );
 
   // Core
   sl.registerLazySingleton(() => InputConverter());
 
   // External
   sl.registerLazySingleton<LocalPersistenceProvider>(
-      () => LocalPersistenceProviderImpl());
-  sl.registerLazySingleton<TimeProvider>(() => TimeProviderImpl());
+    () => LocalPersistenceProviderImpl(),
+  );
+  sl.registerLazySingleton<TimeProvider>(
+    () => TimeProviderImpl(),
+  );
 }

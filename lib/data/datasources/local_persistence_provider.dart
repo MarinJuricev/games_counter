@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 abstract class LocalPersistenceProvider {
   Future<int> saveIntoPersistence({dynamic valueToSave, String boxToSaveInto});
   Future<int> clearPersistence({String boxToClear});
+  Future<void> removeItemFromPersistence(
+      {dynamic valueToDelete, String boxToDeleteFrom});
   Future<void> saveKeyValuePair({dynamic valueToSave, String boxToSaveInto});
   Future<dynamic> getFromKeyValuePair({String boxToGetDataFrom});
   Future<dynamic> getLatestFromPersistence({String boxToGetDataFrom});
@@ -57,7 +59,10 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
   // If we want to always have a single and always replace a value with the coresponding
   // key, we use saveKeyValuePair ( it functions like sharedPreferences in native Android )
   @override
-  Future<void> saveKeyValuePair({valueToSave, String boxToSaveInto}) async {
+  Future<void> saveKeyValuePair({
+    valueToSave,
+    String boxToSaveInto,
+  }) async {
     final box = await Hive.openBox(boxToSaveInto);
 
     return await box.put(boxToSaveInto, valueToSave);
@@ -70,5 +75,14 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
     final box = await Hive.openBox(boxToGetDataFrom);
 
     return await box.get(boxToGetDataFrom);
+  }
+
+  @override
+  Future<void> removeItemFromPersistence({
+    dynamic valueToDelete,
+    String boxToDeleteFrom,
+  }) async {
+    final box = await Hive.openBox(boxToDeleteFrom);
+    return box.delete(valueToDelete);
   }
 }

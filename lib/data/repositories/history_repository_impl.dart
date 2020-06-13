@@ -15,11 +15,6 @@ class HistoryRepositoryImpl implements HistoryRepository {
   HistoryRepositoryImpl({@required this.historyLocalDataSource});
 
   @override
-  Future<Either<Failure, List<Game>>> deleteRecentGame(Game gameToDelete) {
-    return null;
-  }
-
-  @override
   Future<Either<Failure, List<String>>> getRecentQueries() async {
     try {
       final localResult = await historyLocalDataSource.getRecentQueries();
@@ -58,6 +53,17 @@ class HistoryRepositoryImpl implements HistoryRepository {
   Future<Either<Failure, void>> saveQuery(String query) async {
     try {
       final localResult = await historyLocalDataSource.saveQuery(query);
+
+      return Right(localResult);
+    } on CacheException {
+      return Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteQuery(String query) async {
+    try {
+      final localResult = await historyLocalDataSource.deleteQuery(query);
 
       return Right(localResult);
     } on CacheException {

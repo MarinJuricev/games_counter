@@ -1,28 +1,28 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/domain/repositories/history_repository.dart';
-import 'package:game_counter/domain/usecases/save_query.dart';
+import 'package:game_counter/domain/usecases/delete_query.dart';
 import 'package:mockito/mockito.dart';
 
 class MockHistoryRepository extends Mock implements HistoryRepository {}
 
 void main() {
   MockHistoryRepository mockHistoryRepository;
-  SaveQuery saveQuery;
+  DeleteQuery deleteQuery;
   String testQuery = 'testQuery';
 
   setUp(
     () {
       mockHistoryRepository = MockHistoryRepository();
-      saveQuery = SaveQuery(repository: mockHistoryRepository);
+      deleteQuery = DeleteQuery(repository: mockHistoryRepository);
     },
   );
 
   test(
-    'should trigger historyRepository saveQuery with the provided query',
+    'should trigger historyRepository deleteQuery with the provided query',
     () async {
-      await saveQuery(testQuery);
+      await deleteQuery(testQuery);
 
-      verify(mockHistoryRepository.saveQuery(testQuery)).called(1);
+      verify(mockHistoryRepository.deleteQuery(testQuery)).called(1);
     },
   );
 }

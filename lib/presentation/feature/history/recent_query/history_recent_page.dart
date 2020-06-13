@@ -36,7 +36,9 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
                   icon: Icon(Icons.search),
                   onPressed: () {
                     showSearch(
-                        context: context, delegate: HistorySearchDelegate());
+                      context: context,
+                      delegate: HistorySearchDelegate(),
+                    );
                   },
                 ),
               ],
@@ -55,7 +57,13 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
                   Center(child: CircularProgressIndicator()),
               updatedState: (params) => params.recentQueries.isEmpty
                   ? InfoContainer(description: 'No recent queries!')
-                  : RecentQueryList(recentQueries: params.recentQueries),
+                  : RecentQueryList(
+                      recentQueries: params.recentQueries,
+                      onQueryItemClicked: (String query) => showSearch(
+                          context: context,
+                          delegate: HistorySearchDelegate(),
+                          query: query),
+                    ),
               errorState: (params) => ErrorContainer(
                 erorrMessage:
                     'No recent searches available, please use the search bar at the top!',

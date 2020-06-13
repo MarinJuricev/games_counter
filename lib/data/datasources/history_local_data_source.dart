@@ -8,9 +8,9 @@ import 'local_persistence_provider.dart';
 abstract class HistoryLocalDataSource {
   Future<List<String>> getRecentQueries();
   Future<List<Game>> getMatchesByQuery(String query);
-  Future<void> deleteRecentGame();
   Future<void> saveGame(LocalGame gameToSave);
   Future<void> saveQuery(String query);
+  Future<void> deleteQuery(String query);
 }
 
 const HISTORY_BOX = 'HISTORY_BOX';
@@ -22,8 +22,11 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   HistoryLocalDataSourceImpl({@required this.localPersistenceProvider});
 
   @override
-  Future<void> deleteRecentGame() {
-    return null;
+  Future<void> deleteQuery(String query) async {
+    return await localPersistenceProvider.removeItemFromPersistence(
+      valueToDelete: query,
+      boxToDeleteFrom: HISTORY_QUERY_BOX,
+    );
   }
 
   @override
@@ -33,6 +36,7 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
 
     if (allQueries != null) {
       final List<String> convertedList = List<String>.from(allQueries);
+
       return Future.value(convertedList);
     } else {
       throw CacheException();

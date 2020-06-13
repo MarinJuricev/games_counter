@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_counter/core/error/exceptions.dart';
 import 'package:game_counter/data/datasources/history_local_data_source.dart';
-import 'package:game_counter/data/datasources/history_local_data_source.dart';
 import 'package:game_counter/data/datasources/local_persistence_provider.dart';
 import 'package:mockito/mockito.dart';
 import 'package:matcher/matcher.dart';
@@ -196,7 +195,8 @@ void main() {
         'should return Future<void> when the query is already inside local Persistence',
         () async {
           when(mockLocalPersistenceProvider.saveIntoPersistence(
-                  boxToSaveInto: HISTORY_QUERY_BOX, valueToSave: testQueries[0]))
+                  boxToSaveInto: HISTORY_QUERY_BOX,
+                  valueToSave: testQueries[0]))
               .thenAnswer((_) async => 1);
           when(mockLocalPersistenceProvider.getAllFromPersistence(
                   boxToGetDataFrom: HISTORY_QUERY_BOX))
@@ -258,6 +258,32 @@ void main() {
 
           verify(mockLocalPersistenceProvider.getAllFromPersistence(
               boxToGetDataFrom: HISTORY_QUERY_BOX));
+        },
+      );
+    },
+  );
+
+  group(
+    'deleteQuery',
+    () {
+      test(
+        'should trigger localPersistenceProivder removeItemFromPersistence with the provided query',
+        () async {
+          when(
+            mockLocalPersistenceProvider.removeItemFromPersistence(
+              boxToDeleteFrom: HISTORY_QUERY_BOX,
+              valueToDelete: testQueries[0],
+            ),
+          ).thenAnswer((_) async => null);
+
+          await dataSource.deleteQuery(testQueries[0]);
+
+          verify(
+            mockLocalPersistenceProvider.removeItemFromPersistence(
+              boxToDeleteFrom: HISTORY_QUERY_BOX,
+              valueToDelete: testQueries[0],
+            ),
+          ).called(1);
         },
       );
     },
