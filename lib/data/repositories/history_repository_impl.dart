@@ -61,9 +61,10 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteQuery(String query) async {
+  Future<Either<Failure, void>> deleteQuery(int positionToDelete) async {
     try {
-      final localResult = await historyLocalDataSource.deleteQuery(query);
+      final localResult =
+          await historyLocalDataSource.deleteQuery(positionToDelete);
 
       return Right(localResult);
     } on CacheException {

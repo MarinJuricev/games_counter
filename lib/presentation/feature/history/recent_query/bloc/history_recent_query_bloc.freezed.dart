@@ -16,9 +16,9 @@ class _$HistoryRecentQueryEventTearOff {
     return _OnGetRecentQueries();
   }
 
-  _OnGameDeleted recentQueryDeleted({String queryToDelete}) {
+  _OnGameDeleted recentQueryDeleted({int positionToDelete}) {
     return _OnGameDeleted(
-      queryToDelete: queryToDelete,
+      positionToDelete: positionToDelete,
     );
   }
 
@@ -34,13 +34,13 @@ mixin _$HistoryRecentQueryEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result getRecentQuries(),
-    @required Result recentQueryDeleted(String queryToDelete),
+    @required Result recentQueryDeleted(int positionToDelete),
     @required Result allRecentGamesDeleted(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result getRecentQuries(),
-    Result recentQueryDeleted(String queryToDelete),
+    Result recentQueryDeleted(int positionToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   });
@@ -111,7 +111,7 @@ class _$_OnGetRecentQueries implements _OnGetRecentQueries {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result getRecentQuries(),
-    @required Result recentQueryDeleted(String queryToDelete),
+    @required Result recentQueryDeleted(int positionToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
     assert(getRecentQuries != null);
@@ -124,7 +124,7 @@ class _$_OnGetRecentQueries implements _OnGetRecentQueries {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result getRecentQuries(),
-    Result recentQueryDeleted(String queryToDelete),
+    Result recentQueryDeleted(int positionToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   }) {
@@ -172,7 +172,7 @@ abstract class _$OnGameDeletedCopyWith<$Res> {
   factory _$OnGameDeletedCopyWith(
           _OnGameDeleted value, $Res Function(_OnGameDeleted) then) =
       __$OnGameDeletedCopyWithImpl<$Res>;
-  $Res call({String queryToDelete});
+  $Res call({int positionToDelete});
 }
 
 class __$OnGameDeletedCopyWithImpl<$Res>
@@ -187,39 +187,40 @@ class __$OnGameDeletedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object queryToDelete = freezed,
+    Object positionToDelete = freezed,
   }) {
     return _then(_OnGameDeleted(
-      queryToDelete: queryToDelete == freezed
-          ? _value.queryToDelete
-          : queryToDelete as String,
+      positionToDelete: positionToDelete == freezed
+          ? _value.positionToDelete
+          : positionToDelete as int,
     ));
   }
 }
 
 class _$_OnGameDeleted implements _OnGameDeleted {
-  _$_OnGameDeleted({this.queryToDelete});
+  _$_OnGameDeleted({this.positionToDelete});
 
   @override
-  final String queryToDelete;
+  final int positionToDelete;
 
   @override
   String toString() {
-    return 'HistoryRecentQueryEvent.recentQueryDeleted(queryToDelete: $queryToDelete)';
+    return 'HistoryRecentQueryEvent.recentQueryDeleted(positionToDelete: $positionToDelete)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _OnGameDeleted &&
-            (identical(other.queryToDelete, queryToDelete) ||
+            (identical(other.positionToDelete, positionToDelete) ||
                 const DeepCollectionEquality()
-                    .equals(other.queryToDelete, queryToDelete)));
+                    .equals(other.positionToDelete, positionToDelete)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(queryToDelete);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(positionToDelete);
 
   @override
   _$OnGameDeletedCopyWith<_OnGameDeleted> get copyWith =>
@@ -229,26 +230,26 @@ class _$_OnGameDeleted implements _OnGameDeleted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result getRecentQuries(),
-    @required Result recentQueryDeleted(String queryToDelete),
+    @required Result recentQueryDeleted(int positionToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
     assert(getRecentQuries != null);
     assert(recentQueryDeleted != null);
     assert(allRecentGamesDeleted != null);
-    return recentQueryDeleted(queryToDelete);
+    return recentQueryDeleted(positionToDelete);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result getRecentQuries(),
-    Result recentQueryDeleted(String queryToDelete),
+    Result recentQueryDeleted(int positionToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (recentQueryDeleted != null) {
-      return recentQueryDeleted(queryToDelete);
+      return recentQueryDeleted(positionToDelete);
     }
     return orElse();
   }
@@ -283,9 +284,9 @@ class _$_OnGameDeleted implements _OnGameDeleted {
 }
 
 abstract class _OnGameDeleted implements HistoryRecentQueryEvent {
-  factory _OnGameDeleted({String queryToDelete}) = _$_OnGameDeleted;
+  factory _OnGameDeleted({int positionToDelete}) = _$_OnGameDeleted;
 
-  String get queryToDelete;
+  int get positionToDelete;
   _$OnGameDeletedCopyWith<_OnGameDeleted> get copyWith;
 }
 
@@ -327,7 +328,7 @@ class _$_OnAllRecentGamesDeleted implements _OnAllRecentGamesDeleted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result getRecentQuries(),
-    @required Result recentQueryDeleted(String queryToDelete),
+    @required Result recentQueryDeleted(int positionToDelete),
     @required Result allRecentGamesDeleted(),
   }) {
     assert(getRecentQuries != null);
@@ -340,7 +341,7 @@ class _$_OnAllRecentGamesDeleted implements _OnAllRecentGamesDeleted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result getRecentQuries(),
-    Result recentQueryDeleted(String queryToDelete),
+    Result recentQueryDeleted(int positionToDelete),
     Result allRecentGamesDeleted(),
     @required Result orElse(),
   }) {

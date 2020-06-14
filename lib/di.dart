@@ -87,84 +87,38 @@ Future<void> init() async {
       repository: sl<GameRepository>(),
     ),
   );
+  sl.registerFactory(() => UpdateGame(repository: sl<GameRepository>()));
+  sl.registerFactory(() => ResetPlayer(repository: sl<GameRepository>()));
+  sl.registerFactory(() => DeletePlayer(repository: sl<GameRepository>()));
   sl.registerFactory(
-    () => UpdateGame(
-      repository: sl<GameRepository>(),
-    ),
-  );
+      () => GetRecentQueries(historyRepository: sl<HistoryRepository>()));
+  sl.registerFactory(() => EndGameSooner(repository: sl<GameRepository>()));
+  sl.registerFactory(() => SaveQuery(repository: sl<HistoryRepository>()));
+  sl.registerFactory(() => DeleteQuery(repository: sl<HistoryRepository>()));
   sl.registerFactory(
-    () => ResetPlayer(
-      repository: sl<GameRepository>(),
-    ),
-  );
+      () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
   sl.registerFactory(
-    () => DeletePlayer(
-      repository: sl<GameRepository>(),
-    ),
-  );
-  sl.registerFactory(
-    () => EndGameSooner(
-      repository: sl<GameRepository>(),
-    ),
-  );
-  sl.registerFactory(
-    () => SaveQuery(
-      repository: sl<HistoryRepository>(),
-    ),
-  );
-  sl.registerFactory(
-    () => DeleteQuery(
-      repository: sl<HistoryRepository>(),
-    ),
-  );
-  sl.registerFactory(
-    () => GetGamesFromQuery(
-      historyRepository: sl<HistoryRepository>(),
-    ),
-  );
-  sl.registerFactory(
-    () => SaveGameIntoHistory(
-      repository: sl<HistoryRepository>(),
-    ),
-  );
+      () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
-    () => GameRepositoryImpl(
-      gameLocalDataSource: sl(),
-    ),
-  );
+      () => GameRepositoryImpl(gameLocalDataSource: sl()));
 
   sl.registerLazySingleton<ColorRepository>(
-    () => ColorRepositoryImpl(
-      colorLocalDataSource: sl(),
-    ),
-  );
+      () => ColorRepositoryImpl(colorLocalDataSource: sl()));
 
   sl.registerLazySingleton<HistoryRepository>(
-    () => HistoryRepositoryImpl(
-      historyLocalDataSource: sl(),
-    ),
-  );
+      () => HistoryRepositoryImpl(historyLocalDataSource: sl()));
 
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
-    () => GameLocalDataSourceImpl(
-      localPersistenceProvider: sl(),
-    ),
-  );
+      () => GameLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   sl.registerLazySingleton<ColorLocalDataSource>(
-    () => ColorLocalDataSourceImpl(
-      localPersistenceProvider: sl(),
-    ),
-  );
+      () => ColorLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   sl.registerLazySingleton<HistoryLocalDataSource>(
-    () => HistoryLocalDataSourceImpl(
-      localPersistenceProvider: sl(),
-    ),
-  );
+      () => HistoryLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   // Core
   sl.registerLazySingleton(() => InputConverter());

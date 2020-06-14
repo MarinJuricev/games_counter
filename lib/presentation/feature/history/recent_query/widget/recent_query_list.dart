@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/history_recent_query_bloc.dart';
 
 class RecentQueryList extends StatefulWidget {
   final List<String> recentQueries;
@@ -44,12 +47,16 @@ class _RecentQueryListState extends State<RecentQueryList> {
                 return Dismissible(
                   key: Key(currentItem),
                   onDismissed: (direction) {
+                    BlocProvider.of<HistoryRecentQueryBloc>(context)
+                      ..add(HistoryRecentQueryEvent.recentQueryDeleted(
+                          positionToDelete: index));
+
                     setState(() {
                       widget.recentQueries.removeAt(index);
                     });
 
                     Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text("$currentItem dismissed")));
+                        SnackBar(content: Text("$currentItem deleted")));
                   },
                   background: Container(
                     color: Theme.of(context).errorColor,

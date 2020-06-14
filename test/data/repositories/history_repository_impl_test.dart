@@ -18,6 +18,7 @@ void main() {
   HistoryRepositoryImpl repository;
 
   final query = 'Tr';
+  final positionToDelete = 0;
 
   setUp(
     () {
@@ -180,25 +181,26 @@ void main() {
       test(
         'should return Right<void> when local persistence returns a success',
         () async {
-          when(mockHistoryLocalDataSource.deleteQuery(testQueries[0]))
+          when(mockHistoryLocalDataSource.deleteQuery(positionToDelete))
               .thenAnswer((_) async => Future.value(null));
 
-          final actualResult = await repository.deleteQuery(testQueries[0]);
+          final actualResult = await repository.deleteQuery(positionToDelete);
           final expectedResult = Right(null);
 
           expect(expectedResult, actualResult);
 
-          verify(mockHistoryLocalDataSource.deleteQuery(testQueries[0])).called(1);
+          verify(mockHistoryLocalDataSource.deleteQuery(positionToDelete))
+              .called(1);
         },
       );
 
       test(
         'should return Left<CacheFailure> when local persistence throws [CacheException]',
         () async {
-          when(mockHistoryLocalDataSource.deleteQuery(testQueries[0]))
+          when(mockHistoryLocalDataSource.deleteQuery(positionToDelete))
               .thenThrow(CacheException());
 
-          final actualResult = await repository.deleteQuery(testQueries[0]);
+          final actualResult = await repository.deleteQuery(positionToDelete);
           final expectedResult = Left(CacheFailure(ERROR_RETREVING_LOCAL_DATA));
 
           expect(expectedResult, actualResult);

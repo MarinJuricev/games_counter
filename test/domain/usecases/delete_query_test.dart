@@ -8,7 +8,7 @@ class MockHistoryRepository extends Mock implements HistoryRepository {}
 void main() {
   MockHistoryRepository mockHistoryRepository;
   DeleteQuery deleteQuery;
-  String testQuery = 'testQuery';
+  int positionToDelete = 0;
 
   setUp(
     () {
@@ -20,9 +20,9 @@ void main() {
   test(
     'should trigger historyRepository deleteQuery with the provided query',
     () async {
-      await deleteQuery(testQuery);
+      await deleteQuery(positionToDelete);
 
-      verify(mockHistoryRepository.deleteQuery(testQuery)).called(1);
+      verify(mockHistoryRepository.deleteQuery(positionToDelete)).called(1);
     },
   );
 }

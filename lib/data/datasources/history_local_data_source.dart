@@ -10,7 +10,7 @@ abstract class HistoryLocalDataSource {
   Future<List<Game>> getMatchesByQuery(String query);
   Future<void> saveGame(LocalGame gameToSave);
   Future<void> saveQuery(String query);
-  Future<void> deleteQuery(String query);
+  Future<void> deleteQuery(int positionToDelete);
 }
 
 const HISTORY_BOX = 'HISTORY_BOX';
@@ -20,14 +20,6 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   final LocalPersistenceProvider localPersistenceProvider;
 
   HistoryLocalDataSourceImpl({@required this.localPersistenceProvider});
-
-  @override
-  Future<void> deleteQuery(String query) async {
-    return await localPersistenceProvider.removeItemFromPersistence(
-      valueToDelete: query,
-      boxToDeleteFrom: HISTORY_QUERY_BOX,
-    );
-  }
 
   @override
   Future<List<String>> getRecentQueries() async {
@@ -99,5 +91,13 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
     } else {
       throw CacheException();
     }
+  }
+
+  @override
+  Future<void> deleteQuery(int positionToDelete) async {
+    return await localPersistenceProvider.removePositionFromPersistence(
+      positonToDelete: positionToDelete,
+      boxToDeleteFrom: HISTORY_QUERY_BOX,
+    );
   }
 }

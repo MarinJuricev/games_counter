@@ -14,6 +14,7 @@ void main() {
   HistoryLocalDataSource dataSource;
   MockLocalPersistenceProvider mockLocalPersistenceProvider;
   final String query = 'query';
+  final positionToDelete = 0;
 
   setUp(
     () {
@@ -270,18 +271,18 @@ void main() {
         'should trigger localPersistenceProivder removeItemFromPersistence with the provided query',
         () async {
           when(
-            mockLocalPersistenceProvider.removeItemFromPersistence(
+            mockLocalPersistenceProvider.removePositionFromPersistence(
               boxToDeleteFrom: HISTORY_QUERY_BOX,
-              valueToDelete: testQueries[0],
+              positonToDelete: positionToDelete,
             ),
           ).thenAnswer((_) async => null);
 
-          await dataSource.deleteQuery(testQueries[0]);
+          await dataSource.deleteQuery(positionToDelete);
 
           verify(
-            mockLocalPersistenceProvider.removeItemFromPersistence(
+            mockLocalPersistenceProvider.removePositionFromPersistence(
               boxToDeleteFrom: HISTORY_QUERY_BOX,
-              valueToDelete: testQueries[0],
+              positonToDelete: positionToDelete,
             ),
           ).called(1);
         },

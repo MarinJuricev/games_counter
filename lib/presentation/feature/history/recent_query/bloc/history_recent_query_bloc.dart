@@ -32,7 +32,8 @@ class HistoryRecentQueryBloc
   ) async* {
     yield* event.map(
       getRecentQuries: (params) => _handleGetRecentQuries(),
-      recentQueryDeleted: (params) => yieldTestResult(),
+      recentQueryDeleted: (params) =>
+          _handlerecentQueryDeleted(params.positionToDelete),
       allRecentGamesDeleted: (params) => yieldTestResult(),
     );
   }
@@ -44,6 +45,17 @@ class HistoryRecentQueryBloc
       (error) =>
           HistoryRecentQueryState.errorState(errorMessage: error.message),
       (result) => HistoryRecentQueryState.updatedState(recentQueries: result),
+    );
+  }
+
+  Stream<HistoryRecentQueryState> _handlerecentQueryDeleted(
+      int queryToDelete) async* {
+    final deleteQueryResult = await deleteQuery(queryToDelete);
+
+    deleteQueryResult.fold(
+      (error) =>
+          HistoryRecentQueryState.errorState(errorMessage: error.message),
+      (result) => _handleGetRecentQuries(),
     );
   }
 

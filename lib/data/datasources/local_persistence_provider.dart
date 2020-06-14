@@ -1,11 +1,19 @@
 import 'package:hive/hive.dart';
 
 abstract class LocalPersistenceProvider {
-  Future<int> saveIntoPersistence({dynamic valueToSave, String boxToSaveInto});
+  Future<int> saveIntoPersistence({
+    dynamic valueToSave,
+    String boxToSaveInto,
+  });
   Future<int> clearPersistence({String boxToClear});
-  Future<void> removeItemFromPersistence(
-      {dynamic valueToDelete, String boxToDeleteFrom});
-  Future<void> saveKeyValuePair({dynamic valueToSave, String boxToSaveInto});
+  Future<void> removePositionFromPersistence({
+    int positonToDelete,
+    String boxToDeleteFrom,
+  });
+  Future<void> saveKeyValuePair({
+    dynamic valueToSave,
+    String boxToSaveInto,
+  });
   Future<dynamic> getFromKeyValuePair({String boxToGetDataFrom});
   Future<dynamic> getLatestFromPersistence({String boxToGetDataFrom});
   Future<dynamic> getAllFromPersistence({String boxToGetDataFrom});
@@ -78,11 +86,11 @@ class LocalPersistenceProviderImpl implements LocalPersistenceProvider {
   }
 
   @override
-  Future<void> removeItemFromPersistence({
-    dynamic valueToDelete,
+  Future<void> removePositionFromPersistence({
+    int positonToDelete,
     String boxToDeleteFrom,
   }) async {
     final box = await Hive.openBox(boxToDeleteFrom);
-    return box.delete(valueToDelete);
+    return await box.deleteAt(positonToDelete);
   }
 }
