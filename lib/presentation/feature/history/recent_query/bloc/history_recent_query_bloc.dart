@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:game_counter/core/error/failure.dart';
 import 'package:game_counter/domain/usecases/delete_query.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../../core/extensions/extensions.dart';
 import '../../../../../core/usecase/base_usecase.dart';
 import '../../../../../domain/usecases/get_recent_queries.dart';
 
@@ -50,13 +52,14 @@ class HistoryRecentQueryBloc
 
   Stream<HistoryRecentQueryState> _handlerecentQueryDeleted(
       int queryToDelete) async* {
-    final deleteQueryResult = await deleteQuery(queryToDelete);
+    final deleteQueryEither = await deleteQuery(queryToDelete);
+    final deleteQueryResult = deleteQueryEither.unwrapResult();
 
-    deleteQueryResult.fold(
-      (error) =>
-          HistoryRecentQueryState.errorState(errorMessage: error.message),
-      (result) => _handleGetRecentQuries(),
-    );
+    if(deleteQueryResult is Failure){
+      yield HistoryRecentQueryState.errorState(errorMessage: deleteQueryResult.message);
+    } else{
+      yield* _handleGetRecentQuries();
+    }
   }
 
   yieldTestResult() async* {

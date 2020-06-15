@@ -18,6 +18,8 @@ void main() {
   MockGetRecentQueries mockGetRecentQueries;
   MockDeleteQuery mockDeleteQuery;
 
+  final int positionToDelete = 0;
+
   setUp(
     () {
       mockGetRecentQueries = MockGetRecentQueries();
@@ -29,7 +31,7 @@ void main() {
     'getRecentQuries',
     () {
       blocTest(
-        'should emit [HistoryRecentQueryState.errorState] when getRecentQueriesResult retuns a [Failure]',
+        'should emit [HistoryRecentQueryState.errorState] when getRecentQueriesResult returns a [Failure]',
         build: () async {
           when(mockGetRecentQueries(NoParams()))
               .thenAnswer((_) async => Left(CacheFailure(TEST_ERROR_MESSAGE)));
@@ -49,7 +51,7 @@ void main() {
       );
 
       blocTest(
-        'should emit [HistoryRecentQueryState.updatedState] when getRecentQueriesResult retuns a List<String>',
+        'should emit [HistoryRecentQueryState.updatedState] when getRecentQueriesResult returns a List<String>',
         build: () async {
           when(mockGetRecentQueries(NoParams()))
               .thenAnswer((_) async => Right(testQueries));
@@ -65,6 +67,58 @@ void main() {
         verify: (_) => mockGetRecentQueries(NoParams()),
         expect: [
           HistoryRecentQueryState.updatedState(recentQueries: testQueries)
+        ],
+      );
+    },
+  );
+
+  group(
+    'deleteQuery',
+    () {
+      blocTest(
+        'should call _handleGetRecentQuries when deleteQueryResult returns a [Success]',
+        build: () async {
+          when(mockDeleteQuery(positionToDelete))
+              .thenAnswer((_) async => Right(null));
+          when(mockGetRecentQueries(NoParams()))
+              .thenAnswer((_) async => Right(testQueries));
+
+          return HistoryRecentQueryBloc(
+            getRecentQueries: mockGetRecentQueries,
+            deleteQuery: mockDeleteQuery,
+          );
+        },
+        act: (HistoryRecentQueryBloc bloc) async => bloc.add(
+          HistoryRecentQueryEvent.recentQueryDeleted(
+              positionToDelete: positionToDelete),
+        ),
+        verify: (_) {
+          mockGetRecentQueries(NoParams());
+          return mockDeleteQuery(positionToDelete);
+        },
+        expect: [
+          HistoryRecentQueryState.updatedState(recentQueries: testQueries)
+        ],
+      );
+
+      blocTest(
+        'should emit [HistoryRecentQueryState.errorState] when deleteQuery returns a [Failure]',
+        build: () async {
+          when(mockDeleteQuery(positionToDelete))
+              .thenAnswer((_) async => Left(CacheFailure(TEST_ERROR_MESSAGE)));
+
+          return HistoryRecentQueryBloc(
+            getRecentQueries: mockGetRecentQueries,
+            deleteQuery: mockDeleteQuery,
+          );
+        },
+        act: (HistoryRecentQueryBloc bloc) async => bloc.add(
+          HistoryRecentQueryEvent.recentQueryDeleted(
+              positionToDelete: positionToDelete),
+        ),
+        verify: (_) => mockDeleteQuery(positionToDelete),
+        expect: [
+          HistoryRecentQueryState.errorState(errorMessage: TEST_ERROR_MESSAGE)
         ],
       );
     },
