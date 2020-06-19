@@ -33,11 +33,16 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
               snap: true,
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     showSearch(
                       context: context,
                       delegate: HistorySearchDelegate(),
+                    ).then(
+                      (value) {
+                        BlocProvider.of<HistoryRecentQueryBloc>(context)
+                          ..add(HistoryRecentQueryEvent.getRecentQuries());
+                      },
                     );
                   },
                 ),
@@ -54,9 +59,9 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
 
             return state.map(
               initialState: (params) =>
-                  Center(child: CircularProgressIndicator()),
+                  const Center(child: const CircularProgressIndicator()),
               updatedState: (params) => params.recentQueries.isEmpty
-                  ? InfoContainer(description: 'No recent queries!')
+                  ? const InfoContainer(description: 'No recent queries!')
                   : RecentQueryList(
                       recentQueries: params.recentQueries,
                       onQueryItemClicked: (String query) => showSearch(
@@ -64,7 +69,7 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
                           delegate: HistorySearchDelegate(),
                           query: query),
                     ),
-              errorState: (params) => ErrorContainer(
+              errorState: (params) => const ErrorContainer(
                 erorrMessage:
                     'No recent searches available, please use the search bar at the top!',
               ),
