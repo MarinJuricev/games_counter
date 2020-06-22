@@ -1,37 +1,9 @@
 part of 'game_bloc.dart';
 
-abstract class GameState extends Equatable {
-  const GameState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class GameInitialState extends GameState {}
-
-class GameUpdatedState extends GameState {
-  final Game game;
-
-  GameUpdatedState({@required this.game});
-
-  @override
-  List<Object> get props => [game];
-}
-
-class GameErrorState extends GameState {
-  final String errorMessage;
-
-  GameErrorState({@required this.errorMessage});
-
-  @override
-  List<Object> get props => [errorMessage];
-}
-
-class GameOverState extends GameState {
-  final Player player;
-
-  GameOverState({@required this.player});
-
-  @override
-  List<Object> get props => [player];
+@freezed
+abstract class GameState with _$GameState {
+  factory GameState.initialState() = _OnGameInitialState;
+  factory GameState.updatedState({Game game}) = _OnGameUpdatedState;
+  factory GameState.errorState({String errorMessage}) = _OnGameErrorState;
+  factory GameState.overState({Player player}) = _OnGameOverState;
 }

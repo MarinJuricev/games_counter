@@ -17,5 +17,6 @@ const String APP_THEME = 'appTheme';
 
 const String HERO_TAG_CARD_TITLE = 'hero-card-title';
 const String HERO_TAG_CARD_POINTS = 'hero-card-points';
+const String VALIDATION_ERROR = 'Validation Error';
 
 const GAME_TIME_FORMAT = 'yMd';

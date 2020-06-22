@@ -1338,3 +1338,614 @@ abstract class _OnEndGameSooner implements GameEvent {
   Game get currentGame;
   _$OnEndGameSoonerCopyWith<_OnEndGameSooner> get copyWith;
 }
+
+class _$GameStateTearOff {
+  const _$GameStateTearOff();
+
+  _OnGameInitialState initialState() {
+    return _OnGameInitialState();
+  }
+
+  _OnGameUpdatedState updatedState({Game game}) {
+    return _OnGameUpdatedState(
+      game: game,
+    );
+  }
+
+  _OnGameErrorState errorState({String errorMessage}) {
+    return _OnGameErrorState(
+      errorMessage: errorMessage,
+    );
+  }
+
+  _OnGameOverState overState({Player player}) {
+    return _OnGameOverState(
+      player: player,
+    );
+  }
+}
+
+// ignore: unused_element
+const $GameState = _$GameStateTearOff();
+
+mixin _$GameState {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(Game game),
+    @required Result errorState(String errorMessage),
+    @required Result overState(Player player),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(Game game),
+    Result errorState(String errorMessage),
+    Result overState(Player player),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnGameInitialState value),
+    @required Result updatedState(_OnGameUpdatedState value),
+    @required Result errorState(_OnGameErrorState value),
+    @required Result overState(_OnGameOverState value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnGameInitialState value),
+    Result updatedState(_OnGameUpdatedState value),
+    Result errorState(_OnGameErrorState value),
+    Result overState(_OnGameOverState value),
+    @required Result orElse(),
+  });
+}
+
+abstract class $GameStateCopyWith<$Res> {
+  factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
+      _$GameStateCopyWithImpl<$Res>;
+}
+
+class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
+  _$GameStateCopyWithImpl(this._value, this._then);
+
+  final GameState _value;
+  // ignore: unused_field
+  final $Res Function(GameState) _then;
+}
+
+abstract class _$OnGameInitialStateCopyWith<$Res> {
+  factory _$OnGameInitialStateCopyWith(
+          _OnGameInitialState value, $Res Function(_OnGameInitialState) then) =
+      __$OnGameInitialStateCopyWithImpl<$Res>;
+}
+
+class __$OnGameInitialStateCopyWithImpl<$Res>
+    extends _$GameStateCopyWithImpl<$Res>
+    implements _$OnGameInitialStateCopyWith<$Res> {
+  __$OnGameInitialStateCopyWithImpl(
+      _OnGameInitialState _value, $Res Function(_OnGameInitialState) _then)
+      : super(_value, (v) => _then(v as _OnGameInitialState));
+
+  @override
+  _OnGameInitialState get _value => super._value as _OnGameInitialState;
+}
+
+class _$_OnGameInitialState
+    with DiagnosticableTreeMixin
+    implements _OnGameInitialState {
+  _$_OnGameInitialState();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GameState.initialState()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'GameState.initialState'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnGameInitialState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(Game game),
+    @required Result errorState(String errorMessage),
+    @required Result overState(Player player),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return initialState();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(Game game),
+    Result errorState(String errorMessage),
+    Result overState(Player player),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnGameInitialState value),
+    @required Result updatedState(_OnGameUpdatedState value),
+    @required Result errorState(_OnGameErrorState value),
+    @required Result overState(_OnGameOverState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return initialState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnGameInitialState value),
+    Result updatedState(_OnGameUpdatedState value),
+    Result errorState(_OnGameErrorState value),
+    Result overState(_OnGameOverState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGameInitialState implements GameState {
+  factory _OnGameInitialState() = _$_OnGameInitialState;
+}
+
+abstract class _$OnGameUpdatedStateCopyWith<$Res> {
+  factory _$OnGameUpdatedStateCopyWith(
+          _OnGameUpdatedState value, $Res Function(_OnGameUpdatedState) then) =
+      __$OnGameUpdatedStateCopyWithImpl<$Res>;
+  $Res call({Game game});
+
+  $GameCopyWith<$Res> get game;
+}
+
+class __$OnGameUpdatedStateCopyWithImpl<$Res>
+    extends _$GameStateCopyWithImpl<$Res>
+    implements _$OnGameUpdatedStateCopyWith<$Res> {
+  __$OnGameUpdatedStateCopyWithImpl(
+      _OnGameUpdatedState _value, $Res Function(_OnGameUpdatedState) _then)
+      : super(_value, (v) => _then(v as _OnGameUpdatedState));
+
+  @override
+  _OnGameUpdatedState get _value => super._value as _OnGameUpdatedState;
+
+  @override
+  $Res call({
+    Object game = freezed,
+  }) {
+    return _then(_OnGameUpdatedState(
+      game: game == freezed ? _value.game : game as Game,
+    ));
+  }
+
+  @override
+  $GameCopyWith<$Res> get game {
+    if (_value.game == null) {
+      return null;
+    }
+    return $GameCopyWith<$Res>(_value.game, (value) {
+      return _then(_value.copyWith(game: value));
+    });
+  }
+}
+
+class _$_OnGameUpdatedState
+    with DiagnosticableTreeMixin
+    implements _OnGameUpdatedState {
+  _$_OnGameUpdatedState({this.game});
+
+  @override
+  final Game game;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GameState.updatedState(game: $game)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GameState.updatedState'))
+      ..add(DiagnosticsProperty('game', game));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnGameUpdatedState &&
+            (identical(other.game, game) ||
+                const DeepCollectionEquality().equals(other.game, game)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(game);
+
+  @override
+  _$OnGameUpdatedStateCopyWith<_OnGameUpdatedState> get copyWith =>
+      __$OnGameUpdatedStateCopyWithImpl<_OnGameUpdatedState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(Game game),
+    @required Result errorState(String errorMessage),
+    @required Result overState(Player player),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return updatedState(game);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(Game game),
+    Result errorState(String errorMessage),
+    Result overState(Player player),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(game);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnGameInitialState value),
+    @required Result updatedState(_OnGameUpdatedState value),
+    @required Result errorState(_OnGameErrorState value),
+    @required Result overState(_OnGameOverState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return updatedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnGameInitialState value),
+    Result updatedState(_OnGameUpdatedState value),
+    Result errorState(_OnGameErrorState value),
+    Result overState(_OnGameOverState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGameUpdatedState implements GameState {
+  factory _OnGameUpdatedState({Game game}) = _$_OnGameUpdatedState;
+
+  Game get game;
+  _$OnGameUpdatedStateCopyWith<_OnGameUpdatedState> get copyWith;
+}
+
+abstract class _$OnGameErrorStateCopyWith<$Res> {
+  factory _$OnGameErrorStateCopyWith(
+          _OnGameErrorState value, $Res Function(_OnGameErrorState) then) =
+      __$OnGameErrorStateCopyWithImpl<$Res>;
+  $Res call({String errorMessage});
+}
+
+class __$OnGameErrorStateCopyWithImpl<$Res>
+    extends _$GameStateCopyWithImpl<$Res>
+    implements _$OnGameErrorStateCopyWith<$Res> {
+  __$OnGameErrorStateCopyWithImpl(
+      _OnGameErrorState _value, $Res Function(_OnGameErrorState) _then)
+      : super(_value, (v) => _then(v as _OnGameErrorState));
+
+  @override
+  _OnGameErrorState get _value => super._value as _OnGameErrorState;
+
+  @override
+  $Res call({
+    Object errorMessage = freezed,
+  }) {
+    return _then(_OnGameErrorState(
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
+    ));
+  }
+}
+
+class _$_OnGameErrorState
+    with DiagnosticableTreeMixin
+    implements _OnGameErrorState {
+  _$_OnGameErrorState({this.errorMessage});
+
+  @override
+  final String errorMessage;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GameState.errorState(errorMessage: $errorMessage)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GameState.errorState'))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnGameErrorState &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(errorMessage);
+
+  @override
+  _$OnGameErrorStateCopyWith<_OnGameErrorState> get copyWith =>
+      __$OnGameErrorStateCopyWithImpl<_OnGameErrorState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(Game game),
+    @required Result errorState(String errorMessage),
+    @required Result overState(Player player),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return errorState(errorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(Game game),
+    Result errorState(String errorMessage),
+    Result overState(Player player),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorState != null) {
+      return errorState(errorMessage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnGameInitialState value),
+    @required Result updatedState(_OnGameUpdatedState value),
+    @required Result errorState(_OnGameErrorState value),
+    @required Result overState(_OnGameOverState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return errorState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnGameInitialState value),
+    Result updatedState(_OnGameUpdatedState value),
+    Result errorState(_OnGameErrorState value),
+    Result overState(_OnGameOverState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (errorState != null) {
+      return errorState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGameErrorState implements GameState {
+  factory _OnGameErrorState({String errorMessage}) = _$_OnGameErrorState;
+
+  String get errorMessage;
+  _$OnGameErrorStateCopyWith<_OnGameErrorState> get copyWith;
+}
+
+abstract class _$OnGameOverStateCopyWith<$Res> {
+  factory _$OnGameOverStateCopyWith(
+          _OnGameOverState value, $Res Function(_OnGameOverState) then) =
+      __$OnGameOverStateCopyWithImpl<$Res>;
+  $Res call({Player player});
+
+  $PlayerCopyWith<$Res> get player;
+}
+
+class __$OnGameOverStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
+    implements _$OnGameOverStateCopyWith<$Res> {
+  __$OnGameOverStateCopyWithImpl(
+      _OnGameOverState _value, $Res Function(_OnGameOverState) _then)
+      : super(_value, (v) => _then(v as _OnGameOverState));
+
+  @override
+  _OnGameOverState get _value => super._value as _OnGameOverState;
+
+  @override
+  $Res call({
+    Object player = freezed,
+  }) {
+    return _then(_OnGameOverState(
+      player: player == freezed ? _value.player : player as Player,
+    ));
+  }
+
+  @override
+  $PlayerCopyWith<$Res> get player {
+    if (_value.player == null) {
+      return null;
+    }
+    return $PlayerCopyWith<$Res>(_value.player, (value) {
+      return _then(_value.copyWith(player: value));
+    });
+  }
+}
+
+class _$_OnGameOverState
+    with DiagnosticableTreeMixin
+    implements _OnGameOverState {
+  _$_OnGameOverState({this.player});
+
+  @override
+  final Player player;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GameState.overState(player: $player)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GameState.overState'))
+      ..add(DiagnosticsProperty('player', player));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnGameOverState &&
+            (identical(other.player, player) ||
+                const DeepCollectionEquality().equals(other.player, player)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(player);
+
+  @override
+  _$OnGameOverStateCopyWith<_OnGameOverState> get copyWith =>
+      __$OnGameOverStateCopyWithImpl<_OnGameOverState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(Game game),
+    @required Result errorState(String errorMessage),
+    @required Result overState(Player player),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return overState(player);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(Game game),
+    Result errorState(String errorMessage),
+    Result overState(Player player),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (overState != null) {
+      return overState(player);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnGameInitialState value),
+    @required Result updatedState(_OnGameUpdatedState value),
+    @required Result errorState(_OnGameErrorState value),
+    @required Result overState(_OnGameOverState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    assert(errorState != null);
+    assert(overState != null);
+    return overState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnGameInitialState value),
+    Result updatedState(_OnGameUpdatedState value),
+    Result errorState(_OnGameErrorState value),
+    Result overState(_OnGameOverState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (overState != null) {
+      return overState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnGameOverState implements GameState {
+  factory _OnGameOverState({Player player}) = _$_OnGameOverState;
+
+  Player get player;
+  _$OnGameOverStateCopyWith<_OnGameOverState> get copyWith;
+}

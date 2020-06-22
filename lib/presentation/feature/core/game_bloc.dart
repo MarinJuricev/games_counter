@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/constants/budget_constants.dart';
 import '../../../core/error/failure.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/util/input_converter.dart';
@@ -21,8 +21,6 @@ import '../../../domain/usecases/save_game_into_history.dart';
 part 'game_bloc.freezed.dart';
 part 'game_event.dart';
 part 'game_state.dart';
-
-const String VALIDATION_ERROR = 'Validation Error';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   final CreateGame createGame;
@@ -42,7 +40,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   });
 
   @override
-  GameState get initialState => GameInitialState();
+  GameState get initialState => GameState.initialState();
 
   @override
   Stream<GameState> mapEventToState(
@@ -73,7 +71,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (numberResult is Failure ||
         pointsResult is Failure ||
         gameTitle.isEmpty) {
-      yield GameErrorState(errorMessage: VALIDATION_ERROR);
+      yield GameState.errorState(errorMessage: VALIDATION_ERROR);
     }
 
     if (numberResult is int && pointsResult is int) {
@@ -92,7 +90,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final updatedGame = newGame;
 
     if (updatedGame.winner == null || updatedGame.winner.isEmpty) {
-      yield GameUpdatedState(game: newGame);
+      yield GameState.updatedState(game: newGame);
     } else {
       Player winner = updatedGame.players
           .firstWhere((itemToCheck) => itemToCheck.name == updatedGame.winner);
@@ -100,7 +98,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       await saveGameIntoHistory(
           SaveGameIntoHistoryParams(gameToSave: updatedGame));
 
-      yield GameOverState(player: winner);
+      yield GameState.overState(player: winner);
     }
   }
 
@@ -126,14 +124,14 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final createPlayerResult = createPlayerUseCase.unwrapResult();
 
     if (createPlayerResult is Failure)
-      yield GameErrorState(errorMessage: createPlayerResult.message);
+      yield GameState.errorState(errorMessage: createPlayerResult.message);
     else if (createPlayerResult is Game) {
-      yield GameUpdatedState(game: createPlayerResult);
+      yield GameState.updatedState(game: createPlayerResult);
     }
   }
 
   Stream<GameState> _handleResetGameEvent() async* {
-    yield GameInitialState();
+    yield GameState.initialState();
   }
 
   Stream<GameState> _handleDeletePlayerEvent(Player playerToDelete) async* {
@@ -142,9 +140,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final deletePlayerResult = useCaseResult.unwrapResult();
 
     if (deletePlayerResult is Failure)
-      yield GameErrorState(errorMessage: deletePlayerResult.message);
+      yield GameState.errorState(errorMessage: deletePlayerResult.message);
     else if (deletePlayerResult is Game) {
-      yield GameUpdatedState(game: deletePlayerResult);
+      yield GameState.updatedState(game: deletePlayerResult);
     }
   }
 
@@ -153,12 +151,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     final endGameSoonerResult = useCaseResult.unwrapResult();
     if (endGameSoonerResult is Failure)
-      yield GameErrorState(errorMessage: endGameSoonerResult.message);
+      yield GameState.errorState(errorMessage: endGameSoonerResult.message);
     else if (endGameSoonerResult is Player) {
       await saveGameIntoHistory(
           SaveGameIntoHistoryParams(gameToSave: currentGame));
 
-      yield GameOverState(player: endGameSoonerResult);
+      yield GameState.overState(player: endGameSoonerResult);
     }
   }
 
@@ -185,28 +183,28 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final createPlayerResult = createPlayerUseCase.unwrapResult();
 
     if (createPlayerResult is Failure)
-      yield GameErrorState(errorMessage: createPlayerResult.message);
+      yield GameState.errorState(errorMessage: createPlayerResult.message);
     else if (createPlayerResult is Game) {
-      yield GameUpdatedState(game: createPlayerResult);
+      yield GameState.updatedState(game: createPlayerResult);
     }
   }
 
   Stream<GameState> _validatePointsEitherResults(
       pointsEitherResult, bonusPointsEitherResult) async* {
     if (pointsEitherResult is Failure) {
-      yield GameErrorState(errorMessage: pointsEitherResult.message);
+      yield GameState.errorState(errorMessage: pointsEitherResult.message);
     }
 
     if (bonusPointsEitherResult is Failure) {
-      yield GameErrorState(errorMessage: pointsEitherResult.errorMessage);
+      yield GameState.errorState(errorMessage: pointsEitherResult.errorMessage);
     }
   }
 
   Stream<GameState> _mapEitherErrorOrGameCreated(
       Either<Failure, Game> useCaseEither) async* {
     yield useCaseEither.fold(
-      (failure) => GameErrorState(errorMessage: VALIDATION_ERROR),
-      (game) => GameUpdatedState(game: game),
+      (failure) => GameState.errorState(errorMessage: VALIDATION_ERROR),
+      (game) => GameState.updatedState(game: game),
     );
   }
 }
