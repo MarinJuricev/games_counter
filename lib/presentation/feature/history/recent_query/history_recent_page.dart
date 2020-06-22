@@ -19,62 +19,65 @@ class _HistoryRecentPageState extends State<HistoryRecentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              expandedHeight: 100.0,
-              flexibleSpace: const FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text('Search previous games'),
-              ),
-              pinned: true,
-              floating: true,
-              snap: true,
-              actions: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {
-                    showSearch(
-                      context: context,
-                      delegate: HistorySearchDelegate(),
-                    ).then(
-                      (value) {
-                        BlocProvider.of<HistoryRecentQueryBloc>(context)
-                          ..add(HistoryRecentQueryEvent.getRecentQuries());
-                      },
-                    );
-                  },
+      body: BlocProvider(
+        create: (BuildContext context) => di.sl<HistoryRecentQueryBloc>(),
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 100.0,
+                flexibleSpace: const FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text('Search previous games'),
                 ),
-              ],
-            ),
-          ];
-        },
-        body: BlocProvider(
-          create: (BuildContext context) => di.sl<HistoryRecentQueryBloc>(),
-          child: BlocBuilder<HistoryRecentQueryBloc, HistoryRecentQueryState>(
-              builder: (BuildContext context, HistoryRecentQueryState state) {
-            BlocProvider.of<HistoryRecentQueryBloc>(context)
-              ..add(HistoryRecentQueryEvent.getRecentQuries());
-
-            return state.map(
-              initialState: (params) =>
-                  const Center(child: const CircularProgressIndicator()),
-              updatedState: (params) => params.recentQueries.isEmpty
-                  ? const InfoContainer(description: 'No recent queries!')
-                  : RecentQueryList(
-                      recentQueries: params.recentQueries,
-                      onQueryItemClicked: (String query) => showSearch(
-                          context: context,
-                          delegate: HistorySearchDelegate(),
-                          query: query),
-                    ),
-              errorState: (params) => const ErrorContainer(
-                erorrMessage:
-                    'No recent searches available, please use the search bar at the top!',
+                pinned: true,
+                floating: true,
+                snap: true,
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: HistorySearchDelegate(),
+                      ).then(
+                        (value) {
+                          // Used to refresh recent page when the user navigates back from
+                          // the search delegate
+                          BlocProvider.of<HistoryRecentQueryBloc>(context)
+                            ..add(HistoryRecentQueryEvent.getRecentQuries());
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
-            );
-          }),
+            ];
+          },
+          body: BlocBuilder<HistoryRecentQueryBloc, HistoryRecentQueryState>(
+            builder: (BuildContext context, HistoryRecentQueryState state) {
+              BlocProvider.of<HistoryRecentQueryBloc>(context)
+                ..add(HistoryRecentQueryEvent.getRecentQuries());
+
+              return state.map(
+                initialState: (params) =>
+                    const Center(child: const CircularProgressIndicator()),
+                updatedState: (params) => params.recentQueries.isEmpty
+                    ? const InfoContainer(description: 'No recent queries!')
+                    : RecentQueryList(
+                        recentQueries: params.recentQueries,
+                        onQueryItemClicked: (String query) => showSearch(
+                            context: context,
+                            delegate: HistorySearchDelegate(),
+                            query: query),
+                      ),
+                errorState: (params) => const ErrorContainer(
+                  erorrMessage:
+                      'No recent searches available, please use the search bar at the top!',
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

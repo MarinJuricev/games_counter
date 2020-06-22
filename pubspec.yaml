@@ -32,11 +32,10 @@ dependencies:
   flutter_material_color_picker: ^1.0.5
   # Date time format
   intl: ^0.16.1
-  # dartx: ^0.2.0
-  # quiver: ^2.0.3
-  # Remote API
-  # data_connection_checker: ^0.3.4
-  # http: ^0.12.0+4
+  
+
+dependency_overrides:
+  dartx: ^0.4.0
 
 dev_dependencies:
   flutter_test:

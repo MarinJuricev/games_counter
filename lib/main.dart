@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => di.sl<ColorBloc>(),
         )
       ],
-      // BlocBuilder<, PlayerDetailState>(
       child: BlocBuilder<ColorBloc, ColorState>(
         builder: (builderContext, state) {
           if (state is ColorInitial) {
