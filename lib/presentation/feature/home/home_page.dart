@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animations/animations.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,6 @@ import '../../widgets/game_title.dart';
 import '../../widgets/player_grid.dart';
 import '../add_player/add_player_page.dart';
 import '../core/game_bloc.dart';
-
 
 const double _fabDimension = 56.0;
 
@@ -26,24 +27,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<GameBloc, GameState>(
       listenWhen: (previousState, currentState) {
-        return (currentState is GameErrorState);
+        return currentState.maybeMap(
+            orElse: () => false, errorState: (errorMessage) => true);
       },
       listener: (builderContext, state) {
-        if (state is GameErrorState) {
-          Flushbar(
-            message: state.errorMessage,
-            icon: Icon(
-              Icons.error,
-              size: 28.0,
-              color: Colors.red,
-            ),
-            duration: Duration(seconds: 3),
-            leftBarIndicatorColor: Colors.red,
-          )..show(builderContext);
-        }
+        state.maybeWhen(
+          orElse: null,
+          errorState: (String errorMessage) => {
+            Flushbar(
+              message: errorMessage,
+              icon: Icon(
+                Icons.error,
+                size: 28.0,
+                color: Colors.red,
+              ),
+              duration: Duration(seconds: 3),
+              leftBarIndicatorColor: Colors.red,
+            )..show(builderContext)
+          },
+        );
       },
       buildWhen: (previousState, currentState) {
-        return (currentState is! GameErrorState);
+        return currentState.maybeMap(
+            orElse: () => true, errorState: (errorMessage) => false);
       },
       builder: (builderContext, state) {
         return Scaffold(
@@ -62,19 +68,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCreateGame(GameState state) {
-    if (state is GameInitialState) {
-      return CreateGame();
-    } else if (state is GameUpdatedState) {
-      return PlayerGrid(currentGame: state.game);
-    } else if (state is GameOverState) {
-      return GameOver(winner: state.player);
-    } else if (state is GameErrorState) {
-      return ErrorContainer(
-        erorrMessage: state.errorMessage,
-      );
-    } else {
-      return SizedBox();
-    }
+    return state.when(
+      initialState: () => CreateGame(),
+      updatedState: (updatedGame) => PlayerGrid(
+        currentGame: updatedGame,
+      ),
+      errorState: (errorMessage) => ErrorContainer(
+        erorrMessage: errorMessage,
+      ),
+      overState: (winner) => GameOver(winner: winner),
+    );
   }
 
   Widget _buildAddPlayerFab(BuildContext builderContext, GameState state) {
