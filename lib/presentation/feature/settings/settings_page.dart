@@ -6,7 +6,6 @@ import 'package:game_counter/presentation/feature/settings/color/color_bloc.dart
 
 import '../../../domain/entities/game.dart';
 
-
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key key}) : super(key: key);
 
@@ -32,18 +31,18 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text('Settings'),
       ),
       body: AnimatedContainer(
-          color: _backgroundColor,
-          duration: Duration(milliseconds: 250),
-          child: BlocBuilder<GameBloc, GameState>(
-            builder: (builderContext, state) {
-              if (state is GameUpdatedState) {
-                return _buildGameInformation(state.game);
-              } else {
-                // In any other case just return a sizedBox
-                return _buildSettingsItems();
-              }
-            },
-          )),
+        color: _backgroundColor,
+        duration: Duration(milliseconds: 250),
+        child: BlocBuilder<GameBloc, GameState>(
+          builder: (builderContext, state) {
+            return state.maybeMap(
+              orElse: () => _buildSettingsItems(),
+              updatedState: (updatedGame) =>
+                  _buildGameInformation(updatedGame.game),
+            );
+          },
+        ),
+      ),
     );
   }
 

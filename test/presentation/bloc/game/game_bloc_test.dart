@@ -98,7 +98,7 @@ void main() {
                 numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
                 winningPoints: TEST_POINTS_TO_WIN_PARSED_1));
           },
-          expect: [GameUpdatedState(game: testGame)]);
+          expect: [GameState.updatedState(game: testGame)]);
 
       blocTest(
         'should emit [ErrorState] when the usecase validation fails',
@@ -122,7 +122,7 @@ void main() {
           pointsToWin: TEST_POINTS_TO_WIN_1,
         )),
         expect: [
-          GameErrorState(errorMessage: VALIDATION_ERROR),
+          GameState.errorState(errorMessage: VALIDATION_ERROR),
         ],
       );
 
@@ -146,7 +146,7 @@ void main() {
                 numberOfPlayers: TEST_NUMBER_OF_PLAYERS_1,
                 pointsToWin: TEST_POINTS_TO_WIN_1,
               ))),
-          expect: [GameErrorState(errorMessage: VALIDATION_ERROR)]);
+          expect: [GameState.errorState(errorMessage: VALIDATION_ERROR)]);
 
       blocTest(
         'should emit [GameCreatedState] when the usecase validation succeeds',
@@ -170,7 +170,7 @@ void main() {
           pointsToWin: TEST_POINTS_TO_WIN_1,
         )),
         expect: [
-          GameUpdatedState(game: testGame),
+          GameState.updatedState(game: testGame),
         ],
       );
 
@@ -186,7 +186,7 @@ void main() {
         ),
         act: (gameBloc) =>
             gameBloc.add(GameEvent.gameUpdated(newGame: testGame.copyWith(winner: ''))),
-        expect: [GameUpdatedState(game: testGame.copyWith(winner: ''))],
+        expect: [GameState.updatedState(game: testGame.copyWith(winner: ''))],
       );
 
       blocTest(
@@ -205,7 +205,7 @@ void main() {
           mockSaveGameIntoHistory(
               SaveGameIntoHistoryParams(gameToSave: testGame));
         },
-        expect: [GameOverState(player: testPlayer1)],
+        expect: [GameState.overState(player: testPlayer1)],
       );
 
       blocTest(
@@ -234,7 +234,7 @@ void main() {
           points: TEST_PLAYER_1_POINTS_PARSED,
           bonusPoints: TEST_PLAYER_1_BONUS_POINTS_PARSED,
         )),
-        expect: [GameUpdatedState(game: testGame)],
+        expect: [GameState.updatedState(game: testGame)],
       );
 
       blocTest(
@@ -259,7 +259,7 @@ void main() {
           bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
         )),
         expect: [
-          GameErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
+          GameState.errorState(errorMessage: INVALID_NUMBER_PROVIDED),
         ],
       );
 
@@ -285,7 +285,7 @@ void main() {
           bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
         ))),
         expect: [
-          GameErrorState(errorMessage: INVALID_NUMBER_PROVIDED),
+          GameState.errorState(errorMessage: INVALID_NUMBER_PROVIDED),
         ],
       );
 
@@ -310,7 +310,7 @@ void main() {
           points: TEST_PLAYER_1_POINTS,
           bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
         ))),
-        expect: [isA<GameUpdatedState>()],
+        expect: [isA<GameState>()], // TODO Check how to compare freezed classed we need GameState.GameState.updatedState here
       );
 
       blocTest(
@@ -336,7 +336,7 @@ void main() {
           bonusPoints: TEST_PLAYER_1_BONUS_POINTS,
         ))),
         expect: [
-          GameErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
+          GameState.errorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
         ],
       );
 
@@ -359,7 +359,7 @@ void main() {
           playerToDelete: testPlayer1,
         )),
         expect: [
-          GameErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
+          GameState.errorState(errorMessage: ERROR_RETREVING_LOCAL_DATA),
         ],
       );
 
@@ -382,7 +382,7 @@ void main() {
           playerToDelete: testPlayer1,
         )),
         expect: [
-          GameErrorState(errorMessage: ''),
+          GameState.errorState(errorMessage: ''),
         ],
       );
 
@@ -405,7 +405,7 @@ void main() {
           playerToDelete: testPlayer1,
         )),
         expect: [
-          GameUpdatedState(game: testGame),
+          GameState.updatedState(game: testGame),
         ],
       );
 
@@ -433,7 +433,7 @@ void main() {
               SaveGameIntoHistoryParams(gameToSave: testGame));
         },
         expect: [
-          GameOverState(player: testPlayer1),
+          GameState.overState(player: testPlayer1),
         ],
       );
 
@@ -457,7 +457,7 @@ void main() {
         act: (gameBloc) =>
             gameBloc.add(GameEvent.endGameSooner(currentGame: testGame)),
         expect: [
-          GameErrorState(errorMessage: ''),
+          GameState.errorState(errorMessage: ''),
         ],
       );
     },

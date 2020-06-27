@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,11 +12,10 @@ class GameTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
       builder: (_, state) {
-        if (state is GameUpdatedState) {
-          return _buildGameTitle(state.game.name, context);
-        } else {
-          return Container(); // Just render a empty container in other states...
-        }
+        return state.maybeMap(
+          orElse: () => Container(), // Just render a empty container in any other case
+          updatedState: (params) => _buildGameTitle(params.game.name, context),
+        );
       },
     );
   }

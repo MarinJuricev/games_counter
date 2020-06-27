@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animations/animations.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +26,15 @@ class _HomePageState extends State<HomePage> {
     return BlocConsumer<GameBloc, GameState>(
       listenWhen: (previousState, currentState) {
         return currentState.maybeMap(
-            orElse: () => false, errorState: (errorMessage) => true);
+          orElse: () => false,
+          errorState: (_) => true,
+        );
       },
       listener: (builderContext, state) {
-        state.maybeWhen(
-          orElse: null,
+        return state.maybeWhen(
+          orElse: () => null,
           errorState: (String errorMessage) => {
-            Flushbar(
+             Flushbar(
               message: errorMessage,
               icon: Icon(
                 Icons.error,
@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
       },
       buildWhen: (previousState, currentState) {
         return currentState.maybeMap(
-            orElse: () => true, errorState: (errorMessage) => false);
+          orElse: () => true,
+          errorState: (_) => false,
+        );
       },
       builder: (builderContext, state) {
         return Scaffold(
@@ -81,36 +83,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildAddPlayerFab(BuildContext builderContext, GameState state) {
-    if (state is! GameInitialState && state is! GameOverState) {
-      return OpenContainer(
-        openBuilder: (BuildContext context, VoidCallback _) {
-          return AddPlayerPage(
-              gameBloc: BlocProvider.of<GameBloc>(builderContext));
-        },
-        closedElevation: 6.0,
-        closedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(_fabDimension / 2),
-          ),
+    return state.when(
+      initialState: () => Container(),
+      updatedState: (_) => _renderAddPlayerFab(builderContext),
+      errorState: (_) => _renderAddPlayerFab(builderContext),
+      overState: (_) => Container(),
+    );
+  }
+
+  Widget _renderAddPlayerFab(BuildContext builderContext) {
+    return OpenContainer(
+      openBuilder: (BuildContext context, VoidCallback _) {
+        return AddPlayerPage(
+            gameBloc: BlocProvider.of<GameBloc>(builderContext));
+      },
+      closedElevation: 6.0,
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(_fabDimension / 2),
         ),
-        closedColor: Theme.of(context).colorScheme.secondary,
-        closedBuilder: (BuildContext context, VoidCallback openContainer) {
-          return Container(
-            color: Colors.white,
-            child: SizedBox(
-              height: _fabDimension,
-              width: _fabDimension,
-              child: Center(
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(builderContext).scaffoldBackgroundColor,
-                ),
+      ),
+      closedColor: Theme.of(context).colorScheme.secondary,
+      closedBuilder: (BuildContext context, VoidCallback openContainer) {
+        return Container(
+          color: Colors.white,
+          child: SizedBox(
+            height: _fabDimension,
+            width: _fabDimension,
+            child: Center(
+              child: Icon(
+                Icons.add,
+                color: Theme.of(builderContext).scaffoldBackgroundColor,
               ),
             ),
-          );
-        },
-      );
-    } else
-      return null; // returning null won't render the widget
+          ),
+        );
+      },
+    );
   }
 }
