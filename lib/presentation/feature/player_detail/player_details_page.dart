@@ -10,7 +10,6 @@ import '../../widgets/point_indicator.dart';
 import '../../widgets/point_picker.dart';
 import 'bloc/player_detail_bloc.dart';
 
-
 class PlayerDetailsPage extends StatefulWidget {
   final Player currentPlayer;
   final int pointsToWin;
@@ -56,33 +55,30 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
   }
 
   Widget _buildDetailPage(PlayerDetailState state, BuildContext context) {
-    final TextStyle style = Theme.of(context).accentTextTheme.bodyText1.copyWith(
-          fontSize: 20,
-          fontWeight: FontWeight.normal,
-        );
+    final TextStyle style =
+        Theme.of(context).accentTextTheme.bodyText1.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+            );
 
-    if (state is PlayerDetailInitialState) {
-      return _detailView(
+    return state.maybeWhen(
+      orElse: () => Container(),
+      initialState: () => _detailView(
         context: context,
         mainPoints: 0,
         bonusPoints: 0,
         player: widget.currentPlayer,
         pointsToWin: widget.pointsToWin,
         style: style,
-      );
-    } else if (state is PlayerDetailUpdatedState) {
-      int updatedMainPoints = state.player.points;
-      int updatedBonusPoints = state.player.bonusPoints;
-      Player updatedPlayer = state.player;
-
-      return _detailView(
+      ),
+      updatedState: (player) => _detailView(
           context: context,
-          mainPoints: updatedMainPoints,
-          bonusPoints: updatedBonusPoints,
+          mainPoints: player.points,
+          bonusPoints: player.bonusPoints,
           pointsToWin: widget.pointsToWin,
-          player: updatedPlayer,
-          style: style);
-    }
+          player: player,
+          style: style),
+    );
   }
 
   Widget _detailView({
@@ -211,7 +207,7 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
     Player updatedPlayer,
   ) {
     BlocProvider.of<PlayerDetailBloc>(context)
-        .add(PlayerDetailResetClickedEvent(currentPlayer: updatedPlayer));
+        .add(PlayerDetailEvent.resetClicked(currentPlayer: updatedPlayer));
 
     Navigator.of(context).pop();
   }
@@ -222,7 +218,8 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
     int updatedBonusPoints,
     Player updatedPlayer,
   ) {
-    BlocProvider.of<PlayerDetailBloc>(context).add(PlayerDetailSaveClickedEvent(
+    BlocProvider.of<PlayerDetailBloc>(context)
+        .add(PlayerDetailEvent.saveClicked(
       newMainPoints: updatedMainPoints,
       newBonusPoints: updatedBonusPoints,
       currentPlayer: updatedPlayer,

@@ -1,32 +1,14 @@
 part of 'player_detail_bloc.dart';
 
-abstract class PlayerDetailEvent extends Equatable {
-  const PlayerDetailEvent();
+@freezed
+abstract class PlayerDetailEvent with _$PlayerDetailEvent {
+  factory PlayerDetailEvent.saveClicked({
+    @required int newMainPoints,
+    @required int newBonusPoints,
+    @required Player currentPlayer,
+  }) = _OnSaveClicked;
 
-  @override
-  List<Object> get props => [];
-}
-
-class PlayerDetailSaveClickedEvent extends PlayerDetailEvent {
-  final int newMainPoints;
-  final int newBonusPoints;
-  final Player currentPlayer;
-
-  PlayerDetailSaveClickedEvent({
-    @required this.newMainPoints,
-    @required this.newBonusPoints,
-    @required this.currentPlayer,
-  });
-
-  @override
-  List<Object> get props => [newMainPoints, newBonusPoints, currentPlayer];
-}
-
-class PlayerDetailResetClickedEvent extends PlayerDetailEvent {
-  final Player currentPlayer;
-
-  PlayerDetailResetClickedEvent({@required this.currentPlayer});
-
-  @override
-  List<Object> get props => [currentPlayer];
+  factory PlayerDetailEvent.resetClicked({
+    @required Player currentPlayer,
+  }) = _OnResetClicked;
 }

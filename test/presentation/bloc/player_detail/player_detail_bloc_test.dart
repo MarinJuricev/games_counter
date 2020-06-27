@@ -31,24 +31,15 @@ void main() {
   int newMainPoints = 15;
   int newBonusPoints = 10;
   Player currentPlayer = Player(
-    name: 'Test',
+    name: TEST_PLAYER_1_NAME,
     points: 0,
     bonusPoints: 0,
   );
-  Player updatedPlayer = Player(
-    name: 'Test',
-    points: newMainPoints,
-    bonusPoints: newBonusPoints,
-  );
-
-  final gameName = 'Treseta';
-  final pointsToWinParsed = 41;
-  final numberOfPlayersParsed = 4;
 
   final testGameWithPlayer0Points = Game(
-    name: gameName,
-    pointsToWin: pointsToWinParsed,
-    numberOfPlayers: numberOfPlayersParsed,
+    name: TEST_GAME_NAME_1,
+    pointsToWin: TEST_POINTS_TO_WIN_PARSED_1,
+    numberOfPlayers: TEST_NUMBER_OF_PLAYERS_PARSED_1,
     players: [currentPlayer],
     createdAt: TEST_CREATED_AT_1,
     winner: TEST_PLAYER_1_NAME
@@ -120,13 +111,13 @@ void main() {
           );
         },
         act: (playerDetailBloc) =>
-            playerDetailBloc.add(PlayerDetailSaveClickedEvent(
+            playerDetailBloc.add(PlayerDetailEvent.saveClicked(
           currentPlayer: currentPlayer,
           newMainPoints: newMainPoints,
           newBonusPoints: newBonusPoints,
         )),
         expect: [
-          PlayerDetailErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
+          PlayerDetailState.errorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
         ],
       );
 
@@ -144,12 +135,12 @@ void main() {
           );
         },
         act: (playerDetailBloc) =>
-            playerDetailBloc.add(PlayerDetailSaveClickedEvent(
+            playerDetailBloc.add(PlayerDetailEvent.saveClicked(
           currentPlayer: currentPlayer,
           newMainPoints: newMainPoints,
           newBonusPoints: newBonusPoints,
         )),
-        expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
+        expect: [PlayerDetailState.errorState(errorMessage: UPDATE_GAME_ERROR)],
       );
 
       blocTest(
@@ -166,7 +157,7 @@ void main() {
           );
         },
         act: (playerDetailBloc) =>
-            playerDetailBloc.add(PlayerDetailSaveClickedEvent(
+            playerDetailBloc.add(PlayerDetailEvent.saveClicked(
           currentPlayer: testPlayer1,
           newMainPoints: newMainPoints,
           newBonusPoints: newBonusPoints,
@@ -174,7 +165,7 @@ void main() {
         verify: (playerDetailBloc) async {
           mockGameBloc.add(GameEvent.gameUpdated(newGame: testGame));
         },
-        expect: [PlayerDetailUpdatedState(player: updatedPlayer)],
+        expect: [PlayerDetailState.updatedState(player: currentPlayer)],
       );
 
       blocTest(
@@ -190,12 +181,12 @@ void main() {
           );
         },
         act: (playerDetailBloc) => playerDetailBloc
-            .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
+            .add(PlayerDetailEvent.resetClicked(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
         },
         expect: [
-          PlayerDetailErrorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
+          PlayerDetailState.errorState(errorMessage: ERROR_RETREVING_LOCAL_DATA)
         ],
       );
 
@@ -213,13 +204,13 @@ void main() {
           );
         },
         act: (playerDetailBloc) => playerDetailBloc
-            .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
+            .add(PlayerDetailEvent.resetClicked(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
           mockResetPlayer(ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
-        expect: [PlayerDetailErrorState(errorMessage: UPDATE_GAME_ERROR)],
+        expect: [PlayerDetailState.errorState(errorMessage: UPDATE_GAME_ERROR)],
       );
 
       blocTest(
@@ -236,13 +227,13 @@ void main() {
           );
         },
         act: (playerDetailBloc) => playerDetailBloc
-            .add(PlayerDetailResetClickedEvent(currentPlayer: currentPlayer)),
+            .add(PlayerDetailEvent.resetClicked(currentPlayer: currentPlayer)),
         verify: (playerDetailBloc) async {
           mockGameRepository.getGame();
           mockResetPlayer(ResetPlayerParams(
               currentGame: testGame, currentPlayer: currentPlayer));
         },
-        expect: [PlayerDetailUpdatedState(player: currentPlayer)],
+        expect: [PlayerDetailState.updatedState(player: currentPlayer)],
       );
     },
   );
