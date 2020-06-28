@@ -21,7 +21,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
   ColorBloc({@required this.colorRepository});
 
   @override
-  ColorState get initialState => ColorInitial();
+  ColorState get initialState => ColorState.initialState();
 
   @override
   Stream<ColorState> mapEventToState(
@@ -85,7 +85,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
 
       await colorRepository.updateAppColors(updatedAppColors);
 
-      yield ColorUpdated(appColors: updatedAppColors);
+      yield ColorState.updatedState(appColors: updatedAppColors);
     }
   }
 
@@ -94,7 +94,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
     final colorEither = colorRepoResult.unwrapResult();
 
     if (colorEither is AppColors) {
-      yield ColorUpdated(appColors: colorEither);
+      yield ColorState.updatedState(appColors: colorEither);
     }
   }
 
@@ -103,7 +103,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
     final colorEither = colorRepoResult.unwrapResult();
 
     if (colorEither is AppColors) {
-      yield ColorUpdated(appColors: colorEither);
+      yield ColorState.updatedState(appColors: colorEither);
     }
   }
 }

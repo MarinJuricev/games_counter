@@ -39,7 +39,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async => colorBloc
             .add(ColorEvent.onScaffoldColorChange(newScaffoldColor: newColor)),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );
@@ -56,7 +56,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async => colorBloc
             .add(ColorEvent.onErrorColorChange(newErrorColor: newColor)),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );
@@ -73,7 +73,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async => colorBloc
             .add(ColorEvent.onPrimaryColorChange(newPrimaryColor: newColor)),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );
@@ -90,7 +90,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async => colorBloc
             .add(ColorEvent.onAccentColorChange(newAccentColor: newColor)),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );
@@ -107,7 +107,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async =>
             colorBloc.add(ColorEvent.onGetCurrentAppColors()),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );
@@ -124,7 +124,7 @@ void main() {
         },
         act: (ColorBloc colorBloc) async =>
             colorBloc.add(ColorEvent.onGetCurrentAppColors()),
-        expect: [isA<ColorUpdated>()],
+        expect: [isA<ColorState>()],
       );
     },
   );

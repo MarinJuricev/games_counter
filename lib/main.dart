@@ -38,25 +38,16 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ColorBloc, ColorState>(
         builder: (builderContext, state) {
-          if (state is ColorInitial) {
-            BlocProvider.of<ColorBloc>(builderContext)
-              ..add(ColorEvent.onGetCurrentAppColors());
-            return MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            );
-          } else if (state is ColorUpdated) {
-            return buildApp(state.appColors);
-          }
+          return state.when(
+            initialState: () => _buildProgressBar(builderContext),
+            updatedState: (appColors) => _buildApp(appColors),
+          );
         },
       ),
     );
   }
 
-  Widget buildApp(AppColors appColors) {
+  Widget _buildApp(AppColors appColors) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -64,13 +55,27 @@ class MyApp extends StatelessWidget {
         primaryColor: HexColor.fromHex(appColors.primaryColor),
         accentColor: HexColor.fromHex(appColors.accentColor),
         errorColor: HexColor.fromHex(appColors.errorColor),
-        primaryTextTheme: Typography.material2018(platform: TargetPlatform.iOS).white,
+        primaryTextTheme:
+            Typography.material2018(platform: TargetPlatform.iOS).white,
         textTheme: Typography.material2018(platform: TargetPlatform.iOS).white,
-        accentTextTheme: Typography.material2018(platform: TargetPlatform.iOS).black,
+        accentTextTheme:
+            Typography.material2018(platform: TargetPlatform.iOS).black,
       ),
       home: BlocProvider(
         create: (BuildContext context) => di.sl<GameBloc>(),
         child: HomeBottomNavRoute(),
+      ),
+    );
+  }
+
+  Widget _buildProgressBar(BuildContext builderContext) {
+    BlocProvider.of<ColorBloc>(builderContext)
+      ..add(ColorEvent.onGetCurrentAppColors());
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }

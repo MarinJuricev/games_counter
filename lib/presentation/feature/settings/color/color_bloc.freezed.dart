@@ -955,3 +955,292 @@ class _$_OnResetAppColors
 abstract class _OnResetAppColors implements ColorEvent {
   factory _OnResetAppColors() = _$_OnResetAppColors;
 }
+
+class _$ColorStateTearOff {
+  const _$ColorStateTearOff();
+
+  _OnColorInitialState initialState() {
+    return _OnColorInitialState();
+  }
+
+  _OnColorUpdatedState updatedState({AppColors appColors}) {
+    return _OnColorUpdatedState(
+      appColors: appColors,
+    );
+  }
+}
+
+// ignore: unused_element
+const $ColorState = _$ColorStateTearOff();
+
+mixin _$ColorState {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(AppColors appColors),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(AppColors appColors),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnColorInitialState value),
+    @required Result updatedState(_OnColorUpdatedState value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnColorInitialState value),
+    Result updatedState(_OnColorUpdatedState value),
+    @required Result orElse(),
+  });
+}
+
+abstract class $ColorStateCopyWith<$Res> {
+  factory $ColorStateCopyWith(
+          ColorState value, $Res Function(ColorState) then) =
+      _$ColorStateCopyWithImpl<$Res>;
+}
+
+class _$ColorStateCopyWithImpl<$Res> implements $ColorStateCopyWith<$Res> {
+  _$ColorStateCopyWithImpl(this._value, this._then);
+
+  final ColorState _value;
+  // ignore: unused_field
+  final $Res Function(ColorState) _then;
+}
+
+abstract class _$OnColorInitialStateCopyWith<$Res> {
+  factory _$OnColorInitialStateCopyWith(_OnColorInitialState value,
+          $Res Function(_OnColorInitialState) then) =
+      __$OnColorInitialStateCopyWithImpl<$Res>;
+}
+
+class __$OnColorInitialStateCopyWithImpl<$Res>
+    extends _$ColorStateCopyWithImpl<$Res>
+    implements _$OnColorInitialStateCopyWith<$Res> {
+  __$OnColorInitialStateCopyWithImpl(
+      _OnColorInitialState _value, $Res Function(_OnColorInitialState) _then)
+      : super(_value, (v) => _then(v as _OnColorInitialState));
+
+  @override
+  _OnColorInitialState get _value => super._value as _OnColorInitialState;
+}
+
+class _$_OnColorInitialState
+    with DiagnosticableTreeMixin
+    implements _OnColorInitialState {
+  _$_OnColorInitialState();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ColorState.initialState()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ColorState.initialState'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnColorInitialState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(AppColors appColors),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    return initialState();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(AppColors appColors),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnColorInitialState value),
+    @required Result updatedState(_OnColorUpdatedState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    return initialState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnColorInitialState value),
+    Result updatedState(_OnColorUpdatedState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialState != null) {
+      return initialState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnColorInitialState implements ColorState {
+  factory _OnColorInitialState() = _$_OnColorInitialState;
+}
+
+abstract class _$OnColorUpdatedStateCopyWith<$Res> {
+  factory _$OnColorUpdatedStateCopyWith(_OnColorUpdatedState value,
+          $Res Function(_OnColorUpdatedState) then) =
+      __$OnColorUpdatedStateCopyWithImpl<$Res>;
+  $Res call({AppColors appColors});
+
+  $AppColorsCopyWith<$Res> get appColors;
+}
+
+class __$OnColorUpdatedStateCopyWithImpl<$Res>
+    extends _$ColorStateCopyWithImpl<$Res>
+    implements _$OnColorUpdatedStateCopyWith<$Res> {
+  __$OnColorUpdatedStateCopyWithImpl(
+      _OnColorUpdatedState _value, $Res Function(_OnColorUpdatedState) _then)
+      : super(_value, (v) => _then(v as _OnColorUpdatedState));
+
+  @override
+  _OnColorUpdatedState get _value => super._value as _OnColorUpdatedState;
+
+  @override
+  $Res call({
+    Object appColors = freezed,
+  }) {
+    return _then(_OnColorUpdatedState(
+      appColors:
+          appColors == freezed ? _value.appColors : appColors as AppColors,
+    ));
+  }
+
+  @override
+  $AppColorsCopyWith<$Res> get appColors {
+    if (_value.appColors == null) {
+      return null;
+    }
+    return $AppColorsCopyWith<$Res>(_value.appColors, (value) {
+      return _then(_value.copyWith(appColors: value));
+    });
+  }
+}
+
+class _$_OnColorUpdatedState
+    with DiagnosticableTreeMixin
+    implements _OnColorUpdatedState {
+  _$_OnColorUpdatedState({this.appColors});
+
+  @override
+  final AppColors appColors;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ColorState.updatedState(appColors: $appColors)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ColorState.updatedState'))
+      ..add(DiagnosticsProperty('appColors', appColors));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OnColorUpdatedState &&
+            (identical(other.appColors, appColors) ||
+                const DeepCollectionEquality()
+                    .equals(other.appColors, appColors)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(appColors);
+
+  @override
+  _$OnColorUpdatedStateCopyWith<_OnColorUpdatedState> get copyWith =>
+      __$OnColorUpdatedStateCopyWithImpl<_OnColorUpdatedState>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialState(),
+    @required Result updatedState(AppColors appColors),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    return updatedState(appColors);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialState(),
+    Result updatedState(AppColors appColors),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(appColors);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialState(_OnColorInitialState value),
+    @required Result updatedState(_OnColorUpdatedState value),
+  }) {
+    assert(initialState != null);
+    assert(updatedState != null);
+    return updatedState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialState(_OnColorInitialState value),
+    Result updatedState(_OnColorUpdatedState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedState != null) {
+      return updatedState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnColorUpdatedState implements ColorState {
+  factory _OnColorUpdatedState({AppColors appColors}) = _$_OnColorUpdatedState;
+
+  AppColors get appColors;
+  _$OnColorUpdatedStateCopyWith<_OnColorUpdatedState> get copyWith;
+}
