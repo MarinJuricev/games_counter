@@ -32,6 +32,8 @@ dependencies:
   flutter_material_color_picker: ^1.0.5
   # Date time format
   intl: ^0.16.1
+  # Introduction screen
+  introduction_screen: ^1.0.8
   
 
 dependency_overrides:

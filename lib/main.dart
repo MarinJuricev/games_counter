@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/feature/onboarding/onboarding_page.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (BuildContext context) => di.sl<GameBloc>(),
-        child: HomeBottomNavRoute(),
+        child: OnboardingPage(),
       ),
     );
   }

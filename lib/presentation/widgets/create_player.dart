@@ -87,6 +87,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     onChanged: (value) {
                       points = value;
                     },
+                    initialValue: '0',
                     decoration: InputDecoration(
                       errorMaxLines: 2,
                       errorStyle: TextStyle(
@@ -121,6 +122,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     onChanged: (value) {
                       bonusPoints = value;
                     },
+                    initialValue: '0',
                     decoration: InputDecoration(
                       errorMaxLines: 2,
                       errorStyle: TextStyle(
