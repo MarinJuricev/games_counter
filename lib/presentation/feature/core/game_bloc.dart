@@ -37,10 +37,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     @required this.endGameSooner,
     @required this.inputConverter,
     @required this.saveGameIntoHistory,
-  });
-
-  @override
-  GameState get initialState => GameState.initialState();
+  }): super(GameState.initialState());
 
   @override
   Stream<GameState> mapEventToState(

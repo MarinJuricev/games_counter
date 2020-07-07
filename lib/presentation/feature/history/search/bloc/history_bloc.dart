@@ -19,10 +19,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   HistoryBloc({
     @required this.getGamesFromQuery,
     @required this.saveQuery,
-  });
-
-  @override
-  HistoryState get initialState => HistoryState.initialState();
+  }): super(HistoryState.initialState());
 
   @override
   Stream<HistoryState> mapEventToState(

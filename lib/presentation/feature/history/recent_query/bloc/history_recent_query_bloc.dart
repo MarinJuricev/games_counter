@@ -22,11 +22,7 @@ class HistoryRecentQueryBloc
   HistoryRecentQueryBloc({
     @required this.getRecentQueries,
     @required this.deleteQuery,
-  });
-
-  @override
-  HistoryRecentQueryState get initialState =>
-      HistoryRecentQueryState.initialState();
+  }): super(HistoryRecentQueryState.initialState());
 
   @override
   Stream<HistoryRecentQueryState> mapEventToState(

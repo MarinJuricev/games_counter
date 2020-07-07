@@ -12,8 +12,8 @@ dependencies:
   # Service locator
   get_it: ^4.0.1
   # Bloc for state managment
-  bloc: ^4.0.0
-  flutter_bloc: ^4.0.0
+  bloc: ^5.0.0
+  flutter_bloc: ^5.0.0
   # Value equality
   equatable: ^1.1.1
   # Functional programming
@@ -46,7 +46,7 @@ dev_dependencies:
   lint: ^1.1.1
   hive_generator: ^0.7.0+2
   build_runner: ^1.10.0
-  bloc_test: ^5.0.0
+  bloc_test: ^6.0.0
   # Class code gen and Kotlin like when statement
   freezed: ^0.10.9
 

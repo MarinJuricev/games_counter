@@ -30,10 +30,7 @@ class PlayerDetailBloc extends Bloc<PlayerDetailEvent, PlayerDetailState> {
     @required this.gameBloc,
     @required this.updateGame,
     @required this.resetPlayer,
-  });
-
-  @override
-  PlayerDetailState get initialState => PlayerDetailState.initialState();
+  }): super(PlayerDetailState.initialState());
 
   @override
   Stream<PlayerDetailState> mapEventToState(

@@ -18,10 +18,10 @@ enum ColorField { background, primary, accent, error }
 
 class ColorBloc extends Bloc<ColorEvent, ColorState> {
   final ColorRepository colorRepository;
-  ColorBloc({@required this.colorRepository});
 
-  @override
-  ColorState get initialState => ColorState.initialState();
+  ColorBloc({
+    @required this.colorRepository,
+  }) : super(ColorState.initialState());
 
   @override
   Stream<ColorState> mapEventToState(

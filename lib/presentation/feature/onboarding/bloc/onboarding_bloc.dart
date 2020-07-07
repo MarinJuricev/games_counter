@@ -10,8 +10,7 @@ part 'onboarding_event.dart';
 part 'onboarding_state.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  @override
-  OnboardingState get initialState => OnboardingState.initialState();
+  OnboardingBloc() : super(OnboardingState.initialState());
 
   @override
   Stream<OnboardingState> mapEventToState(
