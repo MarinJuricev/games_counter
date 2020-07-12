@@ -15,7 +15,7 @@ dependencies:
   bloc: ^5.0.0
   flutter_bloc: ^5.0.0
   # Value equality
-  equatable: ^1.1.1
+  equatable: ^1.2.0
   # Functional programming
   dartz: ^0.8.9
   # Prebuilt material animations

@@ -12,7 +12,6 @@ import 'di.dart' as di;
 import 'domain/entities/app_colors.dart';
 import 'presentation/feature/core/game_bloc.dart';
 import 'presentation/feature/settings/color/color_bloc.dart';
-import 'presentation/home_bottom_navigation_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

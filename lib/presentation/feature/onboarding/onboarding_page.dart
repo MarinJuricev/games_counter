@@ -71,6 +71,8 @@ class OnboardingPage extends StatelessWidget {
   }
 
   _navigateToHome(BuildContext context) {
+
+    
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => HomeBottomNavRoute()),

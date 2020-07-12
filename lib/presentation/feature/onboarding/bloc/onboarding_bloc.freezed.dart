@@ -15,12 +15,39 @@ class _$OnboardingEventTearOff {
   _OnOnboardingFinished finished() {
     return _OnOnboardingFinished();
   }
+
+  _OnOnboardingStarted started() {
+    return _OnOnboardingStarted();
+  }
 }
 
 // ignore: unused_element
 const $OnboardingEvent = _$OnboardingEventTearOff();
 
-mixin _$OnboardingEvent {}
+mixin _$OnboardingEvent {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finished(),
+    @required Result started(),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finished(),
+    Result started(),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finished(_OnOnboardingFinished value),
+    @required Result started(_OnOnboardingStarted value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finished(_OnOnboardingFinished value),
+    Result started(_OnOnboardingStarted value),
+    @required Result orElse(),
+  });
+}
 
 abstract class $OnboardingEventCopyWith<$Res> {
   factory $OnboardingEventCopyWith(
@@ -77,10 +104,156 @@ class _$_OnOnboardingFinished
 
   @override
   int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finished(),
+    @required Result started(),
+  }) {
+    assert(finished != null);
+    assert(started != null);
+    return finished();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finished(),
+    Result started(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finished != null) {
+      return finished();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finished(_OnOnboardingFinished value),
+    @required Result started(_OnOnboardingStarted value),
+  }) {
+    assert(finished != null);
+    assert(started != null);
+    return finished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finished(_OnOnboardingFinished value),
+    Result started(_OnOnboardingStarted value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finished != null) {
+      return finished(this);
+    }
+    return orElse();
+  }
 }
 
 abstract class _OnOnboardingFinished implements OnboardingEvent {
   factory _OnOnboardingFinished() = _$_OnOnboardingFinished;
+}
+
+abstract class _$OnOnboardingStartedCopyWith<$Res> {
+  factory _$OnOnboardingStartedCopyWith(_OnOnboardingStarted value,
+          $Res Function(_OnOnboardingStarted) then) =
+      __$OnOnboardingStartedCopyWithImpl<$Res>;
+}
+
+class __$OnOnboardingStartedCopyWithImpl<$Res>
+    extends _$OnboardingEventCopyWithImpl<$Res>
+    implements _$OnOnboardingStartedCopyWith<$Res> {
+  __$OnOnboardingStartedCopyWithImpl(
+      _OnOnboardingStarted _value, $Res Function(_OnOnboardingStarted) _then)
+      : super(_value, (v) => _then(v as _OnOnboardingStarted));
+
+  @override
+  _OnOnboardingStarted get _value => super._value as _OnOnboardingStarted;
+}
+
+class _$_OnOnboardingStarted
+    with DiagnosticableTreeMixin
+    implements _OnOnboardingStarted {
+  _$_OnOnboardingStarted();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'OnboardingEvent.started()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'OnboardingEvent.started'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _OnOnboardingStarted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finished(),
+    @required Result started(),
+  }) {
+    assert(finished != null);
+    assert(started != null);
+    return started();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finished(),
+    Result started(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (started != null) {
+      return started();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finished(_OnOnboardingFinished value),
+    @required Result started(_OnOnboardingStarted value),
+  }) {
+    assert(finished != null);
+    assert(started != null);
+    return started(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finished(_OnOnboardingFinished value),
+    Result started(_OnOnboardingStarted value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (started != null) {
+      return started(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnOnboardingStarted implements OnboardingEvent {
+  factory _OnOnboardingStarted() = _$_OnOnboardingStarted;
 }
 
 class _$OnboardingStateTearOff {
@@ -90,11 +263,11 @@ class _$OnboardingStateTearOff {
     return _OnOnboardingInitialState();
   }
 
-  _OnOnboardingSkipState skipState() {
+  _OnOnboardingSkipState skipOnboardingState() {
     return _OnOnboardingSkipState();
   }
 
-  _OnOnboardingStartState startState() {
+  _OnOnboardingStartState startOnboardingState() {
     return _OnOnboardingStartState();
   }
 }
@@ -106,27 +279,27 @@ mixin _$OnboardingState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result skipState(),
-    @required Result startState(),
+    @required Result skipOnboardingState(),
+    @required Result startOnboardingState(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result skipState(),
-    Result startState(),
+    Result skipOnboardingState(),
+    Result startOnboardingState(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialState(_OnOnboardingInitialState value),
-    @required Result skipState(_OnOnboardingSkipState value),
-    @required Result startState(_OnOnboardingStartState value),
+    @required Result skipOnboardingState(_OnOnboardingSkipState value),
+    @required Result startOnboardingState(_OnOnboardingStartState value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialState(_OnOnboardingInitialState value),
-    Result skipState(_OnOnboardingSkipState value),
-    Result startState(_OnOnboardingStartState value),
+    Result skipOnboardingState(_OnOnboardingSkipState value),
+    Result startOnboardingState(_OnOnboardingStartState value),
     @required Result orElse(),
   });
 }
@@ -193,12 +366,12 @@ class _$_OnOnboardingInitialState
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result skipState(),
-    @required Result startState(),
+    @required Result skipOnboardingState(),
+    @required Result startOnboardingState(),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
     return initialState();
   }
 
@@ -206,8 +379,8 @@ class _$_OnOnboardingInitialState
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result skipState(),
-    Result startState(),
+    Result skipOnboardingState(),
+    Result startOnboardingState(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -221,12 +394,12 @@ class _$_OnOnboardingInitialState
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialState(_OnOnboardingInitialState value),
-    @required Result skipState(_OnOnboardingSkipState value),
-    @required Result startState(_OnOnboardingStartState value),
+    @required Result skipOnboardingState(_OnOnboardingSkipState value),
+    @required Result startOnboardingState(_OnOnboardingStartState value),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
     return initialState(this);
   }
 
@@ -234,8 +407,8 @@ class _$_OnOnboardingInitialState
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialState(_OnOnboardingInitialState value),
-    Result skipState(_OnOnboardingSkipState value),
-    Result startState(_OnOnboardingStartState value),
+    Result skipOnboardingState(_OnOnboardingSkipState value),
+    Result startOnboardingState(_OnOnboardingStartState value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -274,13 +447,14 @@ class _$_OnOnboardingSkipState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OnboardingState.skipState()';
+    return 'OnboardingState.skipOnboardingState()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OnboardingState.skipState'));
+    properties
+      ..add(DiagnosticsProperty('type', 'OnboardingState.skipOnboardingState'));
   }
 
   @override
@@ -295,26 +469,26 @@ class _$_OnOnboardingSkipState
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result skipState(),
-    @required Result startState(),
+    @required Result skipOnboardingState(),
+    @required Result startOnboardingState(),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
-    return skipState();
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
+    return skipOnboardingState();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result skipState(),
-    Result startState(),
+    Result skipOnboardingState(),
+    Result startOnboardingState(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (skipState != null) {
-      return skipState();
+    if (skipOnboardingState != null) {
+      return skipOnboardingState();
     }
     return orElse();
   }
@@ -323,26 +497,26 @@ class _$_OnOnboardingSkipState
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialState(_OnOnboardingInitialState value),
-    @required Result skipState(_OnOnboardingSkipState value),
-    @required Result startState(_OnOnboardingStartState value),
+    @required Result skipOnboardingState(_OnOnboardingSkipState value),
+    @required Result startOnboardingState(_OnOnboardingStartState value),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
-    return skipState(this);
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
+    return skipOnboardingState(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialState(_OnOnboardingInitialState value),
-    Result skipState(_OnOnboardingSkipState value),
-    Result startState(_OnOnboardingStartState value),
+    Result skipOnboardingState(_OnOnboardingSkipState value),
+    Result startOnboardingState(_OnOnboardingStartState value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (skipState != null) {
-      return skipState(this);
+    if (skipOnboardingState != null) {
+      return skipOnboardingState(this);
     }
     return orElse();
   }
@@ -376,13 +550,15 @@ class _$_OnOnboardingStartState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OnboardingState.startState()';
+    return 'OnboardingState.startOnboardingState()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'OnboardingState.startState'));
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'OnboardingState.startOnboardingState'));
   }
 
   @override
@@ -397,26 +573,26 @@ class _$_OnOnboardingStartState
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialState(),
-    @required Result skipState(),
-    @required Result startState(),
+    @required Result skipOnboardingState(),
+    @required Result startOnboardingState(),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
-    return startState();
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
+    return startOnboardingState();
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialState(),
-    Result skipState(),
-    Result startState(),
+    Result skipOnboardingState(),
+    Result startOnboardingState(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (startState != null) {
-      return startState();
+    if (startOnboardingState != null) {
+      return startOnboardingState();
     }
     return orElse();
   }
@@ -425,26 +601,26 @@ class _$_OnOnboardingStartState
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialState(_OnOnboardingInitialState value),
-    @required Result skipState(_OnOnboardingSkipState value),
-    @required Result startState(_OnOnboardingStartState value),
+    @required Result skipOnboardingState(_OnOnboardingSkipState value),
+    @required Result startOnboardingState(_OnOnboardingStartState value),
   }) {
     assert(initialState != null);
-    assert(skipState != null);
-    assert(startState != null);
-    return startState(this);
+    assert(skipOnboardingState != null);
+    assert(startOnboardingState != null);
+    return startOnboardingState(this);
   }
 
   @override
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialState(_OnOnboardingInitialState value),
-    Result skipState(_OnOnboardingSkipState value),
-    Result startState(_OnOnboardingStartState value),
+    Result skipOnboardingState(_OnOnboardingSkipState value),
+    Result startOnboardingState(_OnOnboardingStartState value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (startState != null) {
-      return startState(this);
+    if (startOnboardingState != null) {
+      return startOnboardingState(this);
     }
     return orElse();
   }
