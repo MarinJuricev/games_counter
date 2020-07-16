@@ -1,6 +1,11 @@
+import 'package:game_counter/data/datasources/onboarding_local_data_source.dart';
+import 'package:game_counter/domain/repositories/onboarding_repository.dart';
 import 'package:game_counter/domain/usecases/delete_query.dart';
 import 'package:game_counter/domain/usecases/get_recent_queries.dart';
+import 'package:game_counter/domain/usecases/set_onboarding_status.dart';
+import 'package:game_counter/domain/usecases/should_skip_onboarding.dart';
 import 'package:game_counter/presentation/feature/history/recent_query/bloc/history_recent_query_bloc.dart';
+import 'package:game_counter/presentation/feature/onboarding/bloc/onboarding_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/util/input_converter.dart';
@@ -11,6 +16,7 @@ import 'data/datasources/local_persistence_provider.dart';
 import 'data/repositories/color_repository_impl.dart';
 import 'data/repositories/game_repository_impl.dart';
 import 'data/repositories/history_repository_impl.dart';
+import 'data/repositories/onboarding_repository_impl.dart';
 import 'data/service/time_provider_impl.dart';
 import 'domain/repositories/color_repository.dart';
 import 'domain/repositories/game_repository.dart';
@@ -75,6 +81,12 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerFactory(
+    () => OnboardingBloc(
+        setOnBoardingStatus: sl<SetOnBoardingStatus>(),
+        shouldSkipOnboarding: sl<ShouldSkipOnboarding>()),
+  );
+
   // Use cases
   sl.registerFactory(
     () => CreateGame(
@@ -99,6 +111,10 @@ Future<void> init() async {
       () => GetGamesFromQuery(historyRepository: sl<HistoryRepository>()));
   sl.registerFactory(
       () => SaveGameIntoHistory(repository: sl<HistoryRepository>()));
+  sl.registerFactory(
+      () => SetOnBoardingStatus(repository: sl<OnboardingRepository>()));
+  sl.registerFactory(
+      () => ShouldSkipOnboarding(repository: sl<OnboardingRepository>()));
 
   // Repository
   sl.registerLazySingleton<GameRepository>(
@@ -110,6 +126,9 @@ Future<void> init() async {
   sl.registerLazySingleton<HistoryRepository>(
       () => HistoryRepositoryImpl(historyLocalDataSource: sl()));
 
+  sl.registerLazySingleton<OnboardingRepository>(
+      () => OnboardingRepositoryImpl(onboardingLocalDataSource: sl()));
+
   // Data source
   sl.registerLazySingleton<GameLocalDataSource>(
       () => GameLocalDataSourceImpl(localPersistenceProvider: sl()));
@@ -119,6 +138,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<HistoryLocalDataSource>(
       () => HistoryLocalDataSourceImpl(localPersistenceProvider: sl()));
+
+  sl.registerLazySingleton<OnboardingLocalDataSource>(
+      () => OnboardingLocalDataSourceImpl(localPersistenceProvider: sl()));
 
   // Core
   sl.registerLazySingleton(() => InputConverter());

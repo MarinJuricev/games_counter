@@ -1,14 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_counter/presentation/feature/onboarding/bloc/onboarding_bloc.dart';
 import 'package:game_counter/presentation/home_bottom_navigation_route.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import '../../../di.dart' as di;
 
 class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (BuildContext context) => di.sl<OnboardingBloc>(),
+      child: BlocConsumer<OnboardingBloc, OnboardingState>(
+        buildWhen: (previousState, currentState) {
+          return currentState.maybeMap(
+            orElse: () => true,
+            skipOnboardingState: (_) => false,
+          );
+        },
+        builder: (BuildContext context, OnboardingState state) {
+          return state.maybeMap(
+            orElse: () => null,
+            initialState: (params) {
+              BlocProvider.of<OnboardingBloc>(context)
+                ..add(OnboardingEvent.started());
+
+              return const Center(child: const CircularProgressIndicator());
+            },
+            startOnboardingState: (_) => _buildIntroductionScreen(context),
+          );
+        },
+        listenWhen: (previousState, currentState) {
+          return currentState.maybeMap(
+            orElse: () => false,
+            skipOnboardingState: (_) => true,
+          );
+        },
+        listener: (buildContext, state) {
+          return state.maybeMap(
+            orElse: () => null,
+            skipOnboardingState: (_) => _navigateToHome(context),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildIntroductionScreen(BuildContext context) {
     return IntroductionScreen(
       pages: _buildIntroductionPages(),
-      onDone: () => _navigateToHome(context),
-      onSkip: () => _navigateToHome(context),
+      onDone: () {
+        BlocProvider.of<OnboardingBloc>(context)
+          ..add(OnboardingEvent.finished());
+        _navigateToHome(context);
+      },
+      onSkip: () {
+        BlocProvider.of<OnboardingBloc>(context)
+                ..add(OnboardingEvent.finished());
+        _navigateToHome(context);
+      },
       showSkipButton: true,
       skip: const Icon(Icons.skip_next),
       next: const Icon(Icons.forward),
@@ -71,8 +120,6 @@ class OnboardingPage extends StatelessWidget {
   }
 
   _navigateToHome(BuildContext context) {
-
-    
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => HomeBottomNavRoute()),
