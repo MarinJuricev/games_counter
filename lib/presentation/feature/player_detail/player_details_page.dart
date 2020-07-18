@@ -45,10 +45,12 @@ class _PlayerDetailsPageState extends State<PlayerDetailsPage> {
     return BlocProvider(
       create: (_) => di.sl<PlayerDetailBloc>(),
       child: Scaffold(
-        body: BlocBuilder<PlayerDetailBloc, PlayerDetailState>(
-          builder: (context, state) {
-            return _buildDetailPage(state, context);
-          },
+        body: SingleChildScrollView(
+          child: BlocBuilder<PlayerDetailBloc, PlayerDetailState>(
+            builder: (context, state) {
+              return _buildDetailPage(state, context);
+            },
+          ),
         ),
       ),
     );

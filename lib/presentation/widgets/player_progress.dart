@@ -83,6 +83,9 @@ class PlayerProgress extends StatelessWidget {
                 child: Center(
                   child: Text(
                     currentPlayer.sumOfAllPoints.toString(),
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    softWrap: false,
                     style: TextStyle(
                       color: Colors.grey.shade700,
                       fontSize: 32,

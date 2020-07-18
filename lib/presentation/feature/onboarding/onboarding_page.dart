@@ -55,13 +55,22 @@ class OnboardingPage extends StatelessWidget {
       },
       onSkip: () {
         BlocProvider.of<OnboardingBloc>(context)
-                ..add(OnboardingEvent.finished());
+          ..add(OnboardingEvent.finished());
         _navigateToHome(context);
       },
       showSkipButton: true,
-      skip: const Icon(Icons.skip_next),
-      next: const Icon(Icons.forward),
-      done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
+      skip: const Icon(
+        Icons.skip_next,
+        color: Colors.white,
+      ),
+      next: const Icon(
+        Icons.forward,
+        color: Colors.white,
+      ),
+      done: const Text(
+        "Done",
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+      ),
       dotsDecorator: DotsDecorator(
           size: const Size.square(10.0),
           activeSize: const Size(20.0, 10.0),
@@ -79,7 +88,7 @@ class OnboardingPage extends StatelessWidget {
         PageViewModel(
           title: 'GameCounter',
           body:
-              'Welcome to GameCounter, a universal counting tool for your favorite games.',
+              'Welcome to GameCounter, a universal counting tool for your favorite board games.',
           image: Center(
             child: Text('Add app icon here'),
           ),

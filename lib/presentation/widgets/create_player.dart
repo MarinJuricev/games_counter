@@ -14,8 +14,8 @@ class CreatePlayer extends StatefulWidget {
 
 class _CreatePlayerState extends State<CreatePlayer> {
   String playerName;
-  String points;
-  String bonusPoints;
+  String points = '0';
+  String bonusPoints = '0';
 
   final _createPlayerFormKey = GlobalKey<FormState>();
 
@@ -87,7 +87,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     onChanged: (value) {
                       points = value;
                     },
-                    initialValue: '0',
+                    initialValue: points,
                     decoration: InputDecoration(
                       errorMaxLines: 2,
                       errorStyle: TextStyle(
@@ -122,7 +122,7 @@ class _CreatePlayerState extends State<CreatePlayer> {
                     onChanged: (value) {
                       bonusPoints = value;
                     },
-                    initialValue: '0',
+                    initialValue: bonusPoints,
                     decoration: InputDecoration(
                       errorMaxLines: 2,
                       errorStyle: TextStyle(
