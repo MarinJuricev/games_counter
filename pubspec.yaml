@@ -34,6 +34,10 @@ dependencies:
   intl: ^0.16.1
   # Introduction screen
   introduction_screen: ^1.0.8
+  # Convinient app icon generator for iOS and Android
+  flutter_launcher_icons: ^0.7.5
+
+  
   
 
 dependency_overrides:
@@ -50,6 +54,10 @@ dev_dependencies:
   # Class code gen and Kotlin like when statement
   freezed: ^0.10.9
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/app_icon.png"
 
 flutter:
 
