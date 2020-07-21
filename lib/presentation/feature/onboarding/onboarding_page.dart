@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_counter/presentation/feature/onboarding/bloc/onboarding_bloc.dart';
+import 'package:game_counter/presentation/feature/onboarding/widget/onboarding_body.dart';
+import 'package:game_counter/presentation/feature/onboarding/widget/onboarding_image.dart';
+import 'package:game_counter/presentation/feature/onboarding/widget/onboarding_title.dart';
 import 'package:game_counter/presentation/home_bottom_navigation_route.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import '../../../di.dart' as di;
@@ -46,8 +49,10 @@ class OnboardingPage extends StatelessWidget {
   }
 
   Widget _buildIntroductionScreen(BuildContext context) {
+    final accentColor = Theme.of(context).accentColor;
+
     return IntroductionScreen(
-      pages: _buildIntroductionPages(),
+      pages: _buildIntroductionPages(accentColor),
       onDone: () {
         BlocProvider.of<OnboardingBloc>(context)
           ..add(OnboardingEvent.finished());
@@ -58,18 +63,19 @@ class OnboardingPage extends StatelessWidget {
           ..add(OnboardingEvent.finished());
         _navigateToHome(context);
       },
+      globalBackgroundColor: Colors.white,
       showSkipButton: true,
-      skip: const Icon(
+      skip: Icon(
         Icons.skip_next,
-        color: Colors.white,
+        color: accentColor,
       ),
-      next: const Icon(
+      next: Icon(
         Icons.forward,
-        color: Colors.white,
+        color: accentColor,
       ),
-      done: const Text(
+      done: Text(
         "Done",
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        style: TextStyle(color: accentColor, fontWeight: FontWeight.w600),
       ),
       dotsDecorator: DotsDecorator(
           size: const Size.square(10.0),
@@ -82,48 +88,72 @@ class OnboardingPage extends StatelessWidget {
     );
   }
 
-  List<PageViewModel> _buildIntroductionPages() {
+  List<PageViewModel> _buildIntroductionPages(Color color) {
     return List.of(
       [
         PageViewModel(
-          title: 'GameCounter',
-          body:
-              'Welcome to GameCounter, a universal counting tool for your favorite board games.',
-          image: Center(
-            child: Text('Add app icon here'),
+          titleWidget: OnboardingTitle(
+            title: 'GameCounter',
+            textColor: color,
           ),
+          bodyWidget: OnboardingBody(
+            message:
+                'Welcome to GameCounter, a universal counting tool for your favorite board games.',
+            textColor: color,
+          ),
+          image: OnboardingImage(assetPath: 'assets/icon/app_icon.png'),
         ),
         PageViewModel(
-          title: 'Create Game',
-          body:
-              'You create a game by filling out all the required fields, currently we support only points based games.',
-          image: Center(
-            child: Text('Add create game icon here'),
+          titleWidget: OnboardingTitle(
+            title: 'Create Game',
+            textColor: color,
           ),
+          bodyWidget: OnboardingBody(
+            message:
+                'You create a game by filling out all the required fields, currently we support only points based games.',
+            textColor: color,
+          ),
+          image:
+              OnboardingImage(assetPath: 'assets/images/home_onboarding.png'),
         ),
         PageViewModel(
-          title: 'Create Player',
-          body: 'You create a player by filling out all the required fields.',
-          image: Center(
-            child: Text('Add create player icon here'),
+          titleWidget: OnboardingTitle(
+            title: 'Create Player',
+            textColor: color,
           ),
+          bodyWidget: OnboardingBody(
+            message:
+                'You create a player by filling out all the required fields.',
+            textColor: color,
+          ),
+          image: OnboardingImage(
+              assetPath: 'assets/images/create_player_onboarding.png'),
         ),
         PageViewModel(
-          title: 'History',
-          body:
-              'Be sure to checkout the history feature to keep track who\'s really mastered the game!',
-          image: Center(
-            child: Text('Add history icon here'),
+          titleWidget: OnboardingTitle(
+            title: 'History',
+            textColor: color,
           ),
+          bodyWidget: OnboardingBody(
+              message:
+                  'Be sure to checkout the history feature to keep track who\'s really mastered the game!',
+              textColor: color),
+          image: OnboardingImage(
+              assetPath: 'assets/images/history_onboarding.png'),
         ),
         PageViewModel(
-          title: 'Settings',
-          body:
-              'Check out the settings tab if you want to personalize the app colors!',
-          image: Center(
-            child: Text('Add settings icon here'),
+          titleWidget: OnboardingTitle(
+            title: 'Settings',
+            textColor: color,
           ),
-        )
+          bodyWidget: OnboardingBody(
+            message:
+                'Check out the settings tab if you want to personalize the app colors!',
+            textColor: color,
+          ),
+          image: OnboardingImage(
+              assetPath: 'assets/images/settings_onboarding.png'),
+          ),
       ],
     );
   }
